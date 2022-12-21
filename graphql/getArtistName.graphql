@@ -1,0 +1,5 @@
+query getArtistName($id: Int!) {
+  getArtistById(id: $id) {
+    name
+  }
+}

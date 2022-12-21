@@ -1,0 +1,12 @@
+query getAllReleases {
+  getAllReleases {
+    id
+    genres
+    artistId
+    title
+    rating
+    recorded
+    ratingCount
+    cover
+  }
+}

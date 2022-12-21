@@ -1,22 +1,30 @@
-import { StatusBar } from 'expo-status-bar';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import React from "react";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { NativeBaseProvider, Text } from "native-base";
+import { Navigation } from "./components/Navigation";
+import { Provider, createClient } from "urql";
+import { getAccessToken } from "./utils/accessToken";
 
-import useCachedResources from './hooks/useCachedResources';
-import useColorScheme from './hooks/useColorScheme';
-import Navigation from './navigation';
+export const urqlClient = createClient({
+  url: "http://192.168.0.120:80/graphql",
+  fetchOptions: () => {
+    const token = getAccessToken();
+    return {
+      headers: { authorization: token ? `Bearer ${token}` : "" },
+    };
+  },
+});
 
 export default function App() {
-  const isLoadingComplete = useCachedResources();
-  const colorScheme = useColorScheme();
+  const client = new QueryClient();
 
-  if (!isLoadingComplete) {
-    return null;
-  } else {
-    return (
-      <SafeAreaProvider>
-        <Navigation colorScheme={colorScheme} />
-        <StatusBar />
-      </SafeAreaProvider>
-    );
-  }
+  return (
+    <QueryClientProvider client={client}>
+      <Provider value={urqlClient}>
+        <NativeBaseProvider>
+          <Navigation />
+        </NativeBaseProvider>
+      </Provider>
+    </QueryClientProvider>
+  );
 }

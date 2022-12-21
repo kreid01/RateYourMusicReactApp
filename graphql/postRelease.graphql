@@ -1,0 +1,23 @@
+mutation postRelease(
+  $artistId: Int!
+  $type: String!
+  $title: String!
+  $recorded: String!
+  $language: String!
+  $genres: [String]!
+  $tracks: [String]!
+  $cover: String!
+) {
+  postRelease(
+    artistId: $artistId
+    type: $type
+    title: $title
+    recorded: $recorded
+    language: $language
+    genres: $genres
+    tracks: $tracks
+    cover: $cover
+  ) {
+    id
+  }
+}
