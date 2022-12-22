@@ -1,0 +1,27 @@
+mutation updateRelease(
+  $id: Int!
+  $ratingCount: Int!
+  $rating: Int!
+  $type: String!
+  $title: String!
+  $recorded: String!
+  $language: String!
+  $genres: [String]!
+  $tracks: [String]!
+  $cover: String!
+) {
+  updateRelease(
+    id: $id
+    ratingCount: $ratingCount
+    rating: $rating
+    type: $type
+    title: $title
+    recorded: $recorded
+    language: $language
+    genres: $genres
+    tracks: $tracks
+    cover: $cover
+  ) {
+    tracks
+  }
+}

@@ -24,6 +24,8 @@ export const HomeScreen = ({ navigation }: any) => {
     dispatch(setUser(user as User));
   }, [user]);
 
+  useRefreshOnFocus(refetch);
+
   const scrollY = useRef(new Animated.Value(0)).current;
   const itemSize = 176;
 
@@ -69,9 +71,9 @@ export const HomeScreen = ({ navigation }: any) => {
             return (
               <AnimatedTouchable
                 style={{ transform: [{ scale }], opacity }}
-                onPress={() => navigation.navigate("Recipe", { id: item.id })}
+                onPress={() => navigation.navigate("Release", { id: item.id })}
                 key={item.id}
-                className="w-[90vw] flex flex-row rounded-sm bg-gray-800 shadow-md h-[15vh]  m-2"
+                className="w-[90vw] flex flex-row rounded-sm bg-gray-800 shadow-md h-[16vh]  m-2"
               >
                 <Image
                   className="w-28 h-28 mx-2 my-auto"
@@ -79,20 +81,21 @@ export const HomeScreen = ({ navigation }: any) => {
                   source={{ uri: item.cover }}
                 />
                 <View>
-                  <Text className="text-blue-300 text-lg mt-2  w-[100%]">
+                  <Text className="text-blue-300 text-lg mt-2  w-[90%]">
                     {item.title}
                   </Text>
-                  <ArtistName id={item.id} />
+                  <ArtistName color="text-sky-200" id={item.id} />
                   <Text className="text-sm text-white">{item.recorded}</Text>
-
-                  <View className="flex flex-row mt-auto mb-3 w-[70%] flex-wrap">
+                  <View className="flex flex-row mt-auto mb-3 w-[60%] flex-wrap">
                     {item.genres.map((genre: string, i: number) =>
                       i + 1 !== item.genres.length ? (
-                        <Text className="text-xs text-blue-500 ">
+                        <Text key={i} className="text-xs text-blue-500 ">
                           {genre},{" "}
                         </Text>
                       ) : (
-                        <Text className="text-xs text-blue-500">{genre}</Text>
+                        <Text key={i} className="text-xs text-blue-500">
+                          {genre}
+                        </Text>
                       )
                     )}
                   </View>

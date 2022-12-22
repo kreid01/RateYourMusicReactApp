@@ -4,16 +4,17 @@ import React from "react";
 
 interface Props {
   id: number;
+  color: string;
 }
 
-export const ArtistName: React.FC<Props> = ({ id }) => {
+export const ArtistName: React.FC<Props> = ({ id, color }) => {
   const [result] = useGetArtistNameQuery({
     variables: { id: id as number },
   });
   const { data, fetching } = result;
 
   return !fetching ? (
-    <Text className="text-blue-200">{data?.getArtistById?.name}</Text>
+    <Text className={`${color} font-bold`}>{data?.getArtistById?.name}</Text>
   ) : (
     <Spinner />
   );

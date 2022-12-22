@@ -1,0 +1,6 @@
+query searchArtists($search: String!) {
+  searchArtists(search: $search) {
+    id
+    name
+  }
+}

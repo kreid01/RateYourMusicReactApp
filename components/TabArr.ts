@@ -1,6 +1,7 @@
-import { Icons } from "../components/Icons";
+import { Icons } from "./Icons";
 import { HomeScreen } from "../screens/HomeScreen";
 import { LoginScreen } from "../screens/LoginScreen";
+import { CreateReleaseScreen } from "../screens/CreateReleaseScreen";
 
 export const TabArr = [
   {
@@ -22,7 +23,7 @@ export const TabArr = [
     label: "Add",
     type: Icons.Feather,
     icon: "plus-square",
-    component: HomeScreen,
+    component: CreateReleaseScreen,
   },
   {
     route: "Like",

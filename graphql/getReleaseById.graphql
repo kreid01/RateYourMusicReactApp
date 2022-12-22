@@ -1,0 +1,16 @@
+query getReleaseById($id: Int!) {
+  getReleaseById(id: $id) {
+    artistId
+    cover
+    genres
+    language
+    language
+    id
+    rating
+    ratingCount
+    title
+    recorded
+    tracks
+    type
+  }
+}

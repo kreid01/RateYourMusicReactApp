@@ -88,8 +88,16 @@ export type MutationUpdateArtistArgs = {
 
 
 export type MutationUpdateReleaseArgs = {
+  cover: Scalars['String'];
+  genres: Array<InputMaybe<Scalars['String']>>;
+  id: Scalars['Int'];
+  language: Scalars['String'];
   rating: Scalars['Int'];
   ratingCount: Scalars['Int'];
+  recorded: Scalars['String'];
+  title: Scalars['String'];
+  tracks: Array<InputMaybe<Scalars['String']>>;
+  type: Scalars['String'];
 };
 
 
@@ -109,11 +117,22 @@ export type Query = {
   getReviews?: Maybe<Array<Maybe<Review>>>;
   getUser?: Maybe<User>;
   getUsers?: Maybe<Array<Maybe<User>>>;
+  searchArtists?: Maybe<Array<Maybe<Artist>>>;
 };
 
 
 export type QueryGetArtistByIdArgs = {
   id: Scalars['Int'];
+};
+
+
+export type QueryGetReleaseByIdArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type QuerySearchArtistsArgs = {
+  search: Scalars['String'];
 };
 
 export type Artist = {
@@ -173,6 +192,13 @@ export type GetArtistNameQueryVariables = Exact<{
 
 export type GetArtistNameQuery = { __typename?: 'Query', getArtistById?: { __typename?: 'artist', name?: string | null } | null };
 
+export type GetReleaseByIdQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type GetReleaseByIdQuery = { __typename?: 'Query', getReleaseById?: { __typename?: 'release', artistId?: number | null, cover?: string | null, genres?: Array<string | null> | null, language?: string | null, id?: number | null, rating?: number | null, ratingCount?: number | null, title?: string | null, recorded?: string | null, tracks?: Array<string | null> | null, type?: string | null } | null };
+
 export type GetUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -191,6 +217,29 @@ export type PostReleaseMutationVariables = Exact<{
 
 
 export type PostReleaseMutation = { __typename?: 'Mutation', postRelease?: { __typename?: 'release', id?: number | null } | null };
+
+export type SearchArtistsQueryVariables = Exact<{
+  search: Scalars['String'];
+}>;
+
+
+export type SearchArtistsQuery = { __typename?: 'Query', searchArtists?: Array<{ __typename?: 'artist', id?: number | null, name?: string | null } | null> | null };
+
+export type UpdateReleaseMutationVariables = Exact<{
+  id: Scalars['Int'];
+  ratingCount: Scalars['Int'];
+  rating: Scalars['Int'];
+  type: Scalars['String'];
+  title: Scalars['String'];
+  recorded: Scalars['String'];
+  language: Scalars['String'];
+  genres: Array<InputMaybe<Scalars['String']>> | InputMaybe<Scalars['String']>;
+  tracks: Array<InputMaybe<Scalars['String']>> | InputMaybe<Scalars['String']>;
+  cover: Scalars['String'];
+}>;
+
+
+export type UpdateReleaseMutation = { __typename?: 'Mutation', updateRelease?: { __typename?: 'release', tracks?: Array<string | null> | null } | null };
 
 import { IntrospectionQuery } from 'graphql';
 export default {
@@ -605,6 +654,49 @@ export default {
             },
             "args": [
               {
+                "name": "cover",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              },
+              {
+                "name": "genres",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "id",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              },
+              {
+                "name": "language",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              },
+              {
                 "name": "rating",
                 "type": {
                   "kind": "NON_NULL",
@@ -616,6 +708,49 @@ export default {
               },
               {
                 "name": "ratingCount",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              },
+              {
+                "name": "recorded",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              },
+              {
+                "name": "title",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              },
+              {
+                "name": "tracks",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "type",
                 "type": {
                   "kind": "NON_NULL",
                   "ofType": {
@@ -724,7 +859,18 @@ export default {
               "name": "release",
               "ofType": null
             },
-            "args": []
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
           },
           {
             "name": "getReviewById",
@@ -767,6 +913,29 @@ export default {
               }
             },
             "args": []
+          },
+          {
+            "name": "searchArtists",
+            "type": {
+              "kind": "LIST",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "artist",
+                "ofType": null
+              }
+            },
+            "args": [
+              {
+                "name": "search",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
           }
         ],
         "interfaces": []
@@ -1081,6 +1250,28 @@ export const GetArtistNameDocument = gql`
 export function useGetArtistNameQuery(options: Omit<Urql.UseQueryArgs<GetArtistNameQueryVariables>, 'query'>) {
   return Urql.useQuery<GetArtistNameQuery, GetArtistNameQueryVariables>({ query: GetArtistNameDocument, ...options });
 };
+export const GetReleaseByIdDocument = gql`
+    query getReleaseById($id: Int!) {
+  getReleaseById(id: $id) {
+    artistId
+    cover
+    genres
+    language
+    language
+    id
+    rating
+    ratingCount
+    title
+    recorded
+    tracks
+    type
+  }
+}
+    `;
+
+export function useGetReleaseByIdQuery(options: Omit<Urql.UseQueryArgs<GetReleaseByIdQueryVariables>, 'query'>) {
+  return Urql.useQuery<GetReleaseByIdQuery, GetReleaseByIdQueryVariables>({ query: GetReleaseByIdDocument, ...options });
+};
 export const GetUserDocument = gql`
     query getUser {
   getUser {
@@ -1112,4 +1303,38 @@ export const PostReleaseDocument = gql`
 
 export function usePostReleaseMutation() {
   return Urql.useMutation<PostReleaseMutation, PostReleaseMutationVariables>(PostReleaseDocument);
+};
+export const SearchArtistsDocument = gql`
+    query searchArtists($search: String!) {
+  searchArtists(search: $search) {
+    id
+    name
+  }
+}
+    `;
+
+export function useSearchArtistsQuery(options: Omit<Urql.UseQueryArgs<SearchArtistsQueryVariables>, 'query'>) {
+  return Urql.useQuery<SearchArtistsQuery, SearchArtistsQueryVariables>({ query: SearchArtistsDocument, ...options });
+};
+export const UpdateReleaseDocument = gql`
+    mutation updateRelease($id: Int!, $ratingCount: Int!, $rating: Int!, $type: String!, $title: String!, $recorded: String!, $language: String!, $genres: [String]!, $tracks: [String]!, $cover: String!) {
+  updateRelease(
+    id: $id
+    ratingCount: $ratingCount
+    rating: $rating
+    type: $type
+    title: $title
+    recorded: $recorded
+    language: $language
+    genres: $genres
+    tracks: $tracks
+    cover: $cover
+  ) {
+    tracks
+  }
+}
+    `;
+
+export function useUpdateReleaseMutation() {
+  return Urql.useMutation<UpdateReleaseMutation, UpdateReleaseMutationVariables>(UpdateReleaseDocument);
 };

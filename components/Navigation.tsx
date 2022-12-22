@@ -7,11 +7,13 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { TouchableOpacity } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { navStyles } from "../styles/BottomNavStyles";
-import { TabArr } from "../consts/TabArr";
+import { TabArr } from "./TabArr";
 import { Provider } from "react-redux";
 import store from "../store/store";
 import { setRefreshToken } from "../utils/refreshToken";
 import { setAccessToken } from "../utils/accessToken";
+import { SingleReleaseScreen } from "../screens/SingleReleaseScreen";
+import { LoginScreen } from "../screens/LoginScreen";
 
 export const Navigation = () => {
   const Tab = createBottomTabNavigator();
@@ -123,7 +125,10 @@ export const Navigation = () => {
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Back" component={Root} />
-
+          <Stack.Screen
+            name="Release"
+            component={SingleReleaseScreen}
+          ></Stack.Screen>
           <Stack.Screen
             options={{
               headerStyle: {
@@ -136,6 +141,19 @@ export const Navigation = () => {
             }}
             name="Registration"
             component={RegisterScreen}
+          ></Stack.Screen>
+          <Stack.Screen
+            options={{
+              headerStyle: {
+                backgroundColor: "#0ea5e9",
+              },
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+            }}
+            name="Login"
+            component={LoginScreen}
           ></Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>
