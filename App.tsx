@@ -1,30 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { NativeBaseProvider, Text } from "native-base";
+import { NativeBaseProvider, Spinner } from "native-base";
 import { Navigation } from "./components/Navigation";
-import { Provider, createClient } from "urql";
-import { getAccessToken } from "./utils/accessToken";
-
-export const urqlClient = createClient({
-  url: "http://192.168.0.120:80/graphql",
-  fetchOptions: () => {
-    const token = getAccessToken();
-    return {
-      headers: { authorization: token ? `Bearer ${token}` : "" },
-    };
-  },
-});
+import { setAccessToken } from "./utils/accessToken";
+import { getRefreshToken, setRefreshToken } from "./utils/refreshToken";
+import store from "./store/store";
+import { Provider } from "react-redux";
+import axios from "axios";
 
 export default function App() {
   const client = new QueryClient();
 
-  return (
+  useEffect(() => {
+    const fetchToken = async () => {
+      const token = await getRefreshToken();
+      const { data: response } = await axios.post(
+        "http://192.168.0.120:80/auth",
+        { token: token }
+      );
+      if (await response) {
+        const { refreshToken, accessToken } = response;
+        await setRefreshToken(refreshToken);
+        setAccessToken(accessToken);
+        setLoading(false);
+      }
+    };
+    fetchToken();
+  }, []);
+
+  const [loading, setLoading] = useState(true);
+
+  return !loading ? (
     <QueryClientProvider client={client}>
-      <Provider value={urqlClient}>
+      <Provider store={store}>
         <NativeBaseProvider>
           <Navigation />
         </NativeBaseProvider>
       </Provider>
     </QueryClientProvider>
+  ) : (
+    <NativeBaseProvider>
+      <Spinner />
+    </NativeBaseProvider>
   );
 }

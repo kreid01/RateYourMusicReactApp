@@ -1,0 +1,11 @@
+query getReleaseReviews($id: Int!) {
+  getReleaseReviews(id: $id) {
+    id
+    description
+    title
+    posterId
+    postDate
+    title
+    rating
+  }
+}

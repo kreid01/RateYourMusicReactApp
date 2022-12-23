@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\kiera\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add -D @graphql-codegen/urql-introspection @graphql/typescript-operations
+  C:\Program Files\nodejs\node.exe C:\Users\kiera\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add selenium-driver
 
 PATH: 
   C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Users\kiera\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files\nodejs\;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files (x86)\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\150\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\150\DTS\Binn\;C:\Program Files\Azure Data Studio\bin;C:\Program Files\Amazon\AWSCLIV2\;C:\Program Files\MySQL\MySQL Shell 8.0\bin\;C:\Users\kiera\AppData\Local\Microsoft\WindowsApps;C:\Users\kiera\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\kiera\AppData\Local\GitHubDesktop\bin;C:\Users\kiera\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Users\kiera\AppData\Roaming\npm;C:\Users\kiera\.dotnet\tools;C:\Users\kiera\AppData\Local\Programs\Python\Python310;c:\users\kiera\appdata\local\programs\python\python310\lib\site-packages;C:\Program Files\Azure Data Studio\bin;C:\Program Files\heroku\bin;C:\Program Files\OpenSSL-Win64\bin;
@@ -14,7 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@graphql%2ftypescript-operations: Not found
+  Error: https://registry.yarnpkg.com/selenium-driver: Not found
       at Request.params.callback [as _callback] (C:\Users\kiera\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:66145:18)
       at Request.self.callback (C:\Users\kiera\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:140890:22)
       at Request.emit (node:events:513:28)
@@ -51,6 +51,7 @@ npm manifest:
       "@graphql-codegen/cli": "^2.16.1",
       "@graphql-codegen/client-preset": "^1.2.3",
       "@graphql-codegen/typescript-react-query": "^4.0.6",
+      "@graphql-codegen/urql-introspection": "^2.2.1",
       "@hookform/resolvers": "^2.9.10",
       "@react-navigation/bottom-tabs": "^6.4.3",
       "@react-navigation/native": "^6.0.16",
@@ -1864,7 +1865,7 @@ Lockfile:
       auto-bind "~4.0.0"
       tslib "~2.4.0"
   
-  "@graphql-codegen/plugin-helpers@^2.7.2":
+  "@graphql-codegen/plugin-helpers@^2.6.2", "@graphql-codegen/plugin-helpers@^2.7.2":
     version "2.7.2"
     resolved "https://registry.yarnpkg.com/@graphql-codegen/plugin-helpers/-/plugin-helpers-2.7.2.tgz#6544f739d725441c826a8af6a49519f588ff9bed"
     integrity sha512-kln2AZ12uii6U59OQXdjLk5nOlh1pHis1R98cDZGFnfaiAbX9V3fxcZ1MMJkB7qFUymTALzyjZoXXdyVmPMfRg==
@@ -1949,6 +1950,15 @@ Lockfile:
       "@graphql-codegen/schema-ast" "^2.6.0"
       "@graphql-codegen/visitor-plugin-common" "2.13.5"
       auto-bind "~4.0.0"
+      tslib "~2.4.0"
+  
+  "@graphql-codegen/urql-introspection@^2.2.1":
+    version "2.2.1"
+    resolved "https://registry.yarnpkg.com/@graphql-codegen/urql-introspection/-/urql-introspection-2.2.1.tgz#97baaf09bf91b044a21dd6715af22e0ba6d829ec"
+    integrity sha512-/KjHSf4dQNoYZZ+G10b3lbw304ik9xHzRf/syNvoYehmwdYE5J7RnO1v1Cz78LDm2NEdsFas6vJHi0sJd/pOHg==
+    dependencies:
+      "@graphql-codegen/plugin-helpers" "^2.6.2"
+      "@urql/introspection" "^0.3.2"
       tslib "~2.4.0"
   
   "@graphql-codegen/visitor-plugin-common@2.13.1":
@@ -4231,6 +4241,11 @@ Lockfile:
     dependencies:
       "@urql/core" ">=2.3.1"
       wonka "^4.0.14"
+  
+  "@urql/introspection@^0.3.2":
+    version "0.3.3"
+    resolved "https://registry.yarnpkg.com/@urql/introspection/-/introspection-0.3.3.tgz#5bcedfebd515161eecf9b193169c2765bf5674f1"
+    integrity sha512-tekSLLqWnusfV6V7xaEnLJQSdXOD/lWy7f8JYQwrX+88Md+voGSCSx5WJXI7KLBN3Tat2OV08tAr8UROykls4Q==
   
   "@webassemblyjs/ast@1.9.0":
     version "1.9.0"

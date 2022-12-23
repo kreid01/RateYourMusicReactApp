@@ -1,5 +1,5 @@
-import { useGetArtistNameQuery } from "../generated/graphql";
-import { Spinner, Text } from "native-base";
+import { useGetArtistNameQuery } from "../../generated/graphql";
+import { Text, Spinner } from "native-base";
 import React from "react";
 
 interface Props {

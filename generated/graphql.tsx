@@ -18,6 +18,7 @@ export type Scalars = {
 export type LoginResponse = {
   __typename?: 'LoginResponse';
   accessToken?: Maybe<Scalars['String']>;
+  refreshToken?: Maybe<Scalars['String']>;
 };
 
 export type Mutation = {
@@ -113,9 +114,11 @@ export type Query = {
   getAllReleases?: Maybe<Array<Maybe<Release>>>;
   getArtistById?: Maybe<Artist>;
   getReleaseById?: Maybe<Release>;
+  getReleaseReviews?: Maybe<Review>;
   getReviewById?: Maybe<Review>;
   getReviews?: Maybe<Array<Maybe<Review>>>;
   getUser?: Maybe<User>;
+  getUserById?: Maybe<User>;
   getUsers?: Maybe<Array<Maybe<User>>>;
   searchArtists?: Maybe<Array<Maybe<Artist>>>;
 };
@@ -127,6 +130,16 @@ export type QueryGetArtistByIdArgs = {
 
 
 export type QueryGetReleaseByIdArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type QueryGetReleaseReviewsArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type QueryGetUserByIdArgs = {
   id: Scalars['Int'];
 };
 
@@ -199,10 +212,32 @@ export type GetReleaseByIdQueryVariables = Exact<{
 
 export type GetReleaseByIdQuery = { __typename?: 'Query', getReleaseById?: { __typename?: 'release', artistId?: number | null, cover?: string | null, genres?: Array<string | null> | null, language?: string | null, id?: number | null, rating?: number | null, ratingCount?: number | null, title?: string | null, recorded?: string | null, tracks?: Array<string | null> | null, type?: string | null } | null };
 
+export type GetReleaseReviewsQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type GetReleaseReviewsQuery = { __typename?: 'Query', getReleaseReviews?: { __typename?: 'review', id?: number | null, description?: string | null, title?: string | null, posterId?: number | null, postDate?: string | null, rating?: number | null } | null };
+
 export type GetUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetUserQuery = { __typename?: 'Query', getUser?: { __typename?: 'user', id?: number | null, username?: string | null } | null };
+
+export type GetUsernameQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type GetUsernameQuery = { __typename?: 'Query', getUserById?: { __typename?: 'user', username?: string | null } | null };
+
+export type LoginMutationVariables = Exact<{
+  email: Scalars['String'];
+  password: Scalars['String'];
+}>;
+
+
+export type LoginMutation = { __typename?: 'Mutation', login?: { __typename?: 'LoginResponse', accessToken?: string | null, refreshToken?: string | null } | null };
 
 export type PostReleaseMutationVariables = Exact<{
   artistId: Scalars['Int'];
@@ -258,6 +293,14 @@ export default {
         "fields": [
           {
             "name": "accessToken",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "refreshToken",
             "type": {
               "kind": "SCALAR",
               "name": "Any"
@@ -873,6 +916,26 @@ export default {
             ]
           },
           {
+            "name": "getReleaseReviews",
+            "type": {
+              "kind": "OBJECT",
+              "name": "review",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
             "name": "getReviewById",
             "type": {
               "kind": "OBJECT",
@@ -901,6 +964,26 @@ export default {
               "ofType": null
             },
             "args": []
+          },
+          {
+            "name": "getUserById",
+            "type": {
+              "kind": "OBJECT",
+              "name": "user",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
           },
           {
             "name": "getUsers",
@@ -1272,6 +1355,23 @@ export const GetReleaseByIdDocument = gql`
 export function useGetReleaseByIdQuery(options: Omit<Urql.UseQueryArgs<GetReleaseByIdQueryVariables>, 'query'>) {
   return Urql.useQuery<GetReleaseByIdQuery, GetReleaseByIdQueryVariables>({ query: GetReleaseByIdDocument, ...options });
 };
+export const GetReleaseReviewsDocument = gql`
+    query getReleaseReviews($id: Int!) {
+  getReleaseReviews(id: $id) {
+    id
+    description
+    title
+    posterId
+    postDate
+    title
+    rating
+  }
+}
+    `;
+
+export function useGetReleaseReviewsQuery(options: Omit<Urql.UseQueryArgs<GetReleaseReviewsQueryVariables>, 'query'>) {
+  return Urql.useQuery<GetReleaseReviewsQuery, GetReleaseReviewsQueryVariables>({ query: GetReleaseReviewsDocument, ...options });
+};
 export const GetUserDocument = gql`
     query getUser {
   getUser {
@@ -1283,6 +1383,29 @@ export const GetUserDocument = gql`
 
 export function useGetUserQuery(options?: Omit<Urql.UseQueryArgs<GetUserQueryVariables>, 'query'>) {
   return Urql.useQuery<GetUserQuery, GetUserQueryVariables>({ query: GetUserDocument, ...options });
+};
+export const GetUsernameDocument = gql`
+    query getUsername($id: Int!) {
+  getUserById(id: $id) {
+    username
+  }
+}
+    `;
+
+export function useGetUsernameQuery(options: Omit<Urql.UseQueryArgs<GetUsernameQueryVariables>, 'query'>) {
+  return Urql.useQuery<GetUsernameQuery, GetUsernameQueryVariables>({ query: GetUsernameDocument, ...options });
+};
+export const LoginDocument = gql`
+    mutation login($email: String!, $password: String!) {
+  login(email: $email, password: $password) {
+    accessToken
+    refreshToken
+  }
+}
+    `;
+
+export function useLoginMutation() {
+  return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument);
 };
 export const PostReleaseDocument = gql`
     mutation postRelease($artistId: Int!, $type: String!, $title: String!, $recorded: String!, $language: String!, $genres: [String]!, $tracks: [String]!, $cover: String!) {

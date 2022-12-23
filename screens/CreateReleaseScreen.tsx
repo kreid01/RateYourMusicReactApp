@@ -73,9 +73,12 @@ export const CreateReleaseScreen = () => {
   };
 
   const [, postRelease] = usePostReleaseMutation();
-  const [result] = useSearchArtistsQuery({
-    variables: { search: search as string },
-  });
+  const [result] =
+    search.length > 2
+      ? useSearchArtistsQuery({
+          variables: { search: search as string },
+        })
+      : useSearchArtistsQuery({ variables: { search: "@" } });
 
   const { data: artists, fetching } = result;
 
@@ -259,6 +262,17 @@ export const CreateReleaseScreen = () => {
                 onBlur={handleBlur("language")}
                 value-={values.language}
               />
+              <Input
+                backgroundColor="#475569"
+                borderColor="#475569"
+                focusOutlineColor="#475569"
+                placeholder="Recorded"
+                className="h-10 text-white w-[100vw]"
+                my={2}
+                onChangeText={handleChange("recorded")}
+                onBlur={handleBlur("recorded")}
+                value-={values.language}
+              />
               <Radio.Group
                 className=" text-sm"
                 name="type"
@@ -267,10 +281,10 @@ export const CreateReleaseScreen = () => {
                 value={values.type}
                 onChange={handleChange("type")}
               >
-                <Radio colorScheme="white" value={"true"} my={1}>
+                <Radio colorScheme="white" value={"Album"} my={1}>
                   <Text className="text-white">Album</Text>
                 </Radio>
-                <Radio colorScheme="white" value={"false"} my={1}>
+                <Radio colorScheme="white" value={"Single"} my={1}>
                   <Text className="text-white">Single</Text>
                 </Radio>
               </Radio.Group>
