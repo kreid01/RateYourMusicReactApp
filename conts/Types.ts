@@ -3,7 +3,7 @@ export type IRelease = {
   artistId: number;
   title: string;
   type: string;
-  recorded: string;
+  released: string;
   ratingCount: number;
   rating: number;
   cover: string;

@@ -1,4 +1,4 @@
-import { Spinner, View, Text } from "native-base";
+import { Spinner, View, Text, Image } from "native-base";
 import React from "react";
 import { useGetReleaseReviewsQuery } from "../generated/graphql";
 import { Username } from "./Username";
@@ -13,20 +13,30 @@ export const ReleaseReviews: React.FC<Props> = ({ id }) => {
 
   return !fetching ? (
     <View className="mx-5">
-      <View className="flex flex-row bg-gray-300 h-8">
-        <Text className="my-auto ml-2 font-bold text-sky-800">
-          <Username id={data?.getReleaseReviews?.posterId as number} />
-        </Text>
-        <Text className="ml-3 text-sky-600 my-auto">
-          {data?.getReleaseReviews?.postDate?.substring(0, 4)}
-        </Text>
-        <Text className=" ml-auto mr-2 my-auto">
-          {data?.getReleaseReviews?.rating}/5
-        </Text>
-      </View>
+      {data?.getReleaseReviews &&
+        data?.getReleaseReviews?.map((review) => {
+          return (
+            <View className="border-sky-700 pb-3 border-b-[1px]">
+              <View className="  flex flex-row bg-gray-700 h-8">
+                <Image className="w-8 h-8" alt="" source={{ uri: "" }} />
+                <Text className="my-auto ml-2 font-bold text-sky-200">
+                  <Username id={review?.posterId as number} />
+                </Text>
+                <Text className="ml-3 text-sky-300 my-auto">
+                  {review?.postDate?.substring(0, 4)}
+                </Text>
+                <Text className="text-white ml-auto mr-2 my-auto">
+                  {review?.rating}/5
+                </Text>
+              </View>
 
-      <Text className="my-1">{data?.getReleaseReviews?.title} </Text>
-      <Text>{data?.getReleaseReviews?.description}</Text>
+              <Text className="my-1 text-white font-bold">
+                {review?.title}{" "}
+              </Text>
+              <Text className="text-white">{review?.description}</Text>
+            </View>
+          );
+        })}
     </View>
   ) : (
     <Spinner />

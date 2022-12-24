@@ -1,10 +1,10 @@
 mutation updateRelease(
   $id: Int!
   $ratingCount: Int!
-  $rating: Int!
+  $rating: Float!
   $type: String!
   $title: String!
-  $recorded: String!
+  $released: String!
   $language: String!
   $genres: [String]!
   $tracks: [String]!
@@ -16,7 +16,7 @@ mutation updateRelease(
     rating: $rating
     type: $type
     title: $title
-    recorded: $recorded
+    released: $released
     language: $language
     genres: $genres
     tracks: $tracks

@@ -11,7 +11,7 @@ const mockRelease = {
   artistId: 0,
   id: 0,
   type: "Album",
-  recorded: "1999 Scotland",
+  released: "1999 Scotland",
   ratingCount: 1,
   rating: 5,
   cover: "testimgaeurl",

@@ -87,7 +87,7 @@ export const CreateReleaseScreen = () => {
     type: "",
     cover: "",
     language: "",
-    recorded: "",
+    released: "",
   };
 
   return (
@@ -266,11 +266,11 @@ export const CreateReleaseScreen = () => {
                 backgroundColor="#475569"
                 borderColor="#475569"
                 focusOutlineColor="#475569"
-                placeholder="Recorded"
+                placeholder="Released"
                 className="h-10 text-white w-[100vw]"
                 my={2}
-                onChangeText={handleChange("recorded")}
-                onBlur={handleBlur("recorded")}
+                onChangeText={handleChange("released")}
+                onBlur={handleBlur("released")}
                 value-={values.language}
               />
               <Radio.Group

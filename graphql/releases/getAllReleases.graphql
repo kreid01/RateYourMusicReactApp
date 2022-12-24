@@ -5,7 +5,7 @@ query getAllReleases {
     artistId
     title
     rating
-    recorded
+    released
     ratingCount
     cover
   }

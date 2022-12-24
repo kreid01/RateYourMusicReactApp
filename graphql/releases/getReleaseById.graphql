@@ -9,7 +9,7 @@ query getReleaseById($id: Int!) {
     rating
     ratingCount
     title
-    recorded
+    released
     tracks
     type
   }

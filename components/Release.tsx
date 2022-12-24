@@ -37,7 +37,7 @@ export const Release: React.FC<Props> = ({
           {item.title}
         </Text>
         <ArtistName color="text-sky-200" id={item.artistId} />
-        <Text className="text-sm text-white">{item.recorded}</Text>
+        <Text className="text-sm text-white">{item.released}</Text>
         <View className="flex flex-row mt-auto mb-3 w-[65%] flex-wrap">
           {item.genres.map((genre: string, i: number) =>
             i + 1 !== item.genres.length ? (

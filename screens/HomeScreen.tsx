@@ -1,16 +1,10 @@
-import { Image, Spinner, Text, View } from "native-base";
-import { useEffect } from "react";
+import { Spinner, Text, View } from "native-base";
 import { RefreshControl } from "react-native";
-import { useDispatch } from "react-redux";
-import { setUser, User } from "../slices/userSlice";
 import React, { useRef } from "react";
-import { useRefreshOnFocus } from "../hooks/useRefreshOnFocus";
 import Animated from "react-native-reanimated";
 import { useGetAllReleasesQuery } from "../generated/graphql";
-import { useGetUserQuery } from "../generated/graphql";
 import { Release } from "../components/Release";
 import { SearchBar } from "../components/SearchBar";
-import { getAccessToken } from "../utils/accessToken";
 export const HomeScreen = ({ navigation }: any) => {
   const [result, reexecuteQuery] = useGetAllReleasesQuery();
   const { data: releases, stale, fetching } = result;
@@ -24,7 +18,7 @@ export const HomeScreen = ({ navigation }: any) => {
 
   return (
     <View className="relative min-h-100vh bg-slate-800">
-      <SearchBar />
+      <SearchBar navigation={navigation} />
       <View className=" w-[100vw] mt-3">
         <View className="flex flex-row ml-auto mr-10">
           <Text className="mr-5 text-gray-500">Average</Text>
@@ -33,6 +27,7 @@ export const HomeScreen = ({ navigation }: any) => {
       </View>
       {releases ? (
         <Animated.FlatList
+          className="mb-64"
           accessibilityLabel="releases"
           onScroll={Animated.event(
             [{ nativeEvent: { contentOffset: { y: scrollY } } }],

@@ -2,7 +2,7 @@ mutation postRelease(
   $artistId: Int!
   $type: String!
   $title: String!
-  $recorded: String!
+  $released: String!
   $language: String!
   $genres: [String]!
   $tracks: [String]!
@@ -12,7 +12,7 @@ mutation postRelease(
     artistId: $artistId
     type: $type
     title: $title
-    recorded: $recorded
+    released: $released
     language: $language
     genres: $genres
     tracks: $tracks
