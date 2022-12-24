@@ -46,6 +46,7 @@ export const CreateReview: React.FC<Props> = ({ releaseId }) => {
       <Button
         onPress={() => handleClick()}
         bgColor="blue.400"
+        data-cy="open-review"
         className="w-32 m-5"
       >
         Review
@@ -82,6 +83,7 @@ export const CreateReview: React.FC<Props> = ({ releaseId }) => {
                       Title (optional)
                     </FormControl.Label>
                     <Input
+                      accessibilityLabel="review-title"
                       selectionColor={"white"}
                       className="text-white"
                       backgroundColor="#475569"
@@ -100,6 +102,7 @@ export const CreateReview: React.FC<Props> = ({ releaseId }) => {
                     <TextArea
                       h="70%"
                       color={"white"}
+                      accessibilityLabel="review-description"
                       autoCompleteType="auto-complete"
                       backgroundColor="#475569"
                       borderColor="#475569"
@@ -114,8 +117,12 @@ export const CreateReview: React.FC<Props> = ({ releaseId }) => {
                   <Button onPress={() => handleClick()} bgColor="blue.400">
                     Cancel
                   </Button>
-                  <Button onPress={() => handleSubmit()} bgColor="blue.400">
-                    Post Review
+                  <Button
+                    accessibilityLabel="submit-review-button"
+                    onPress={() => handleSubmit()}
+                    bgColor="blue.400"
+                  >
+                    Submit Review
                   </Button>
                 </View>
               </Box>

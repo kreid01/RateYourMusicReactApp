@@ -54,6 +54,7 @@ export const SingleReleaseScreen = ({ route, navigation }: any) => {
           }}
         />
         <Button
+          accessibilityLabel="back-button"
           className="absolute bg-slate-700 rounded-full py-3 top-12 left-10 text-white"
           variant="ghost"
           onPress={() => navigation.navigate("Home")}

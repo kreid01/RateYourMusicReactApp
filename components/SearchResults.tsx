@@ -33,7 +33,10 @@ export const SearchResults: React.FC<Props> = ({ search, navigation }) => {
               source={{ uri: release?.cover as string }}
             />
             <View>
-              <Text className="text-sky-200 font-bold ml-2 mt-1">
+              <Text
+                data-cy="search-result"
+                className="text-sky-200 font-bold ml-2 mt-1"
+              >
                 {release?.title}
               </Text>
               <View className="flex flex-row">
