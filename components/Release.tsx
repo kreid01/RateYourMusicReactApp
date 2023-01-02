@@ -53,7 +53,9 @@ export const Release: React.FC<Props> = ({
         </View>
       </View>
       <View className="flex mt-auto flex-row mb-3 ml-auto mr-2">
-        <Text className="mr-5 font-bold w-10 text-blue-500">{item.rating}</Text>
+        <Text className="mr-5 font-bold w-10 text-blue-500">
+          {item.rating.toFixed(2)}
+        </Text>
         <Text className="text-gray-500 w-8">{item.ratingCount}</Text>
       </View>
     </AnimatedTouchable>

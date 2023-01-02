@@ -21,6 +21,7 @@ import { useLoginMutation } from "../generated/graphql";
 import { RootState } from "../store/store";
 import { setAccessToken } from "../utils/accessToken";
 import { setRefreshToken } from "../utils/refreshToken";
+import { UserScreen } from "./UserScreen";
 
 export type Login = {
   email: string;
@@ -161,6 +162,6 @@ export const LoginScreen = ({ navigation }: any) => {
       )}
     </Formik>
   ) : (
-    <View className="h-[100vh] bg-slate-800" />
+    <UserScreen />
   );
 };
