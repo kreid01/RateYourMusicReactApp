@@ -20,6 +20,7 @@ import React, { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { object, string } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
+import { useRegisterMutation } from "../generated/graphql";
 
 const createUser = async (queryKey: User) => {
   const { data: response } = await axios.post(
@@ -39,14 +40,13 @@ export type User = {
 
 export const RegisterScreen = ({ navigation }: any) => {
   const [show, setShow] = useState<Boolean>(false);
-  const queryClient = useQueryClient();
+
+  const [, register] = useRegisterMutation();
+
   const registerSchema = object({
-    firstName: string()
-      .min(1, "Name is required")
-      .max(32, "Name must be less than 100 characters"),
-    lastName: string()
-      .min(1, "Name is required")
-      .max(32, "Name must be less than 100 characters"),
+    username: string()
+      .min(1, "Username is required")
+      .max(32, "Username must be less than 100 characters"),
     email: string().min(1, "Email is required").email("Email is invalid"),
     password: string()
       .min(1, "Password is required")
@@ -57,30 +57,24 @@ export const RegisterScreen = ({ navigation }: any) => {
     path: ["passwordConfirm"],
     message: "Passwords do not match",
   });
-  const { mutate, isLoading } = useMutation(createUser, {
-    onSuccess: (data) => {
-      const message = "success";
-      alert(message);
-      navigation.navigate("Login");
-    },
-    onError: () => {
-      alert("there was an error");
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries("create");
-    },
-  });
 
   return (
     <Formik
       initialValues={{
-        firstName: "",
-        lastName: "",
+        username: "",
         email: "",
         password: "",
         passwordConfirm: "",
       }}
-      onSubmit={(values) => mutate({ ...values })}
+      onSubmit={(values) =>
+        register({ ...values }).then(async ({ data }: any) => {
+          if (data.error) {
+            alert("Network error");
+          } else {
+            navigation.navigate("Home");
+          }
+        })
+      }
       validationSchema={toFormikValidationSchema(registerSchema)}
     >
       {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
@@ -111,47 +105,30 @@ export const RegisterScreen = ({ navigation }: any) => {
 
             <VStack space={3} mt="5">
               <FormControl>
-                <FormControl.Label>First Name</FormControl.Label>
+                <FormControl.Label>Username</FormControl.Label>
                 <Input
+                  accessibilityLabel="register-username"
                   className="text-white"
                   backgroundColor="#475569"
                   borderColor="#475569"
-                  onChangeText={handleChange("firstName")}
-                  onBlur={handleBlur("firstName")}
-                  value={values.firstName}
+                  onChangeText={handleChange("username")}
+                  onBlur={handleBlur("username")}
+                  value={values.username}
                 />{" "}
-                {errors.firstName ? (
+                {errors.username ? (
                   <View className="flex flex-row -mb-2 -mt-3 ">
                     <WarningOutlineIcon size="xs" color="red.500" />
                     <Text className="text-red-500 ml-1 -mt-1 text-sm">
-                      {errors.firstName.toString()}
+                      {errors.username.toString()}
                     </Text>
                   </View>
                 ) : null}
               </FormControl>
-              <FormControl>
-                <FormControl.Label>Last Name</FormControl.Label>
-                <Input
-                  className="text-white"
-                  backgroundColor="#475569"
-                  borderColor="#475569"
-                  onChangeText={handleChange("lastName")}
-                  onBlur={handleBlur("lastName")}
-                  value={values.lastName}
-                />
 
-                {errors.lastName ? (
-                  <View className="flex flex-row mt-2">
-                    <WarningOutlineIcon size="xs" color="red.500" />
-                    <Text className="text-red-500 ml-1 -mt-1 text-sm">
-                      {errors.lastName.toString()}
-                    </Text>
-                  </View>
-                ) : null}
-              </FormControl>
               <FormControl variant="outlined">
                 <FormControl.Label>Email Adress</FormControl.Label>
                 <Input
+                  accessibilityLabel="register-email"
                   className="text-white"
                   backgroundColor="#475569"
                   borderColor="#475569"
@@ -171,6 +148,7 @@ export const RegisterScreen = ({ navigation }: any) => {
               <FormControl>
                 <FormControl.Label>Password</FormControl.Label>
                 <Input
+                  accessibilityLabel="register-password"
                   className="text-white"
                   backgroundColor="#475569"
                   borderColor="#475569"
@@ -207,6 +185,7 @@ export const RegisterScreen = ({ navigation }: any) => {
                 <FormControl.Label>Confirm Password</FormControl.Label>
                 <Input
                   className="text-white"
+                  accessibilityLabel="register-password-confirm"
                   backgroundColor="#475569"
                   borderColor="#475569"
                   onChangeText={handleChange("passwordConfirm")}
@@ -241,6 +220,7 @@ export const RegisterScreen = ({ navigation }: any) => {
                 mt={5}
                 onPress={() => handleSubmit()}
                 isLoadingText="Submitting"
+                accessibilityLabel="register-button"
                 bgColor="#38bdf8"
               >
                 Register

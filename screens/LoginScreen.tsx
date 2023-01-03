@@ -81,6 +81,7 @@ export const LoginScreen = ({ navigation }: any) => {
               <FormControl>
                 <FormControl.Label>Email</FormControl.Label>
                 <Input
+                  accessibilityLabel="login-email"
                   className="text-white"
                   backgroundColor="#475569"
                   borderColor="#475569"
@@ -97,6 +98,7 @@ export const LoginScreen = ({ navigation }: any) => {
                 <Input
                   className="text-white"
                   backgroundColor="#475569"
+                  accessibilityLabel="login-password"
                   borderColor="#475569"
                   focusOutlineColor="#475569"
                   onChangeText={handleChange("password")}
@@ -130,7 +132,12 @@ export const LoginScreen = ({ navigation }: any) => {
                   Forget Password?
                 </Link>
               </FormControl>
-              <Button onPress={() => handleSubmit()} mt="2" bgColor="#38bdf8">
+              <Button
+                accessibilityLabel="login-button"
+                onPress={() => handleSubmit()}
+                mt="2"
+                bgColor="#38bdf8"
+              >
                 Sign in
               </Button>
               <HStack mt="6" justifyContent="center">
