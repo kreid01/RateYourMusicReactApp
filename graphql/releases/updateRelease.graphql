@@ -1,23 +1,27 @@
-mutation postRelease(
-  $artistId: Int!
+mutation updateRelease(
+  $id: Int!
+  $ratingCount: Int!
+  $rating: Float!
   $type: String!
   $title: String!
-  $recorded: String!
+  $released: String!
   $language: String!
   $genres: [String]!
   $tracks: [String]!
   $cover: String!
 ) {
-  postRelease(
-    artistId: $artistId
+  updateRelease(
+    id: $id
+    ratingCount: $ratingCount
+    rating: $rating
     type: $type
     title: $title
-    recorded: $recorded
+    released: $released
     language: $language
     genres: $genres
     tracks: $tracks
     cover: $cover
   ) {
-    id
+    tracks
   }
 }

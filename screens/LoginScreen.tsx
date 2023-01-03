@@ -1,5 +1,4 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import axios from "axios";
 import { Formik } from "formik";
 import {
   Box,
@@ -17,73 +16,49 @@ import {
   VStack,
 } from "native-base";
 import * as React from "react";
-import { useMutation, useQueryClient } from "react-query";
-import { useDispatch, useSelector } from "react-redux";
-import { setUser } from "../slices/userSlice";
+import { useSelector } from "react-redux";
+import { useLoginMutation } from "../generated/graphql";
 import { RootState } from "../store/store";
 import { setAccessToken } from "../utils/accessToken";
 import { setRefreshToken } from "../utils/refreshToken";
+import { UserScreen } from "./UserScreen";
 
 export type Login = {
   email: string;
   password: string;
 };
 
-const loginUser = async (user: Login) => {
-  const { data } = await axios.post(
-    "http://ec2-44-203-24-124.compute-1.amazonaws.com/users/login",
-    user
-  );
-  const { data: userInfo } = await axios.get(
-    "http://ec2-44-203-24-124.compute-1.amazonaws.com/users/auth",
-    {
-      headers: {
-        authorization: "Bearer " + data,
-      },
-    }
-  );
-
-  return {
-    accessToken: data.accessToken,
-    refreshToken: data.refreshToken,
-    user: userInfo,
-  };
-};
-
 export const LoginScreen = ({ navigation }: any) => {
   const [show, setShow] = React.useState<Boolean>(false);
   const currentUser = useSelector((state: RootState) => state.user.value);
-  const queryClient = useQueryClient();
-  const dispatch = useDispatch();
-  const { mutate } = useMutation(loginUser, {
-    onSuccess: (data) => {
-      setRefreshToken(data?.refreshToken);
-      setAccessToken(data?.accessToken);
-      dispatch(setUser(data.user));
-      navigation.navigate("Home");
-    },
-    onError: () => {
-      alert("Invalid login");
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries("create");
-    },
-  });
-  return currentUser === undefined || currentUser === null ? (
+  const [, login] = useLoginMutation();
+
+  return currentUser === null || currentUser === undefined ? (
     <Formik
       initialValues={{
         email: "",
         password: "",
       }}
-      onSubmit={(values) => mutate({ ...values })}
+      onSubmit={(values) =>
+        login({ ...values }).then(async ({ data }: any) => {
+          if (data.login.accessToken.length > 1) {
+            const { refreshToken, accessToken } = data.login;
+            await setRefreshToken(refreshToken);
+            setAccessToken(accessToken);
+            navigation.navigate("Home");
+          } else {
+            alert("Login failed");
+          }
+        })
+      }
     >
       {({ handleChange, handleBlur, handleSubmit, values }) => (
-        <Center w="100%">
+        <Center w="100%" className="h-[100vh] -mp-10 bg-slate-800">
           <Box safeArea p="2" py="8" w="90%" maxW="290">
             <Heading
               size="lg"
               fontWeight="600"
-              color="coolGray.800"
+              color="coolGray.100"
               _dark={{
                 color: "warmGray.50",
               }}
@@ -93,9 +68,9 @@ export const LoginScreen = ({ navigation }: any) => {
             <Heading
               mt="1"
               _dark={{
-                color: "warmGray.200",
+                color: "coolGray.100",
               }}
-              color="coolGray.600"
+              color="coolGray.300"
               fontWeight="medium"
               size="xs"
             >
@@ -106,14 +81,26 @@ export const LoginScreen = ({ navigation }: any) => {
               <FormControl>
                 <FormControl.Label>Email</FormControl.Label>
                 <Input
+                  accessibilityLabel="login-email"
+                  className="text-white"
+                  backgroundColor="#475569"
+                  borderColor="#475569"
+                  focusOutlineColor="#475569"
                   onChangeText={handleChange("email")}
                   onBlur={handleBlur("email")}
                   value={values.email}
                 />
               </FormControl>
               <FormControl>
-                <FormControl.Label>Password</FormControl.Label>
+                <FormControl.Label color="coolGray.100">
+                  Password
+                </FormControl.Label>
                 <Input
+                  className="text-white"
+                  backgroundColor="#475569"
+                  accessibilityLabel="login-password"
+                  borderColor="#475569"
+                  focusOutlineColor="#475569"
                   onChangeText={handleChange("password")}
                   onBlur={handleBlur("password")}
                   value={values.password}
@@ -137,7 +124,7 @@ export const LoginScreen = ({ navigation }: any) => {
                   _text={{
                     fontSize: "xs",
                     fontWeight: "500",
-                    color: "#9D14FF",
+                    color: "#38bdf8",
                   }}
                   alignSelf="flex-end"
                   mt="1"
@@ -145,7 +132,12 @@ export const LoginScreen = ({ navigation }: any) => {
                   Forget Password?
                 </Link>
               </FormControl>
-              <Button onPress={() => handleSubmit()} mt="2" bgColor="#9D14FF">
+              <Button
+                accessibilityLabel="login-button"
+                onPress={() => handleSubmit()}
+                mt="2"
+                bgColor="#38bdf8"
+              >
                 Sign in
               </Button>
               <HStack mt="6" justifyContent="center">
@@ -162,7 +154,7 @@ export const LoginScreen = ({ navigation }: any) => {
                   variant="ghost"
                   mt="-10px"
                   _text={{
-                    color: "#9D14FF",
+                    color: "#38bdf8",
                     fontWeight: "medium",
                     fontSize: "sm",
                   }}
@@ -177,6 +169,6 @@ export const LoginScreen = ({ navigation }: any) => {
       )}
     </Formik>
   ) : (
-    <View />
+    <UserScreen />
   );
 };

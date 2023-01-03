@@ -1,0 +1,21 @@
+mutation postReview(
+  $posterId: Int!
+  $releaseId: Int!
+  $title: String!
+  $description: String!
+  $rating: Int!
+) {
+  postReview(
+    posterId: $posterId
+    releaseId: $releaseId
+    title: $title
+    description: $description
+    rating: $rating
+  ) {
+    posterId
+    description
+    releaseId
+    rating
+    title
+  }
+}

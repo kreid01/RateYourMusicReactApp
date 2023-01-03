@@ -1,37 +1,25 @@
-import axios from "axios";
-import { Image, Spinner, Text, View } from "native-base";
-import { useEffect } from "react";
-import { RefreshControl, TouchableOpacity } from "react-native";
-import { useDispatch } from "react-redux";
-import { setUser, User } from "../slices/userSlice";
+import { Spinner, Text, View } from "native-base";
+import { RefreshControl } from "react-native";
 import React, { useRef } from "react";
-import { useRefreshOnFocus } from "../hooks/useRefreshOnFocus";
 import Animated from "react-native-reanimated";
 import { useGetAllReleasesQuery } from "../generated/graphql";
-import { useGetUserQuery } from "../generated/graphql";
-import { ArtistName } from "../components/ArtistName";
+import { Release } from "../components/Release";
+import { SearchBar } from "../components/SearchBar";
 export const HomeScreen = ({ navigation }: any) => {
-  const dispatch = useDispatch();
-  const [data] = useGetUserQuery();
-  const { data: user } = data;
-
-  const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
-
-  const [result, refetch] = useGetAllReleasesQuery();
+  const [result, reexecuteQuery] = useGetAllReleasesQuery();
   const { data: releases, stale, fetching } = result;
 
-  useEffect(() => {
-    dispatch(setUser(user as User));
-  }, [user]);
-
-  useRefreshOnFocus(refetch);
+  const refresh = () => {
+    reexecuteQuery({ requestPolicy: "network-only" });
+  };
 
   const scrollY = useRef(new Animated.Value(0)).current;
   const itemSize = 176;
 
   return (
     <View className="relative min-h-100vh bg-slate-800">
-      <View className=" w-[100vw] mt-10">
+      <SearchBar navigation={navigation} />
+      <View className=" w-[100vw] mt-3">
         <View className="flex flex-row ml-auto mr-10">
           <Text className="mr-5 text-gray-500">Average</Text>
           <Text className="text-gray-500">Rated</Text>
@@ -39,6 +27,8 @@ export const HomeScreen = ({ navigation }: any) => {
       </View>
       {releases ? (
         <Animated.FlatList
+          className="mb-64"
+          accessibilityLabel="releases"
           onScroll={Animated.event(
             [{ nativeEvent: { contentOffset: { y: scrollY } } }],
             { useNativeDriver: true }
@@ -67,51 +57,19 @@ export const HomeScreen = ({ navigation }: any) => {
               inputRange: opacityInputRange,
               outputRange: [1, 1, 1, 0],
             });
-
             return (
-              <AnimatedTouchable
-                style={{ transform: [{ scale }], opacity }}
-                onPress={() => navigation.navigate("Release", { id: item.id })}
-                key={item.id}
-                className="w-[90vw] flex flex-row rounded-sm bg-gray-800 shadow-md h-[16vh]  m-2"
-              >
-                <Image
-                  className="w-28 h-28 mx-2 my-auto"
-                  alt=""
-                  source={{ uri: item.cover }}
-                />
-                <View>
-                  <Text className="text-blue-300 text-lg mt-2  w-[90%]">
-                    {item.title}
-                  </Text>
-                  <ArtistName color="text-sky-200" id={item.id} />
-                  <Text className="text-sm text-white">{item.recorded}</Text>
-                  <View className="flex flex-row mt-auto mb-3 w-[60%] flex-wrap">
-                    {item.genres.map((genre: string, i: number) =>
-                      i + 1 !== item.genres.length ? (
-                        <Text key={i} className="text-xs text-blue-500 ">
-                          {genre},{" "}
-                        </Text>
-                      ) : (
-                        <Text key={i} className="text-xs text-blue-500">
-                          {genre}
-                        </Text>
-                      )
-                    )}
-                  </View>
-                </View>
-                <View className="flex mt-auto flex-row mb-3 ml-auto mr-2">
-                  <Text className="mr-5 font-bold w-10 text-blue-500">
-                    {item.rating}
-                  </Text>
-                  <Text className="text-gray-500 w-8">{item.ratingCount}</Text>
-                </View>
-              </AnimatedTouchable>
+              <Release
+                key={index}
+                navigation={navigation}
+                scale={scale}
+                opacity={opacity}
+                item={item}
+              />
             );
           }}
           data={releases.getAllReleases}
           refreshControl={
-            <RefreshControl refreshing={fetching} onRefresh={refetch} />
+            <RefreshControl refreshing={fetching} onRefresh={refresh} />
           }
         ></Animated.FlatList>
       ) : (

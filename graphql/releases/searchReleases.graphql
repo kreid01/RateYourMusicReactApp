@@ -1,0 +1,9 @@
+query searchReleases($search: String!) {
+  searchReleases(search: $search) {
+    id
+    title
+    cover
+    genres
+    released
+  }
+}

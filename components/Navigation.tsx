@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useRef } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { Spinner, View } from "native-base";
+import { View } from "native-base";
 import { RegisterScreen } from "../screens/RegisterScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -8,35 +8,24 @@ import { TouchableOpacity } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { navStyles } from "../styles/BottomNavStyles";
 import { TabArr } from "./TabArr";
-import { Provider } from "react-redux";
-import store from "../store/store";
-import { setRefreshToken } from "../utils/refreshToken";
-import { setAccessToken } from "../utils/accessToken";
 import { SingleReleaseScreen } from "../screens/SingleReleaseScreen";
 import { LoginScreen } from "../screens/LoginScreen";
+import { createClient, Provider } from "urql";
+import { getAccessToken } from "../utils/accessToken";
+
+const urqlClient = createClient({
+  url: "http://192.168.0.120:80/graphql",
+  fetchOptions: () => {
+    const token = getAccessToken();
+    return {
+      headers: { authorization: token ? `Bearer ${token}` : "" },
+    };
+  },
+});
 
 export const Navigation = () => {
   const Tab = createBottomTabNavigator();
   const Stack = createNativeStackNavigator();
-
-  useEffect(() => {
-    fetch("http://192.168.0.120:80/auth", {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "x-forwarded-proto": "https",
-      },
-    })
-      .then(async (x) => {
-        const { refreshToken, accessToken } = await x.json();
-        setRefreshToken(refreshToken);
-        setAccessToken(accessToken);
-        setLoading(false);
-      })
-      .catch((error: any) => {
-        console.error(error);
-      });
-  }, []);
 
   const Icon = ({ type, name, color, size = 24, style }: any) => {
     const fontSize = 24;
@@ -61,12 +50,6 @@ export const Navigation = () => {
     const viewRef = useRef<any>(null);
     const textRef = useRef<any>(null);
 
-    useEffect(() => {
-      if (focused) {
-      } else {
-      }
-    }, [focused]);
-
     return (
       <TouchableOpacity
         onPress={onPress}
@@ -81,7 +64,7 @@ export const Navigation = () => {
           <View className="relative" style={navStyles.btn}>
             <Icon type={item.type} name={item.icon} color={"white"} />
             {focused ? (
-              <View className="absolute border-[2px] border-white -top-[11px] w-24 rounded-md z-10"></View>
+              <View className="absolute border-[1px] border-white -top-[11px] w-14 rounded-md z-10"></View>
             ) : null}
           </View>
           <Animatable.Text ref={textRef} style={navStyles.text}>
@@ -118,10 +101,8 @@ export const Navigation = () => {
     );
   };
 
-  const [loading, setLoading] = useState(true);
-
-  return !loading ? (
-    <Provider store={store}>
+  return (
+    <Provider value={urqlClient}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Back" component={Root} />
@@ -158,7 +139,5 @@ export const Navigation = () => {
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
-  ) : (
-    <Spinner />
   );
 };

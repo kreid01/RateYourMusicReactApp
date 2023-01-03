@@ -1,17 +1,22 @@
 import * as SecureStore from "expo-secure-store";
+import { Platform } from "react-native";
 
 export const resetAccessToken = async () => {
-  await SecureStore.deleteItemAsync("token");
+  Platform.OS === "ios" ? await SecureStore.deleteItemAsync("token") : null;
 };
 
 export const setRefreshToken = async (token: string) => {
-  await SecureStore.setItemAsync("token", JSON.stringify(token));
+  Platform.OS === "ios"
+    ? await SecureStore.setItemAsync("token", JSON.stringify(token))
+    : null;
 };
 
 export const getRefreshToken = async () => {
   try {
-    const value = await SecureStore.getItemAsync("token");
+    const value =
+      Platform.OS === "ios" ? await SecureStore.getItemAsync("token") : null;
     if (value) {
+      console.debug(value);
       return await JSON.parse(value);
     }
   } catch (error) {
