@@ -1,0 +1,7 @@
+query getUserPlaylists($id: Int!) {
+  getUserPlaylists(id: $id) {
+    id
+    contentIds
+    title
+  }
+}

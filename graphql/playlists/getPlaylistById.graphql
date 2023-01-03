@@ -1,0 +1,6 @@
+query getPlaylistById($id: Int!) {
+  getPlaylistById(id: $id) {
+    title
+    contentIds
+  }
+}

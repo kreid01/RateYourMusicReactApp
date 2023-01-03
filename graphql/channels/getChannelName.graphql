@@ -1,0 +1,5 @@
+query getChannelName($id: Int!) {
+  getChannelById(id: $id) {
+    title
+  }
+}

@@ -25,14 +25,16 @@ export type Mutation = {
   __typename?: 'Mutation';
   deleteArtist?: Maybe<Artist>;
   deleteChannel?: Maybe<Channel>;
+  deleteMessage?: Maybe<Message>;
+  deletePlaylist?: Maybe<Playlist>;
   deleteRelease?: Maybe<Release>;
   deleteReview?: Maybe<Review>;
   deleteUser?: Maybe<User>;
-  deletemessage?: Maybe<Message>;
   login?: Maybe<LoginResponse>;
   postArtist?: Maybe<Artist>;
   postChannel?: Maybe<Channel>;
   postMessage?: Maybe<Message>;
+  postPlaylist?: Maybe<Playlist>;
   postRelease?: Maybe<Release>;
   postReview?: Maybe<Review>;
   register?: Maybe<User>;
@@ -40,6 +42,16 @@ export type Mutation = {
   updateChannel?: Maybe<Channel>;
   updateRelease?: Maybe<Release>;
   updateReview?: Maybe<Review>;
+};
+
+
+export type MutationDeleteMessageArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type MutationDeletePlaylistArgs = {
+  id: Scalars['Int'];
 };
 
 
@@ -68,6 +80,13 @@ export type MutationPostMessageArgs = {
   channelId: Scalars['Int'];
   content: Scalars['String'];
   posterId: Scalars['Int'];
+};
+
+
+export type MutationPostPlaylistArgs = {
+  contentIds?: InputMaybe<Array<Scalars['Int']>>;
+  posterId: Scalars['Int'];
+  title: Scalars['String'];
 };
 
 
@@ -139,14 +158,16 @@ export type Query = {
   getArtistById?: Maybe<Artist>;
   getChannelById?: Maybe<Channel>;
   getChatMessages?: Maybe<Array<Maybe<Message>>>;
+  getMessageById?: Maybe<Message>;
+  getPlaylistById?: Maybe<Playlist>;
   getReleaseById?: Maybe<Release>;
   getReleaseReviews?: Maybe<Array<Maybe<Review>>>;
   getReviewById?: Maybe<Review>;
   getReviews?: Maybe<Array<Maybe<Review>>>;
   getUser?: Maybe<User>;
   getUserById?: Maybe<User>;
+  getUserPlaylists?: Maybe<Array<Maybe<Playlist>>>;
   getUsers?: Maybe<Array<Maybe<User>>>;
-  getmessageById?: Maybe<Message>;
   searchArtists?: Maybe<Array<Maybe<Artist>>>;
   searchReleases?: Maybe<Array<Maybe<Release>>>;
 };
@@ -167,6 +188,16 @@ export type QueryGetChatMessagesArgs = {
 };
 
 
+export type QueryGetMessageByIdArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type QueryGetPlaylistByIdArgs = {
+  id: Scalars['Int'];
+};
+
+
 export type QueryGetReleaseByIdArgs = {
   id: Scalars['Int'];
 };
@@ -182,7 +213,7 @@ export type QueryGetUserByIdArgs = {
 };
 
 
-export type QueryGetmessageByIdArgs = {
+export type QueryGetUserPlaylistsArgs = {
   id: Scalars['Int'];
 };
 
@@ -220,6 +251,14 @@ export type Message = {
   id?: Maybe<Scalars['Int']>;
   postDate?: Maybe<Scalars['String']>;
   posterId?: Maybe<Scalars['Int']>;
+};
+
+export type Playlist = {
+  __typename?: 'playlist';
+  contentIds?: Maybe<Array<Maybe<Scalars['Int']>>>;
+  id?: Maybe<Scalars['Int']>;
+  posterId?: Maybe<Scalars['Int']>;
+  title?: Maybe<Scalars['String']>;
 };
 
 export type Release = {
@@ -270,10 +309,24 @@ export type SearchArtistsQueryVariables = Exact<{
 
 export type SearchArtistsQuery = { __typename?: 'Query', searchArtists?: Array<{ __typename?: 'artist', id?: number | null, name?: string | null, genres?: Array<string | null> | null } | null> | null };
 
+export type GetChannelNameQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type GetChannelNameQuery = { __typename?: 'Query', getChannelById?: { __typename?: 'channel', title?: string | null } | null };
+
 export type GetAllChannelsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetAllChannelsQuery = { __typename?: 'Query', getAllChannels?: Array<{ __typename?: 'channel', id?: number | null, title?: string | null, releaseId?: number | null } | null> | null };
+
+export type DeleteMessageMutationVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type DeleteMessageMutation = { __typename?: 'Mutation', deleteMessage?: { __typename?: 'message', content?: string | null } | null };
 
 export type GetChatMessagesQueryVariables = Exact<{
   id: Scalars['Int'];
@@ -291,6 +344,20 @@ export type PostMessageMutationVariables = Exact<{
 
 export type PostMessageMutation = { __typename?: 'Mutation', postMessage?: { __typename?: 'message', channelId?: number | null } | null };
 
+export type GetPlaylistByIdQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type GetPlaylistByIdQuery = { __typename?: 'Query', getPlaylistById?: { __typename?: 'playlist', title?: string | null, contentIds?: Array<number | null> | null } | null };
+
+export type GetUserPlaylistsQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type GetUserPlaylistsQuery = { __typename?: 'Query', getUserPlaylists?: Array<{ __typename?: 'playlist', id?: number | null, contentIds?: Array<number | null> | null, title?: string | null } | null> | null };
+
 export type GetAllReleasesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -302,6 +369,13 @@ export type GetReleaseByIdQueryVariables = Exact<{
 
 
 export type GetReleaseByIdQuery = { __typename?: 'Query', getReleaseById?: { __typename?: 'release', artistId?: number | null, cover?: string | null, genres?: Array<string | null> | null, language?: string | null, id?: number | null, rating?: number | null, ratingCount?: number | null, title?: string | null, released?: string | null, tracks?: Array<string | null> | null, type?: string | null } | null };
+
+export type GetReleaseCoverQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type GetReleaseCoverQuery = { __typename?: 'Query', getReleaseById?: { __typename?: 'release', cover?: string | null } | null };
 
 export type GetReleaseReviewsQueryVariables = Exact<{
   id: Scalars['Int'];
@@ -444,6 +518,46 @@ export default {
             "args": []
           },
           {
+            "name": "deleteMessage",
+            "type": {
+              "kind": "OBJECT",
+              "name": "message",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "deletePlaylist",
+            "type": {
+              "kind": "OBJECT",
+              "name": "playlist",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
             "name": "deleteRelease",
             "type": {
               "kind": "OBJECT",
@@ -466,15 +580,6 @@ export default {
             "type": {
               "kind": "OBJECT",
               "name": "user",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "deletemessage",
-            "type": {
-              "kind": "OBJECT",
-              "name": "message",
               "ofType": null
             },
             "args": []
@@ -635,6 +740,49 @@ export default {
               },
               {
                 "name": "posterId",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "postPlaylist",
+            "type": {
+              "kind": "OBJECT",
+              "name": "playlist",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "contentIds",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "posterId",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              },
+              {
+                "name": "title",
                 "type": {
                   "kind": "NON_NULL",
                   "ofType": {
@@ -1173,6 +1321,46 @@ export default {
             ]
           },
           {
+            "name": "getMessageById",
+            "type": {
+              "kind": "OBJECT",
+              "name": "message",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "getPlaylistById",
+            "type": {
+              "kind": "OBJECT",
+              "name": "playlist",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
             "name": "getReleaseById",
             "type": {
               "kind": "OBJECT",
@@ -1266,23 +1454,14 @@ export default {
             ]
           },
           {
-            "name": "getUsers",
+            "name": "getUserPlaylists",
             "type": {
               "kind": "LIST",
               "ofType": {
                 "kind": "OBJECT",
-                "name": "user",
+                "name": "playlist",
                 "ofType": null
               }
-            },
-            "args": []
-          },
-          {
-            "name": "getmessageById",
-            "type": {
-              "kind": "OBJECT",
-              "name": "message",
-              "ofType": null
             },
             "args": [
               {
@@ -1296,6 +1475,18 @@ export default {
                 }
               }
             ]
+          },
+          {
+            "name": "getUsers",
+            "type": {
+              "kind": "LIST",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "user",
+                "ofType": null
+              }
+            },
+            "args": []
           },
           {
             "name": "searchArtists",
@@ -1476,6 +1667,48 @@ export default {
           },
           {
             "name": "posterId",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "playlist",
+        "fields": [
+          {
+            "name": "contentIds",
+            "type": {
+              "kind": "LIST",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": []
+          },
+          {
+            "name": "id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "posterId",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "title",
             "type": {
               "kind": "SCALAR",
               "name": "Any"
@@ -1721,6 +1954,17 @@ export const SearchArtistsDocument = gql`
 export function useSearchArtistsQuery(options: Omit<Urql.UseQueryArgs<SearchArtistsQueryVariables>, 'query'>) {
   return Urql.useQuery<SearchArtistsQuery, SearchArtistsQueryVariables>({ query: SearchArtistsDocument, ...options });
 };
+export const GetChannelNameDocument = gql`
+    query getChannelName($id: Int!) {
+  getChannelById(id: $id) {
+    title
+  }
+}
+    `;
+
+export function useGetChannelNameQuery(options: Omit<Urql.UseQueryArgs<GetChannelNameQueryVariables>, 'query'>) {
+  return Urql.useQuery<GetChannelNameQuery, GetChannelNameQueryVariables>({ query: GetChannelNameDocument, ...options });
+};
 export const GetAllChannelsDocument = gql`
     query getAllChannels {
   getAllChannels {
@@ -1733,6 +1977,17 @@ export const GetAllChannelsDocument = gql`
 
 export function useGetAllChannelsQuery(options?: Omit<Urql.UseQueryArgs<GetAllChannelsQueryVariables>, 'query'>) {
   return Urql.useQuery<GetAllChannelsQuery, GetAllChannelsQueryVariables>({ query: GetAllChannelsDocument, ...options });
+};
+export const DeleteMessageDocument = gql`
+    mutation deleteMessage($id: Int!) {
+  deleteMessage(id: $id) {
+    content
+  }
+}
+    `;
+
+export function useDeleteMessageMutation() {
+  return Urql.useMutation<DeleteMessageMutation, DeleteMessageMutationVariables>(DeleteMessageDocument);
 };
 export const GetChatMessagesDocument = gql`
     query getChatMessages($id: Int!) {
@@ -1758,6 +2013,31 @@ export const PostMessageDocument = gql`
 
 export function usePostMessageMutation() {
   return Urql.useMutation<PostMessageMutation, PostMessageMutationVariables>(PostMessageDocument);
+};
+export const GetPlaylistByIdDocument = gql`
+    query getPlaylistById($id: Int!) {
+  getPlaylistById(id: $id) {
+    title
+    contentIds
+  }
+}
+    `;
+
+export function useGetPlaylistByIdQuery(options: Omit<Urql.UseQueryArgs<GetPlaylistByIdQueryVariables>, 'query'>) {
+  return Urql.useQuery<GetPlaylistByIdQuery, GetPlaylistByIdQueryVariables>({ query: GetPlaylistByIdDocument, ...options });
+};
+export const GetUserPlaylistsDocument = gql`
+    query getUserPlaylists($id: Int!) {
+  getUserPlaylists(id: $id) {
+    id
+    contentIds
+    title
+  }
+}
+    `;
+
+export function useGetUserPlaylistsQuery(options: Omit<Urql.UseQueryArgs<GetUserPlaylistsQueryVariables>, 'query'>) {
+  return Urql.useQuery<GetUserPlaylistsQuery, GetUserPlaylistsQueryVariables>({ query: GetUserPlaylistsDocument, ...options });
 };
 export const GetAllReleasesDocument = gql`
     query getAllReleases {
@@ -1798,6 +2078,17 @@ export const GetReleaseByIdDocument = gql`
 
 export function useGetReleaseByIdQuery(options: Omit<Urql.UseQueryArgs<GetReleaseByIdQueryVariables>, 'query'>) {
   return Urql.useQuery<GetReleaseByIdQuery, GetReleaseByIdQueryVariables>({ query: GetReleaseByIdDocument, ...options });
+};
+export const GetReleaseCoverDocument = gql`
+    query getReleaseCover($id: Int!) {
+  getReleaseById(id: $id) {
+    cover
+  }
+}
+    `;
+
+export function useGetReleaseCoverQuery(options: Omit<Urql.UseQueryArgs<GetReleaseCoverQueryVariables>, 'query'>) {
+  return Urql.useQuery<GetReleaseCoverQuery, GetReleaseCoverQueryVariables>({ query: GetReleaseCoverDocument, ...options });
 };
 export const GetReleaseReviewsDocument = gql`
     query getReleaseReviews($id: Int!) {

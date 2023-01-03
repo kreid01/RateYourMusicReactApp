@@ -25,7 +25,6 @@ export const ChannelComponent: React.FC<Props> = ({
       onPress={() =>
         navigation.navigate("Channel", {
           id: id,
-          title: data?.getReleaseById?.title,
         })
       }
       className="flex flex-row mx-auto"

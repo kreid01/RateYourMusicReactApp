@@ -1,0 +1,5 @@
+query getReleaseCover($id: Int!) {
+  getReleaseById(id: $id) {
+    cover
+  }
+}

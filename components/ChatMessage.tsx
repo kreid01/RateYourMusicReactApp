@@ -1,8 +1,14 @@
 import axios from "axios";
-import { Text, View, Image } from "native-base";
+import { Text, View, Image, Button } from "native-base";
 import React from "react";
 import { useQuery } from "react-query";
-import { Message, useGetUsernameQuery } from "../generated/graphql";
+import { useSelector } from "react-redux";
+import {
+  Message,
+  useDeleteMessageMutation,
+  useGetUsernameQuery,
+} from "../generated/graphql";
+import { RootState } from "../store/store";
 
 interface Props {
   message: Message;
@@ -18,13 +24,15 @@ export const ChatMessaage: React.FC<Props> = ({ message }) => {
     variables: { id: message.posterId as number },
   });
 
-  const { data: image } = useQuery(["user"], getUserImage);
-
+  const currentUser = useSelector((state: RootState) => state.user.value);
+  const { data: image, isFetched } = useQuery(["user"], getUserImage);
   const { data, fetching } = result;
+
+  const [, deleteMessage] = useDeleteMessageMutation();
 
   return (
     <View className="flex flex-row m-2 ml-6">
-      {image ? (
+      {image && isFetched ? (
         <Image
           alt=""
           source={{
@@ -36,7 +44,7 @@ export const ChatMessaage: React.FC<Props> = ({ message }) => {
         <Image
           alt=""
           source={{
-            uri: "data:image/jpeg;base64," + image,
+            uri: "https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-High-Quality-Image.png",
           }}
           className="w-10 z-5 relative h-10 my-auto rounded-full"
         />
@@ -47,10 +55,20 @@ export const ChatMessaage: React.FC<Props> = ({ message }) => {
             {data?.getUserById?.username}
           </Text>
           <Text className="ml-1 text-gray-400">
-            {message.postDate?.substring(0, 10)}
+            {message.postDate?.substring(0, 21)}
           </Text>
+          {currentUser?.id === message.posterId ? (
+            <Button
+              onPress={() => deleteMessage({ id: message.id as number })}
+              variant="ghost"
+              className="ml-10"
+              size={"sm"}
+            >
+              Delete
+            </Button>
+          ) : null}
         </View>
-        <Text className="text-white">{message.content}</Text>
+        <Text className="text-white -mt-2">{message.content}</Text>
       </View>
     </View>
   );

@@ -1,22 +1,30 @@
 import React, { useState } from "react";
-import { Button, View, Image, Text } from "native-base";
+import { Button, View, Image, Text, ScrollView } from "native-base";
 import axios from "axios";
 import * as ImagePicker from "expo-image-picker";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { useQuery } from "react-query";
+import { useGetUserPlaylistsQuery } from "../generated/graphql";
+import { ReleaseCover } from "../components/ReleaseCover";
+import { TouchableOpacity } from "react-native";
 
 const getUserImage = async () => {
   const { data: image } = await axios.get("http://192.168.0.120:80/file");
   return image;
 };
 
-export const UserScreen = () => {
+export const UserScreen = ({ navigation }: any) => {
   const [file, setFile] = useState<any>();
   const currentUser = useSelector((state: RootState) => state.user.value);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-
   const { data: image } = useQuery(["user"], getUserImage);
+
+  const [result] = useGetUserPlaylistsQuery({
+    variables: { id: currentUser?.id as number },
+  });
+
+  const { data, fetching } = result;
 
   const editImage = async () => {
     const formData = new FormData();
@@ -72,6 +80,34 @@ export const UserScreen = () => {
             </Button>
           </View>
         </View>
+      </View>
+      <View className="ml-5 mt-5">
+        <Text className="text-3xl text-white ">YOUR PLAYLISTS</Text>
+        <ScrollView className="mt-5">
+          {!fetching
+            ? data?.getUserPlaylists?.map((playlist) => {
+                return (
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate("Playlist", { id: playlist?.id })
+                    }
+                    className="bg-gray-700 w-[90vw] flex flex-row "
+                  >
+                    <Text className="text-white m-3 text-xl">
+                      {playlist?.title}
+                    </Text>
+                    <View className="my-auto flex flex-row">
+                      {playlist?.contentIds
+                        ? playlist?.contentIds.map((id) => {
+                            return <ReleaseCover id={id as number} />;
+                          })
+                        : null}
+                    </View>
+                  </TouchableOpacity>
+                );
+              })
+            : null}
+        </ScrollView>
       </View>
     </View>
   );
