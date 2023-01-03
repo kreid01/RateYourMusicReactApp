@@ -11,7 +11,7 @@ const getUserImage = async () => {
   return image;
 };
 
-export const UserScreen = ({}) => {
+export const UserScreen = () => {
   const [file, setFile] = useState<any>();
   const currentUser = useSelector((state: RootState) => state.user.value);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -59,11 +59,15 @@ export const UserScreen = ({}) => {
             {currentUser?.username}
           </Text>
 
-          <View className="flex flex-row ml-32 justify-around">
+          <View className="flex flex-row ml-32  mt-5 justify-around">
             <Button variant="ghost" onPress={pickImage}>
               Edit
             </Button>
-            <Button variant="ghost" onPress={() => editImage()}>
+            <Button
+              variant="ghost"
+              colorScheme={"cyan"}
+              onPress={() => editImage()}
+            >
               Confirm
             </Button>
           </View>

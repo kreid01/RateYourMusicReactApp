@@ -24,15 +24,20 @@ export type LoginResponse = {
 export type Mutation = {
   __typename?: 'Mutation';
   deleteArtist?: Maybe<Artist>;
+  deleteChannel?: Maybe<Channel>;
   deleteRelease?: Maybe<Release>;
   deleteReview?: Maybe<Review>;
   deleteUser?: Maybe<User>;
+  deletemessage?: Maybe<Message>;
   login?: Maybe<LoginResponse>;
   postArtist?: Maybe<Artist>;
+  postChannel?: Maybe<Channel>;
+  postMessage?: Maybe<Message>;
   postRelease?: Maybe<Release>;
   postReview?: Maybe<Review>;
   register?: Maybe<User>;
   updateArtist?: Maybe<Artist>;
+  updateChannel?: Maybe<Channel>;
   updateRelease?: Maybe<Release>;
   updateReview?: Maybe<Review>;
 };
@@ -50,6 +55,19 @@ export type MutationPostArtistArgs = {
   name: Scalars['String'];
   relatedArtists: Array<InputMaybe<Scalars['String']>>;
   type: Scalars['String'];
+};
+
+
+export type MutationPostChannelArgs = {
+  releaseId: Scalars['Int'];
+  title: Scalars['String'];
+};
+
+
+export type MutationPostMessageArgs = {
+  channelId: Scalars['Int'];
+  content: Scalars['String'];
+  posterId: Scalars['Int'];
 };
 
 
@@ -88,6 +106,11 @@ export type MutationUpdateArtistArgs = {
 };
 
 
+export type MutationUpdateChannelArgs = {
+  open: Array<InputMaybe<Scalars['Boolean']>>;
+};
+
+
 export type MutationUpdateReleaseArgs = {
   cover: Scalars['String'];
   genres: Array<InputMaybe<Scalars['String']>>;
@@ -111,8 +134,11 @@ export type MutationUpdateReviewArgs = {
 export type Query = {
   __typename?: 'Query';
   getAllArtists?: Maybe<Array<Maybe<Artist>>>;
+  getAllChannels?: Maybe<Array<Maybe<Channel>>>;
   getAllReleases?: Maybe<Array<Maybe<Release>>>;
   getArtistById?: Maybe<Artist>;
+  getChannelById?: Maybe<Channel>;
+  getChatMessages?: Maybe<Array<Maybe<Message>>>;
   getReleaseById?: Maybe<Release>;
   getReleaseReviews?: Maybe<Array<Maybe<Review>>>;
   getReviewById?: Maybe<Review>;
@@ -120,12 +146,23 @@ export type Query = {
   getUser?: Maybe<User>;
   getUserById?: Maybe<User>;
   getUsers?: Maybe<Array<Maybe<User>>>;
+  getmessageById?: Maybe<Message>;
   searchArtists?: Maybe<Array<Maybe<Artist>>>;
   searchReleases?: Maybe<Array<Maybe<Release>>>;
 };
 
 
 export type QueryGetArtistByIdArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type QueryGetChannelByIdArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type QueryGetChatMessagesArgs = {
   id: Scalars['Int'];
 };
 
@@ -141,6 +178,11 @@ export type QueryGetReleaseReviewsArgs = {
 
 
 export type QueryGetUserByIdArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type QueryGetmessageByIdArgs = {
   id: Scalars['Int'];
 };
 
@@ -162,6 +204,22 @@ export type Artist = {
   name?: Maybe<Scalars['String']>;
   relatedArtists?: Maybe<Array<Maybe<Scalars['String']>>>;
   type?: Maybe<Scalars['String']>;
+};
+
+export type Channel = {
+  __typename?: 'channel';
+  id?: Maybe<Scalars['Int']>;
+  releaseId?: Maybe<Scalars['Int']>;
+  title?: Maybe<Scalars['String']>;
+};
+
+export type Message = {
+  __typename?: 'message';
+  channelId?: Maybe<Scalars['Int']>;
+  content?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['Int']>;
+  postDate?: Maybe<Scalars['String']>;
+  posterId?: Maybe<Scalars['Int']>;
 };
 
 export type Release = {
@@ -211,6 +269,27 @@ export type SearchArtistsQueryVariables = Exact<{
 
 
 export type SearchArtistsQuery = { __typename?: 'Query', searchArtists?: Array<{ __typename?: 'artist', id?: number | null, name?: string | null, genres?: Array<string | null> | null } | null> | null };
+
+export type GetAllChannelsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllChannelsQuery = { __typename?: 'Query', getAllChannels?: Array<{ __typename?: 'channel', id?: number | null, title?: string | null, releaseId?: number | null } | null> | null };
+
+export type GetChatMessagesQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type GetChatMessagesQuery = { __typename?: 'Query', getChatMessages?: Array<{ __typename?: 'message', channelId?: number | null, posterId?: number | null, content?: string | null, postDate?: string | null } | null> | null };
+
+export type PostMessageMutationVariables = Exact<{
+  channelId: Scalars['Int'];
+  posterId: Scalars['Int'];
+  content: Scalars['String'];
+}>;
+
+
+export type PostMessageMutation = { __typename?: 'Mutation', postMessage?: { __typename?: 'message', channelId?: number | null } | null };
 
 export type GetAllReleasesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -356,6 +435,15 @@ export default {
             "args": []
           },
           {
+            "name": "deleteChannel",
+            "type": {
+              "kind": "OBJECT",
+              "name": "channel",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
             "name": "deleteRelease",
             "type": {
               "kind": "OBJECT",
@@ -378,6 +466,15 @@ export default {
             "type": {
               "kind": "OBJECT",
               "name": "user",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "deletemessage",
+            "type": {
+              "kind": "OBJECT",
+              "name": "message",
               "ofType": null
             },
             "args": []
@@ -468,6 +565,76 @@ export default {
               },
               {
                 "name": "type",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "postChannel",
+            "type": {
+              "kind": "OBJECT",
+              "name": "channel",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "releaseId",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              },
+              {
+                "name": "title",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "postMessage",
+            "type": {
+              "kind": "OBJECT",
+              "name": "message",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "channelId",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              },
+              {
+                "name": "content",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              },
+              {
+                "name": "posterId",
                 "type": {
                   "kind": "NON_NULL",
                   "ofType": {
@@ -721,6 +888,29 @@ export default {
             ]
           },
           {
+            "name": "updateChannel",
+            "type": {
+              "kind": "OBJECT",
+              "name": "channel",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "open",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
             "name": "updateRelease",
             "type": {
               "kind": "OBJECT",
@@ -896,6 +1086,18 @@ export default {
             "args": []
           },
           {
+            "name": "getAllChannels",
+            "type": {
+              "kind": "LIST",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "channel",
+                "ofType": null
+              }
+            },
+            "args": []
+          },
+          {
             "name": "getAllReleases",
             "type": {
               "kind": "LIST",
@@ -913,6 +1115,49 @@ export default {
               "kind": "OBJECT",
               "name": "artist",
               "ofType": null
+            },
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "getChannelById",
+            "type": {
+              "kind": "OBJECT",
+              "name": "channel",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "getChatMessages",
+            "type": {
+              "kind": "LIST",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "message",
+                "ofType": null
+              }
             },
             "args": [
               {
@@ -1033,6 +1278,26 @@ export default {
             "args": []
           },
           {
+            "name": "getmessageById",
+            "type": {
+              "kind": "OBJECT",
+              "name": "message",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
             "name": "searchArtists",
             "type": {
               "kind": "LIST",
@@ -1133,6 +1398,84 @@ export default {
           },
           {
             "name": "type",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "channel",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "releaseId",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "title",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "message",
+        "fields": [
+          {
+            "name": "channelId",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "content",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "postDate",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "posterId",
             "type": {
               "kind": "SCALAR",
               "name": "Any"
@@ -1377,6 +1720,44 @@ export const SearchArtistsDocument = gql`
 
 export function useSearchArtistsQuery(options: Omit<Urql.UseQueryArgs<SearchArtistsQueryVariables>, 'query'>) {
   return Urql.useQuery<SearchArtistsQuery, SearchArtistsQueryVariables>({ query: SearchArtistsDocument, ...options });
+};
+export const GetAllChannelsDocument = gql`
+    query getAllChannels {
+  getAllChannels {
+    id
+    title
+    releaseId
+  }
+}
+    `;
+
+export function useGetAllChannelsQuery(options?: Omit<Urql.UseQueryArgs<GetAllChannelsQueryVariables>, 'query'>) {
+  return Urql.useQuery<GetAllChannelsQuery, GetAllChannelsQueryVariables>({ query: GetAllChannelsDocument, ...options });
+};
+export const GetChatMessagesDocument = gql`
+    query getChatMessages($id: Int!) {
+  getChatMessages(id: $id) {
+    channelId
+    posterId
+    content
+    postDate
+  }
+}
+    `;
+
+export function useGetChatMessagesQuery(options: Omit<Urql.UseQueryArgs<GetChatMessagesQueryVariables>, 'query'>) {
+  return Urql.useQuery<GetChatMessagesQuery, GetChatMessagesQueryVariables>({ query: GetChatMessagesDocument, ...options });
+};
+export const PostMessageDocument = gql`
+    mutation postMessage($channelId: Int!, $posterId: Int!, $content: String!) {
+  postMessage(channelId: $channelId, posterId: $posterId, content: $content) {
+    channelId
+  }
+}
+    `;
+
+export function usePostMessageMutation() {
+  return Urql.useMutation<PostMessageMutation, PostMessageMutationVariables>(PostMessageDocument);
 };
 export const GetAllReleasesDocument = gql`
     query getAllReleases {

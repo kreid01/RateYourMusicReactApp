@@ -2,6 +2,7 @@ import { Icons } from "./Icons";
 import { HomeScreen } from "../screens/HomeScreen";
 import { LoginScreen } from "../screens/LoginScreen";
 import { CreateReleaseScreen } from "../screens/CreateReleaseScreen";
+import { ChannelScreen } from "../screens/ChannelScreen";
 
 export const TabArr = [
   {
@@ -12,11 +13,11 @@ export const TabArr = [
     component: HomeScreen,
   },
   {
-    route: "Search",
-    label: "Search",
+    route: "Channels",
+    label: "Channels",
     type: Icons.Feather,
-    icon: "search",
-    component: HomeScreen,
+    icon: "globe",
+    component: ChannelScreen,
   },
   {
     route: "Add",
