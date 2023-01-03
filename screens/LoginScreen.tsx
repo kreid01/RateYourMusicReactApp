@@ -169,6 +169,6 @@ export const LoginScreen = ({ navigation }: any) => {
       )}
     </Formik>
   ) : (
-    <UserScreen />
+    <UserScreen navigation={navigation} />
   );
 };

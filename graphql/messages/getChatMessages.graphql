@@ -1,0 +1,8 @@
+query getChatMessages($id: Int!) {
+  getChatMessages(id: $id) {
+    channelId
+    posterId
+    content
+    postDate
+  }
+}

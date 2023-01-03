@@ -1,0 +1,7 @@
+query getAllChannels {
+  getAllChannels {
+    id
+    title
+    releaseId
+  }
+}

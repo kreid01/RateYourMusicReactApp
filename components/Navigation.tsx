@@ -12,6 +12,8 @@ import { SingleReleaseScreen } from "../screens/SingleReleaseScreen";
 import { LoginScreen } from "../screens/LoginScreen";
 import { createClient, Provider } from "urql";
 import { getAccessToken } from "../utils/accessToken";
+import { SingleChannelScreen } from "../screens/SingleChannelScreen";
+import { PlaylistScreen } from "../screens/PlaylistScreen";
 
 const urqlClient = createClient({
   url: "http://192.168.0.120:80/graphql",
@@ -106,10 +108,22 @@ export const Navigation = () => {
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Back" component={Root} />
+
           <Stack.Screen
             name="Release"
             component={SingleReleaseScreen}
           ></Stack.Screen>
+
+          <Stack.Screen
+            name="Channel"
+            component={SingleChannelScreen}
+          ></Stack.Screen>
+
+          <Stack.Screen
+            name="Playlist"
+            component={PlaylistScreen}
+          ></Stack.Screen>
+
           <Stack.Screen
             options={{
               headerStyle: {

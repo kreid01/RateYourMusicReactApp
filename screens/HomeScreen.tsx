@@ -5,6 +5,7 @@ import Animated from "react-native-reanimated";
 import { useGetAllReleasesQuery } from "../generated/graphql";
 import { Release } from "../components/Release";
 import { SearchBar } from "../components/SearchBar";
+
 export const HomeScreen = ({ navigation }: any) => {
   const [result, reexecuteQuery] = useGetAllReleasesQuery();
   const { data: releases, stale, fetching } = result;
@@ -17,7 +18,7 @@ export const HomeScreen = ({ navigation }: any) => {
   const itemSize = 176;
 
   return (
-    <View className="relative min-h-100vh bg-slate-800">
+    <View className="relative min-h-[100vh] bg-slate-800">
       <SearchBar navigation={navigation} />
       <View className=" w-[100vw] mt-3">
         <View className="flex flex-row ml-auto mr-10">

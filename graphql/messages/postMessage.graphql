@@ -1,0 +1,5 @@
+mutation postMessage($channelId: Int!, $posterId: Int!, $content: String!) {
+  postMessage(channelId: $channelId, posterId: $posterId, content: $content) {
+    channelId
+  }
+}
