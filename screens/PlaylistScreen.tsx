@@ -6,14 +6,26 @@ import {
   ScrollView,
   Button,
   ArrowBackIcon,
+  CloseIcon,
 } from "native-base";
-import { useGetPlaylistByIdQuery } from "../generated/graphql";
+import {
+  useDeletePlaylistMutation,
+  useGetPlaylistByIdQuery,
+} from "../generated/graphql";
 import { PlaylistRelease } from "../components/PlaylistRelease";
 
 export const PlaylistScreen = ({ navigation, route }: any) => {
-  const { id } = route;
+  const { id } = route.params;
 
-  const [result] = useGetPlaylistByIdQuery({ variables: { id: 1 } });
+  const [result, reexecuteQuery] = useGetPlaylistByIdQuery({
+    variables: { id: id as number },
+  });
+
+  const refresh = () => {
+    reexecuteQuery({ requestPolicy: "network-only" });
+  };
+
+  const [, deletePlaylist] = useDeletePlaylistMutation();
 
   const { data, fetching } = result;
 
@@ -22,7 +34,7 @@ export const PlaylistScreen = ({ navigation, route }: any) => {
       <View className="pt-16 pb-3 shadow-lg  bg-slate-900  flex flex-row">
         <Button
           accessibilityLabel="back-button"
-          className="absolute rounded-full py-3 top-12 left-5 text-white"
+          className="absolute rounded-full py-3 top-[60px] left-5 text-white"
           variant="ghost"
           onPress={() => navigation.navigate("Account")}
         >
@@ -31,13 +43,38 @@ export const PlaylistScreen = ({ navigation, route }: any) => {
         <Text className="text-xl text-white mx-auto">
           {data?.getPlaylistById?.title}
         </Text>
+
+        <Button
+          className="absolute rounded-full py-3 top-[60px] right-5 text-white"
+          variant="ghost"
+          onPress={() =>
+            deletePlaylist({ id: id as number }).then(async (data) => {
+              if (data.error) {
+                alert(data.error.message);
+              } else {
+                navigation.navigate("Account");
+              }
+            })
+          }
+        >
+          <CloseIcon style={{ size: "lg", color: "red" }} />
+        </Button>
       </View>
       {fetching ? (
         <Spinner />
       ) : (
         <ScrollView>
-          {data?.getPlaylistById?.contentIds?.map((id) => {
-            return <PlaylistRelease id={id as number} />;
+          {data?.getPlaylistById?.contentIds?.map((releaseId) => {
+            return (
+              <PlaylistRelease
+                key={releaseId}
+                playlistId={id as number}
+                contentIds={data.getPlaylistById?.contentIds as number[]}
+                refresh={refresh}
+                navigation={navigation}
+                id={releaseId as number}
+              />
+            );
           })}
         </ScrollView>
       )}

@@ -1,17 +1,60 @@
 import { Spinner, Text, View } from "native-base";
 import { RefreshControl } from "react-native";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import Animated from "react-native-reanimated";
-import { useGetAllReleasesQuery } from "../generated/graphql";
 import { Release } from "../components/Release";
 import { SearchBar } from "../components/SearchBar";
+import { useInfiniteQuery } from "react-query";
+import { IRelease } from "../conts/Types";
+
+const getReleases = async ({ pageParam = 0 }) => {
+  console.log(pageParam);
+
+  const response = await fetch("http://192.168.0.120:80/graphql", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      query: `
+    query getAllReleases($take: Int!, $skip: Int!) {
+      getAllReleases(take: $take, skip: $skip) {
+        id
+        genres
+        artistId
+        title
+        rating
+        released
+        ratingCount
+        cover
+      }
+    }
+  `,
+      variables: {
+        take: 5,
+        skip: pageParam,
+      },
+    }),
+  });
+  const releases = await response.json();
+  return releases.data.getAllReleases;
+};
 
 export const HomeScreen = ({ navigation }: any) => {
-  const [result, reexecuteQuery] = useGetAllReleasesQuery();
-  const { data: releases, stale, fetching } = result;
+  const { data, fetchNextPage, hasNextPage, isFetching, refetch, isSuccess } =
+    useInfiniteQuery({
+      queryKey: ["releases"],
+      queryFn: getReleases,
+      getNextPageParam: (lastPage, allPages) => {
+        const nextPage = allPages.length + 1;
+        return nextPage;
+      },
+    });
 
-  const refresh = () => {
-    reexecuteQuery({ requestPolicy: "network-only" });
+  const loadNext = () => {
+    if (hasNextPage) {
+      fetchNextPage();
+    }
   };
 
   const scrollY = useRef(new Animated.Value(0)).current;
@@ -26,7 +69,7 @@ export const HomeScreen = ({ navigation }: any) => {
           <Text className="text-gray-500">Rated</Text>
         </View>
       </View>
-      {releases ? (
+      {isSuccess ? (
         <Animated.FlatList
           className="mb-64"
           accessibilityLabel="releases"
@@ -68,9 +111,10 @@ export const HomeScreen = ({ navigation }: any) => {
               />
             );
           }}
-          data={releases.getAllReleases}
+          onEndReached={loadNext}
+          data={data.pages.flat()}
           refreshControl={
-            <RefreshControl refreshing={fetching} onRefresh={refresh} />
+            <RefreshControl refreshing={isFetching} onRefresh={refetch} />
           }
         ></Animated.FlatList>
       ) : (

@@ -1,0 +1,5 @@
+mutation postPlaylist($posterId: Int!, $title: String!) {
+  postPlaylist(posterId: $posterId, title: $title) {
+    contentIds
+  }
+}

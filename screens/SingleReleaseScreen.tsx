@@ -18,6 +18,7 @@ import { EditRelease } from "../components/EditRelease/EditRelease";
 import { IRelease } from "../conts/Types";
 import { ReleaseReviews } from "../components/ReleaseReviews";
 import { CreateReview } from "../components/CreateReview";
+import { AddToPlaylist } from "../components/AddToPlaylist";
 
 export const SingleReleaseScreen = ({ route, navigation }: any) => {
   const { id } = route.params;
@@ -32,6 +33,7 @@ export const SingleReleaseScreen = ({ route, navigation }: any) => {
     reexecuteQuery({ variables: { id: id }, requestPolicy: "network-only" });
   };
 
+  const [open, setOpen] = useState(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
   const handleEdit = () => {
@@ -75,15 +77,21 @@ export const SingleReleaseScreen = ({ route, navigation }: any) => {
                     id={data?.getReleaseById?.artistId as number}
                   />
                 </Text>
-
-                <Button
-                  variant="ghost"
-                  className="ml-auto mr-8"
-                  onPress={() => setIsEditing((prevState) => !prevState)}
-                >
-                  Edit
-                </Button>
+                <View className="flex  flex-row ml-auto">
+                  <Button onPress={() => setOpen((prevState) => !prevState)}>
+                    Add to playlist
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    className="mr-8"
+                    onPress={() => setIsEditing((prevState) => !prevState)}
+                  >
+                    Edit
+                  </Button>
+                </View>
               </View>
+
+              {open ? <AddToPlaylist releaseId={id as number} /> : null}
             </Animatable.View>
 
             <Animatable.View className="mx-5 mt-5 p-5 bg-gray-700 ">

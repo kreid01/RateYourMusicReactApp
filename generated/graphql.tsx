@@ -40,6 +40,7 @@ export type Mutation = {
   register?: Maybe<User>;
   updateArtist?: Maybe<Artist>;
   updateChannel?: Maybe<Channel>;
+  updatePlaylist?: Maybe<Playlist>;
   updateRelease?: Maybe<Release>;
   updateReview?: Maybe<Review>;
 };
@@ -130,6 +131,12 @@ export type MutationUpdateChannelArgs = {
 };
 
 
+export type MutationUpdatePlaylistArgs = {
+  contentIds?: InputMaybe<Array<Scalars['Int']>>;
+  id: Scalars['Int'];
+};
+
+
 export type MutationUpdateReleaseArgs = {
   cover: Scalars['String'];
   genres: Array<InputMaybe<Scalars['String']>>;
@@ -170,6 +177,12 @@ export type Query = {
   getUsers?: Maybe<Array<Maybe<User>>>;
   searchArtists?: Maybe<Array<Maybe<Artist>>>;
   searchReleases?: Maybe<Array<Maybe<Release>>>;
+};
+
+
+export type QueryGetAllReleasesArgs = {
+  skip: Scalars['Int'];
+  take: Scalars['Int'];
 };
 
 
@@ -344,6 +357,13 @@ export type PostMessageMutationVariables = Exact<{
 
 export type PostMessageMutation = { __typename?: 'Mutation', postMessage?: { __typename?: 'message', channelId?: number | null } | null };
 
+export type DeletePlaylistMutationVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type DeletePlaylistMutation = { __typename?: 'Mutation', deletePlaylist?: { __typename?: 'playlist', posterId?: number | null } | null };
+
 export type GetPlaylistByIdQueryVariables = Exact<{
   id: Scalars['Int'];
 }>;
@@ -358,7 +378,26 @@ export type GetUserPlaylistsQueryVariables = Exact<{
 
 export type GetUserPlaylistsQuery = { __typename?: 'Query', getUserPlaylists?: Array<{ __typename?: 'playlist', id?: number | null, contentIds?: Array<number | null> | null, title?: string | null } | null> | null };
 
-export type GetAllReleasesQueryVariables = Exact<{ [key: string]: never; }>;
+export type PostPlaylistMutationVariables = Exact<{
+  posterId: Scalars['Int'];
+  title: Scalars['String'];
+}>;
+
+
+export type PostPlaylistMutation = { __typename?: 'Mutation', postPlaylist?: { __typename?: 'playlist', contentIds?: Array<number | null> | null } | null };
+
+export type UpdatePlaylistMutationVariables = Exact<{
+  id: Scalars['Int'];
+  contentIds?: InputMaybe<Array<Scalars['Int']> | Scalars['Int']>;
+}>;
+
+
+export type UpdatePlaylistMutation = { __typename?: 'Mutation', updatePlaylist?: { __typename?: 'playlist', contentIds?: Array<number | null> | null } | null };
+
+export type GetAllReleasesQueryVariables = Exact<{
+  take: Scalars['Int'];
+  skip: Scalars['Int'];
+}>;
 
 
 export type GetAllReleasesQuery = { __typename?: 'Query', getAllReleases?: Array<{ __typename?: 'release', id?: number | null, genres?: Array<string | null> | null, artistId?: number | null, title?: string | null, rating?: number | null, released?: string | null, ratingCount?: number | null, cover?: string | null } | null> | null };
@@ -1059,6 +1098,39 @@ export default {
             ]
           },
           {
+            "name": "updatePlaylist",
+            "type": {
+              "kind": "OBJECT",
+              "name": "playlist",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "contentIds",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "id",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
             "name": "updateRelease",
             "type": {
               "kind": "OBJECT",
@@ -1255,7 +1327,28 @@ export default {
                 "ofType": null
               }
             },
-            "args": []
+            "args": [
+              {
+                "name": "skip",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              },
+              {
+                "name": "take",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
           },
           {
             "name": "getArtistById",
@@ -2014,6 +2107,17 @@ export const PostMessageDocument = gql`
 export function usePostMessageMutation() {
   return Urql.useMutation<PostMessageMutation, PostMessageMutationVariables>(PostMessageDocument);
 };
+export const DeletePlaylistDocument = gql`
+    mutation deletePlaylist($id: Int!) {
+  deletePlaylist(id: $id) {
+    posterId
+  }
+}
+    `;
+
+export function useDeletePlaylistMutation() {
+  return Urql.useMutation<DeletePlaylistMutation, DeletePlaylistMutationVariables>(DeletePlaylistDocument);
+};
 export const GetPlaylistByIdDocument = gql`
     query getPlaylistById($id: Int!) {
   getPlaylistById(id: $id) {
@@ -2039,9 +2143,31 @@ export const GetUserPlaylistsDocument = gql`
 export function useGetUserPlaylistsQuery(options: Omit<Urql.UseQueryArgs<GetUserPlaylistsQueryVariables>, 'query'>) {
   return Urql.useQuery<GetUserPlaylistsQuery, GetUserPlaylistsQueryVariables>({ query: GetUserPlaylistsDocument, ...options });
 };
+export const PostPlaylistDocument = gql`
+    mutation postPlaylist($posterId: Int!, $title: String!) {
+  postPlaylist(posterId: $posterId, title: $title) {
+    contentIds
+  }
+}
+    `;
+
+export function usePostPlaylistMutation() {
+  return Urql.useMutation<PostPlaylistMutation, PostPlaylistMutationVariables>(PostPlaylistDocument);
+};
+export const UpdatePlaylistDocument = gql`
+    mutation updatePlaylist($id: Int!, $contentIds: [Int!]) {
+  updatePlaylist(id: $id, contentIds: $contentIds) {
+    contentIds
+  }
+}
+    `;
+
+export function useUpdatePlaylistMutation() {
+  return Urql.useMutation<UpdatePlaylistMutation, UpdatePlaylistMutationVariables>(UpdatePlaylistDocument);
+};
 export const GetAllReleasesDocument = gql`
-    query getAllReleases {
-  getAllReleases {
+    query getAllReleases($take: Int!, $skip: Int!) {
+  getAllReleases(take: $take, skip: $skip) {
     id
     genres
     artistId
@@ -2054,7 +2180,7 @@ export const GetAllReleasesDocument = gql`
 }
     `;
 
-export function useGetAllReleasesQuery(options?: Omit<Urql.UseQueryArgs<GetAllReleasesQueryVariables>, 'query'>) {
+export function useGetAllReleasesQuery(options: Omit<Urql.UseQueryArgs<GetAllReleasesQueryVariables>, 'query'>) {
   return Urql.useQuery<GetAllReleasesQuery, GetAllReleasesQueryVariables>({ query: GetAllReleasesDocument, ...options });
 };
 export const GetReleaseByIdDocument = gql`

@@ -15,7 +15,7 @@ import { getAccessToken } from "../utils/accessToken";
 import { SingleChannelScreen } from "../screens/SingleChannelScreen";
 import { PlaylistScreen } from "../screens/PlaylistScreen";
 
-const urqlClient = createClient({
+export const urqlClient = createClient({
   url: "http://192.168.0.120:80/graphql",
   fetchOptions: () => {
     const token = getAccessToken();

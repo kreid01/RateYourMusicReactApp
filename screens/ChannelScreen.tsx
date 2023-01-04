@@ -16,19 +16,22 @@ export const ChannelScreen = ({ navigation }: any) => {
       {fetching ? (
         <Spinner />
       ) : (
-        <View>
+        <ScrollView>
           {data?.getAllChannels?.map((channel) => {
             return (
-              <ScrollView className="w-[90vw] flex flex-row rounded-sm bg-gray-800 shadow-md h-[10vh]  m-2">
+              <View
+                key={channel?.id}
+                className="w-[90vw] flex flex-row rounded-sm bg-gray-800 shadow-md h-[10vh]  m-2"
+              >
                 <ChannelComponent
                   navigation={navigation}
                   title={channel?.title as string}
                   id={channel?.id as number}
                 />
-              </ScrollView>
+              </View>
             );
           })}
-        </View>
+        </ScrollView>
       )}
     </View>
   );

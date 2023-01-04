@@ -1,5 +1,5 @@
-query getAllReleases {
-  getAllReleases {
+query getAllReleases($take: Int!, $skip: Int!) {
+  getAllReleases(take: $take, skip: $skip) {
     id
     genres
     artistId
@@ -9,4 +9,5 @@ query getAllReleases {
     ratingCount
     cover
   }
+  hasMore
 }

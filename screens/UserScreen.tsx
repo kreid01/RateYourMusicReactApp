@@ -1,13 +1,28 @@
 import React, { useState } from "react";
-import { Button, View, Image, Text, ScrollView } from "native-base";
+import {
+  Button,
+  View,
+  Image,
+  Text,
+  ScrollView,
+  Input,
+  FormControl,
+  Box,
+  Center,
+  FlatList,
+} from "native-base";
 import axios from "axios";
 import * as ImagePicker from "expo-image-picker";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { useQuery } from "react-query";
-import { useGetUserPlaylistsQuery } from "../generated/graphql";
+import {
+  useGetUserPlaylistsQuery,
+  usePostPlaylistMutation,
+} from "../generated/graphql";
 import { ReleaseCover } from "../components/ReleaseCover";
-import { TouchableOpacity } from "react-native";
+import { RefreshControl, TouchableOpacity } from "react-native";
+import { Formik } from "formik";
 
 const getUserImage = async () => {
   const { data: image } = await axios.get("http://192.168.0.120:80/file");
@@ -20,11 +35,22 @@ export const UserScreen = ({ navigation }: any) => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const { data: image } = useQuery(["user"], getUserImage);
 
-  const [result] = useGetUserPlaylistsQuery({
+  const [result, reexecuteQuery] = useGetUserPlaylistsQuery({
     variables: { id: currentUser?.id as number },
   });
 
+  const refresh = () => {
+    reexecuteQuery({ requestPolicy: "network-only" });
+  };
+
+  const [open, setOpen] = useState(false);
+  const handleClick = () => {
+    setOpen((prevState) => !prevState);
+  };
+
   const { data, fetching } = result;
+
+  console.debug(data?.getUserPlaylists);
 
   const editImage = async () => {
     const formData = new FormData();
@@ -48,6 +74,12 @@ export const UserScreen = ({ navigation }: any) => {
       setFile(result.assets[0]);
     }
   };
+
+  const initialValues = {
+    title: "",
+  };
+
+  const [, postPlaylist] = usePostPlaylistMutation();
 
   return (
     <View className="h-[100vh] bg-slate-800">
@@ -83,31 +115,100 @@ export const UserScreen = ({ navigation }: any) => {
       </View>
       <View className="ml-5 mt-5">
         <Text className="text-3xl text-white ">YOUR PLAYLISTS</Text>
-        <ScrollView className="mt-5">
-          {!fetching
-            ? data?.getUserPlaylists?.map((playlist) => {
-                return (
-                  <TouchableOpacity
-                    onPress={() =>
-                      navigation.navigate("Playlist", { id: playlist?.id })
-                    }
-                    className="bg-gray-700 w-[90vw] flex flex-row "
-                  >
-                    <Text className="text-white m-3 text-xl">
-                      {playlist?.title}
-                    </Text>
-                    <View className="my-auto flex flex-row">
-                      {playlist?.contentIds
-                        ? playlist?.contentIds.map((id) => {
-                            return <ReleaseCover id={id as number} />;
-                          })
-                        : null}
-                    </View>
-                  </TouchableOpacity>
-                );
-              })
-            : null}
-        </ScrollView>
+
+        <FlatList
+          className="mt-5 min-h-[27vh]"
+          numColumns={1}
+          data={data?.getUserPlaylists}
+          refreshControl={
+            <RefreshControl refreshing={fetching} onRefresh={refresh} />
+          }
+          renderItem={({ item }: any) => {
+            return (
+              <TouchableOpacity
+                key={item?.id}
+                onPress={() =>
+                  navigation.navigate("Playlist", { id: item?.id })
+                }
+                className="bg-gray-700 my-1 w-[90vw] flex flex-row "
+              >
+                <Text className="text-white m-3 text-xl">{item?.title}</Text>
+                <View className="my-auto flex flex-row">
+                  {item?.contentIds
+                    ? item?.contentIds.map((id: number) => {
+                        return <ReleaseCover id={id as number} />;
+                      })
+                    : null}
+                </View>
+              </TouchableOpacity>
+            );
+          }}
+        ></FlatList>
+        {open ? (
+          <Formik
+            initialValues={initialValues}
+            onSubmit={(values) => {
+              postPlaylist({
+                posterId: currentUser?.id as number,
+                title: values.title,
+              }).then((result) => {
+                if (result.error) {
+                  console.debug(result.error.message);
+                } else if (result.data) {
+                  handleClick();
+                  refresh();
+                }
+              });
+            }}
+          >
+            {({ handleChange, handleBlur, handleSubmit, values }) => (
+              <Center
+                w="94.5%"
+                marginBottom={10}
+                className="h-[20vh] mt-5  bg-slate-700"
+              >
+                <Box safeArea p="2" w="90%" className="-mt-5" maxW="320">
+                  <FormControl>
+                    <FormControl.Label _text={{ color: "coolGray.100" }}>
+                      Title
+                    </FormControl.Label>
+                    <Input
+                      accessibilityLabel="review-title"
+                      selectionColor={"white"}
+                      className="text-white"
+                      backgroundColor="#475569"
+                      borderColor="#475569"
+                      focusOutlineColor="#475569"
+                      onChangeText={handleChange("title")}
+                      onBlur={handleBlur("title")}
+                      value={values.title}
+                    />
+                  </FormControl>
+                  <View className="flex mt-5 flex-row">
+                    <Button
+                      onPress={() => handleClick()}
+                      className="mr-2"
+                      bgColor="blue.400"
+                    >
+                      Cancel
+                    </Button>
+                    <Button onPress={() => handleSubmit()} bgColor="blue.400">
+                      Create
+                    </Button>
+                  </View>
+                </Box>
+              </Center>
+            )}
+          </Formik>
+        ) : (
+          <Button
+            onPress={() => handleClick()}
+            bgColor="blue.400"
+            className="w-32 m-5 ml-0"
+          >
+            Create Playlist
+          </Button>
+        )}
       </View>
     </View>
   );
