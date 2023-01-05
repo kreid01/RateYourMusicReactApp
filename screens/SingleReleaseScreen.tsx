@@ -8,9 +8,7 @@ import {
 } from "native-base";
 //@ts-ignore
 import ExpoFastImage from "expo-fast-image";
-import React, { Fragment, useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../store/store";
+import React, { Fragment, useRef, useState } from "react";
 import * as Animatable from "react-native-animatable";
 import { useGetReleaseByIdQuery } from "../generated/graphql";
 import { ArtistName } from "../components/ArtistName/ArtistName";
@@ -22,12 +20,13 @@ import { AddToPlaylist } from "../components/AddToPlaylist";
 
 export const SingleReleaseScreen = ({ route, navigation }: any) => {
   const { id } = route.params;
-  const currentUser = useSelector((state: RootState) => state.user.value);
 
   const [result, reexecuteQuery] = useGetReleaseByIdQuery({
     variables: { id: id },
   });
   const { data, fetching } = result;
+
+  const scrollRef = useRef<typeof ScrollView>();
 
   const refresh = () => {
     reexecuteQuery({ variables: { id: id }, requestPolicy: "network-only" });
@@ -44,6 +43,7 @@ export const SingleReleaseScreen = ({ route, navigation }: any) => {
   if (!fetching) {
     return (
       <ScrollView
+        ref={scrollRef}
         className="relative bg-slate-800"
         keyboardShouldPersistTaps="always"
         automaticallyAdjustKeyboardInsets={true}
@@ -105,7 +105,7 @@ export const SingleReleaseScreen = ({ route, navigation }: any) => {
                 <Text className="text-gray-100">
                   Rating:{" "}
                   <Text className="font-bold text-lg">
-                    {data?.getReleaseById?.rating}
+                    {data?.getReleaseById?.rating?.toFixed(2)}
                   </Text>
                   / 5.0 from{" "}
                   <Text className="font-bold">
@@ -169,7 +169,11 @@ export const SingleReleaseScreen = ({ route, navigation }: any) => {
                 </View>
               </Animatable.View>
             </Animatable.View>
-            <CreateReview releaseId={id} />
+            <CreateReview
+              refresh={refresh}
+              scrollRef={scrollRef}
+              releaseId={id}
+            />
             <ReleaseReviews id={id} />
           </Fragment>
         ) : (

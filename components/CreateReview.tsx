@@ -10,17 +10,25 @@ import {
   VStack,
 } from "native-base";
 import React, { useState } from "react";
+import { TouchableOpacity } from "react-native";
 import { useSelector } from "react-redux";
-import { boolean, object, string } from "zod";
+import { object, string } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import { usePostReviewMutation } from "../generated/graphql";
 import { RootState } from "../store/store";
+import Icon, { Icons } from "./Icons";
 
 interface Props {
   releaseId: number;
+  scrollRef: any;
+  refresh: () => void;
 }
 
-export const CreateReview: React.FC<Props> = ({ releaseId }) => {
+export const CreateReview: React.FC<Props> = ({
+  releaseId,
+  scrollRef,
+  refresh,
+}) => {
   const currentUser = useSelector((state: RootState) => state.user.value);
   const [postResult, postReview] = usePostReviewMutation();
 
@@ -33,12 +41,44 @@ export const CreateReview: React.FC<Props> = ({ releaseId }) => {
   const [open, setOpen] = useState<boolean>(false);
   const handleClick = () => {
     setOpen((prevState) => !prevState);
+    if (!open) {
+      setTimeout(() => {
+        scrollRef.current?.scrollTo({
+          y: 950,
+          animated: true,
+        });
+      }, 100);
+    }
   };
 
   const reviewSchema = object({
     description: string()
       .min(10, "Review must be atleast 10 character")
       .max(1500, "Review cannot be over 1500 characters long."),
+  });
+
+  const starsArr = new Array(5).fill(null);
+
+  const [selected, setSelected] = useState(-1);
+
+  const handleRate = (i: number) => {
+    if (selected === i) {
+      setSelected(-1);
+    } else {
+      setSelected(i);
+    }
+  };
+
+  const ratingStars = starsArr.map((star, i) => {
+    return (
+      <TouchableOpacity onPress={() => handleRate(i)}>
+        <Icon
+          type={i <= selected ? Icons.FontAwesome : Icons.Feather}
+          name="star"
+          color="yellow"
+        />
+      </TouchableOpacity>
+    );
   });
 
   return (
@@ -59,10 +99,12 @@ export const CreateReview: React.FC<Props> = ({ releaseId }) => {
               ...values,
               releaseId: releaseId,
               posterId: currentUser?.id as number,
+              rating: selected + 1,
             }).then((result) => {
               if (result.error) {
                 console.debug(result.error.message);
               } else if (result.data) {
+                refresh();
                 handleClick();
               }
             });
@@ -74,7 +116,7 @@ export const CreateReview: React.FC<Props> = ({ releaseId }) => {
               w="90%"
               marginX={"auto"}
               marginBottom={10}
-              className="h-[50vh]  bg-slate-700"
+              className="h-[60vh]  bg-slate-700"
             >
               <Box safeArea p="2" w="90%" maxW="320">
                 <VStack space={3}>
@@ -94,6 +136,9 @@ export const CreateReview: React.FC<Props> = ({ releaseId }) => {
                       value={values.title}
                     />
                   </FormControl>
+                  <View className="flex flex-row justify-around">
+                    {ratingStars}
+                  </View>
                   <FormControl>
                     <FormControl.Label _text={{ color: "coolGray.100" }}>
                       Review{" "}
@@ -113,7 +158,7 @@ export const CreateReview: React.FC<Props> = ({ releaseId }) => {
                     />
                   </FormControl>
                 </VStack>
-                <View className="flex justify-between -mt-8 flex-row">
+                <View className="flex justify-between -mt-10 flex-row">
                   <Button onPress={() => handleClick()} bgColor="blue.400">
                     Cancel
                   </Button>
