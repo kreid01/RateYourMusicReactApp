@@ -1,6 +1,7 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { Button, View, Text, AddIcon, ScrollView } from "native-base";
 import React, { useState } from "react";
+import Animated, { FadeInDown, FadeInUp } from "react-native-reanimated";
 import { useSelector } from "react-redux";
 import {
   useGetUserPlaylistsQuery,
@@ -24,7 +25,11 @@ export const AddToPlaylist: React.FC<Props> = ({ releaseId }) => {
   const { data, fetching } = result;
 
   return (
-    <ScrollView className="bg-gray-800 w-[90vw] mt-5  h-[20vh]">
+    <Animated.ScrollView
+      entering={FadeInUp.duration(200)}
+      exiting={FadeInUp.duration(200)}
+      className="bg-gray-800 w-[90vw] mt-5  h-[20vh]"
+    >
       {data?.getUserPlaylists?.map((playlist) => {
         return (
           <View
@@ -52,6 +57,6 @@ export const AddToPlaylist: React.FC<Props> = ({ releaseId }) => {
           </View>
         );
       })}
-    </ScrollView>
+    </Animated.ScrollView>
   );
 };

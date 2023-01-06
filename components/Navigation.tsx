@@ -1,10 +1,10 @@
-import React, { useRef } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { View } from "native-base";
 import { RegisterScreen } from "../screens/RegisterScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, Animated } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { navStyles } from "../styles/BottomNavStyles";
 import { TabArr } from "./TabArr";
@@ -16,7 +16,7 @@ import { SingleChannelScreen } from "../screens/SingleChannelScreen";
 import { PlaylistScreen } from "../screens/PlaylistScreen";
 
 export const urqlClient = createClient({
-  url: "http://192.168.0.120:80/graphql",
+  url: "http://192.168.0.15:80/graphql",
   fetchOptions: () => {
     const token = getAccessToken();
     return {
@@ -46,11 +46,15 @@ export const Navigation = () => {
     );
   };
 
+  const [selected, setSelected] = useState(1);
+
   const TabButton = (props: any) => {
-    const { item, onPress, accessibilityState } = props;
+    const { item, onPress, accessibilityState, index } = props;
     const focused = accessibilityState.selected;
-    const viewRef = useRef<any>(null);
-    const textRef = useRef<any>(null);
+
+    useEffect(() => {
+      if (focused) setSelected(index + 1);
+    }, [focused]);
 
     return (
       <TouchableOpacity
@@ -58,24 +62,32 @@ export const Navigation = () => {
         activeOpacity={1}
         style={navStyles.container}
       >
-        <Animatable.View
-          ref={viewRef}
-          duration={400}
-          style={navStyles.container}
-        >
+        <Animatable.View style={navStyles.container}>
           <View className="relative" style={navStyles.btn}>
             <Icon type={item.type} name={item.icon} color={"white"} />
-            {focused ? (
-              <View className="absolute border-[1px] border-white -top-[11px] w-14 rounded-md z-10"></View>
-            ) : null}
           </View>
-          <Animatable.Text ref={textRef} style={navStyles.text}>
-            {item.label}
-          </Animatable.Text>
+          <Animatable.Text style={navStyles.text}>{item.label}</Animatable.Text>
         </Animatable.View>
       </TouchableOpacity>
     );
   };
+
+  const left = useState(new Animated.Value(0))[0];
+
+  Animated.timing(left, {
+    toValue:
+      selected === 1
+        ? 5
+        : selected === 2
+        ? 85
+        : selected === 3
+        ? 170
+        : selected === 4
+        ? 250
+        : 335,
+    duration: 700,
+    useNativeDriver: true,
+  }).start();
 
   const Root = () => {
     return (
@@ -94,7 +106,16 @@ export const Navigation = () => {
               component={item.component}
               options={{
                 tabBarShowLabel: false,
-                tabBarButton: (props) => <TabButton {...props} item={item} />,
+                tabBarButton: (props) => (
+                  <Fragment>
+                    <Animated.View
+                      style={{ transform: [{ translateX: left }] }}
+                      className="absolute border-[1px] border-white -top-[0px] left-[10px]
+                     w-14 rounded-md z-10"
+                    ></Animated.View>
+                    <TabButton {...props} index={index} item={item} />
+                  </Fragment>
+                ),
               }}
             />
           );

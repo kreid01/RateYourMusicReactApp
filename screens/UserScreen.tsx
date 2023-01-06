@@ -4,7 +4,6 @@ import {
   View,
   Image,
   Text,
-  ScrollView,
   Input,
   FormControl,
   Box,
@@ -23,6 +22,7 @@ import {
 import { ReleaseCover } from "../components/ReleaseCover";
 import { RefreshControl, TouchableOpacity } from "react-native";
 import { Formik } from "formik";
+import Animated, { FadeInDown, FadeInUp } from "react-native-reanimated";
 
 const getUserImage = async () => {
   const { data: image } = await axios.get("http://192.168.0.120:80/file");
@@ -49,8 +49,6 @@ export const UserScreen = ({ navigation }: any) => {
   };
 
   const { data, fetching } = result;
-
-  console.debug(data?.getUserPlaylists);
 
   const editImage = async () => {
     const formData = new FormData();
@@ -136,7 +134,7 @@ export const UserScreen = ({ navigation }: any) => {
                 <View className="my-auto flex flex-row">
                   {item?.contentIds
                     ? item?.contentIds.map((id: number) => {
-                        return <ReleaseCover id={id as number} />;
+                        return <ReleaseCover key={id} id={id as number} />;
                       })
                     : null}
                 </View>
@@ -162,42 +160,44 @@ export const UserScreen = ({ navigation }: any) => {
             }}
           >
             {({ handleChange, handleBlur, handleSubmit, values }) => (
-              <Center
-                w="94.5%"
-                marginBottom={10}
-                className="h-[20vh] mt-5  bg-slate-700"
-              >
-                <Box safeArea p="2" w="90%" className="-mt-5" maxW="320">
-                  <FormControl>
-                    <FormControl.Label _text={{ color: "coolGray.100" }}>
-                      Title
-                    </FormControl.Label>
-                    <Input
-                      accessibilityLabel="review-title"
-                      selectionColor={"white"}
-                      className="text-white"
-                      backgroundColor="#475569"
-                      borderColor="#475569"
-                      focusOutlineColor="#475569"
-                      onChangeText={handleChange("title")}
-                      onBlur={handleBlur("title")}
-                      value={values.title}
-                    />
-                  </FormControl>
-                  <View className="flex mt-5 flex-row">
-                    <Button
-                      onPress={() => handleClick()}
-                      className="mr-2"
-                      bgColor="blue.400"
-                    >
-                      Cancel
-                    </Button>
-                    <Button onPress={() => handleSubmit()} bgColor="blue.400">
-                      Create
-                    </Button>
-                  </View>
-                </Box>
-              </Center>
+              <Animated.View entering={FadeInUp}>
+                <Center
+                  w="94.5%"
+                  marginBottom={10}
+                  className="h-[20vh] mt-5  bg-slate-700"
+                >
+                  <Box safeArea p="2" w="90%" className="-mt-5" maxW="320">
+                    <FormControl>
+                      <FormControl.Label _text={{ color: "coolGray.100" }}>
+                        Title
+                      </FormControl.Label>
+                      <Input
+                        accessibilityLabel="review-title"
+                        selectionColor={"white"}
+                        className="text-white"
+                        backgroundColor="#475569"
+                        borderColor="#475569"
+                        focusOutlineColor="#475569"
+                        onChangeText={handleChange("title")}
+                        onBlur={handleBlur("title")}
+                        value={values.title}
+                      />
+                    </FormControl>
+                    <View className="flex mt-5 flex-row">
+                      <Button
+                        onPress={() => handleClick()}
+                        className="mr-2"
+                        bgColor="blue.400"
+                      >
+                        Cancel
+                      </Button>
+                      <Button onPress={() => handleSubmit()} bgColor="blue.400">
+                        Create
+                      </Button>
+                    </View>
+                  </Box>
+                </Center>
+              </Animated.View>
             )}
           </Formik>
         ) : (

@@ -17,6 +17,18 @@ import { toFormikValidationSchema } from "zod-formik-adapter";
 import { usePostReviewMutation } from "../generated/graphql";
 import { RootState } from "../store/store";
 import Icon, { Icons } from "./Icons";
+import * as Animatable from "react-native-animatable";
+import Animated, {
+  BounceOutUp,
+  FadeInUp,
+  FadeOutUp,
+  FlipOutEasyX,
+  FlipOutEasyY,
+  SlideInUp,
+  StretchOutX,
+  StretchOutY,
+  ZoomOut,
+} from "react-native-reanimated";
 
 interface Props {
   releaseId: number;
@@ -112,13 +124,12 @@ export const CreateReview: React.FC<Props> = ({
           validationSchema={toFormikValidationSchema(reviewSchema)}
         >
           {({ handleChange, handleBlur, handleSubmit, values }) => (
-            <Center
-              w="90%"
-              marginX={"auto"}
-              marginBottom={10}
-              className="h-[60vh]  bg-slate-700"
+            <Animated.View
+              entering={FadeInUp}
+              exiting={FadeOutUp.duration(150)}
+              className="h-[60vh] w-[90%] mx-auto mb-10  bg-slate-700"
             >
-              <Box safeArea p="2" w="90%" maxW="320">
+              <Box safeArea p="2" w="90%" maxW="320" marginX={"auto"}>
                 <VStack space={3}>
                   <FormControl>
                     <FormControl.Label _text={{ color: "coolGray.100" }}>
@@ -171,7 +182,7 @@ export const CreateReview: React.FC<Props> = ({
                   </Button>
                 </View>
               </Box>
-            </Center>
+            </Animated.View>
           )}
         </Formik>
       ) : null}

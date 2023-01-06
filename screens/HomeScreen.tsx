@@ -7,10 +7,8 @@ import { SearchBar } from "../components/SearchBar";
 import { useInfiniteQuery } from "react-query";
 import { IRelease } from "../conts/Types";
 
-const getReleases = async ({ pageParam = 0 }) => {
-  console.log(pageParam);
-
-  const response = await fetch("http://192.168.0.120:80/graphql", {
+const getReleases = async (pageParam: number) => {
+  const response = await fetch("http://192.168.0.15:80/graphql", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -31,12 +29,15 @@ const getReleases = async ({ pageParam = 0 }) => {
     }
   `,
       variables: {
-        take: 5,
+        take: 8,
         skip: pageParam,
       },
     }),
   });
   const releases = await response.json();
+
+  console.log(pageParam);
+
   return releases.data.getAllReleases;
 };
 
@@ -44,7 +45,7 @@ export const HomeScreen = ({ navigation }: any) => {
   const { data, fetchNextPage, hasNextPage, isFetching, refetch, isSuccess } =
     useInfiniteQuery({
       queryKey: ["releases"],
-      queryFn: getReleases,
+      queryFn: ({ pageParam = 1 }) => getReleases(pageParam),
       getNextPageParam: (lastPage, allPages) => {
         const nextPage = allPages.length + 1;
         return nextPage;

@@ -15,7 +15,7 @@ export default function App() {
     const fetchToken = async () => {
       const token = await getRefreshToken();
       const { data: response } = await axios.post(
-        "http://192.168.0.120:80/auth",
+        "http://192.168.0.15:80/auth",
         { token: token }
       );
       if (await response) {
