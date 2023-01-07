@@ -1,5 +1,5 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import { Icon, Image, Input, View, Text, ScrollView } from "native-base";
+import { Icon, Image, Input, View } from "native-base";
 import React, { useState } from "react";
 import { Login } from "./Login";
 import { SearchResults } from "./SearchResults";
@@ -22,13 +22,14 @@ export const SearchBar: React.FC<Props> = ({ navigation }) => {
           className="h-10 rounded-full ml-5 mr-2 w-10"
         />
         <Input
+          borderColor="trueGray.700"
           accessibilityLabel="search"
           testID="search"
           width="65%"
           borderRadius="xl"
           className="text-white"
           onChangeText={(text) => setSearch(text)}
-          focusOutlineColor="white"
+          focusOutlineColor="gray"
           placeholder="Search..."
           InputLeftElement={
             <Icon marginLeft={2} as={<MaterialIcons name="search" />} />

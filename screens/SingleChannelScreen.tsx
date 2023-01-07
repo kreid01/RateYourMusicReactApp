@@ -31,7 +31,7 @@ export const SingleChannelScreen = ({ route, navigation }: any) => {
 
   return (
     <View className="min-h-[100vh] bg-slate-800">
-      <View className="pt-14 pb-3 shadow-lg  bg-slate-900  flex flex-row">
+      <View className="pt-12 pb-3 shadow-lg  bg-slate-900  flex flex-row">
         <Button
           accessibilityLabel="back-button"
           className="absolute rounded-full py-3 top-12 left-5 text-white"

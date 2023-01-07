@@ -17,18 +17,7 @@ import { toFormikValidationSchema } from "zod-formik-adapter";
 import { usePostReviewMutation } from "../generated/graphql";
 import { RootState } from "../store/store";
 import Icon, { Icons } from "./Icons";
-import * as Animatable from "react-native-animatable";
-import Animated, {
-  BounceOutUp,
-  FadeInUp,
-  FadeOutUp,
-  FlipOutEasyX,
-  FlipOutEasyY,
-  SlideInUp,
-  StretchOutX,
-  StretchOutY,
-  ZoomOut,
-} from "react-native-reanimated";
+import Animated, { FadeInUp, FadeOutUp } from "react-native-reanimated";
 
 interface Props {
   releaseId: number;

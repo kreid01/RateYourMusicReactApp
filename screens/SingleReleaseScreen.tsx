@@ -78,7 +78,10 @@ export const SingleReleaseScreen = ({ route, navigation }: any) => {
                   />
                 </Text>
                 <View className="flex  flex-row ml-auto">
-                  <Button onPress={() => setOpen((prevState) => !prevState)}>
+                  <Button
+                    bgColor="blue.400"
+                    onPress={() => setOpen((prevState) => !prevState)}
+                  >
                     Add to playlist
                   </Button>
                   <Button
@@ -91,7 +94,12 @@ export const SingleReleaseScreen = ({ route, navigation }: any) => {
                 </View>
               </View>
 
-              {open ? <AddToPlaylist releaseId={id as number} /> : null}
+              {open ? (
+                <AddToPlaylist
+                  releaseTitle={data?.getReleaseById?.title as string}
+                  releaseId={id as number}
+                />
+              ) : null}
             </Animatable.View>
 
             <Animatable.View className="mx-5 mt-5 p-5 bg-gray-700 ">

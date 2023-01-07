@@ -91,18 +91,10 @@ export const CreateReleaseScreen = () => {
   };
 
   return (
-    <View className="h-[100vh] pt-20 bg-slate-800 ">
-      <Heading
-        size="lg"
-        marginLeft={10}
-        fontWeight="600"
-        color="coolGray.100"
-        _dark={{
-          color: "warmGray.50",
-        }}
-      >
-        Post New Release
-      </Heading>
+    <View className="h-[100vh] bg-slate-800 ">
+      <View className="pt-12  pb-3 shadow-lg  bg-slate-900  flex flex-row">
+        <Text className="text-white text-3xl mx-auto ">Post New Release</Text>
+      </View>
       <Formik
         initialValues={initialValues}
         onSubmit={(values) =>
@@ -225,7 +217,7 @@ export const CreateReleaseScreen = () => {
               <View>
                 {multiValues?.tracks.map((track, i) => {
                   return (
-                    <View className="flex flex-row justify-between" key={i}>
+                    <View className="flex flex-row justify-between#" key={i}>
                       <Text className="text-white font-semibold text-md mx-2 my-2  max-w-[70%]">
                         {i + 1}. {track}
                       </Text>
@@ -274,7 +266,7 @@ export const CreateReleaseScreen = () => {
                 value-={values.language}
               />
               <Radio.Group
-                className=" text-sm"
+                className=" text-sm flex flex-row justify-around"
                 name="type"
                 my={2}
                 accessibilityLabel="Type"
@@ -282,7 +274,7 @@ export const CreateReleaseScreen = () => {
                 onChange={handleChange("type")}
               >
                 <Radio colorScheme="white" value={"Album"} my={1}>
-                  <Text className="text-white">Album</Text>
+                  <Text className="text-white mr-3">Album</Text>
                 </Radio>
                 <Radio colorScheme="white" value={"Single"} my={1}>
                   <Text className="text-white">Single</Text>
@@ -290,6 +282,7 @@ export const CreateReleaseScreen = () => {
               </Radio.Group>
 
               <Button
+                className="mt-4"
                 spinnerPlacement="end"
                 bgColor="#94a3b8"
                 isLoadingText="Submitting"

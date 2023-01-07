@@ -55,7 +55,7 @@ export const PlaylistRelease: React.FC<Props> = ({
   const handleRemove = (event: any) => {
     const newArr = [...contentIds];
     const i = newArr.indexOf(id);
-    newArr.splice(i);
+    newArr.splice(i, 1);
 
     updatePlaylist({
       id: playlistId as number,
@@ -87,7 +87,7 @@ export const PlaylistRelease: React.FC<Props> = ({
           source={{ uri: release?.getReleaseById?.cover as string }}
         />
         <View>
-          <Text className="text-blue-300  mt-2  w-[90%]">
+          <Text className="text-blue-300  mt-2  w-[100%]">
             {release?.getReleaseById?.title}
           </Text>
           <ArtistName

@@ -64,10 +64,10 @@ export const PlaylistScreen = ({ navigation, route }: any) => {
         <Spinner />
       ) : (
         <ScrollView>
-          {data?.getPlaylistById?.contentIds?.map((releaseId) => {
+          {data?.getPlaylistById?.contentIds?.map((releaseId, index) => {
             return (
               <PlaylistRelease
-                key={releaseId}
+                key={index}
                 playlistId={id as number}
                 contentIds={data.getPlaylistById?.contentIds as number[]}
                 refresh={refresh}

@@ -27,10 +27,10 @@ export const TabArr = [
     component: CreateReleaseScreen,
   },
   {
-    route: "Like",
-    label: "Like",
+    route: "News",
+    label: "News",
     type: Icons.Feather,
-    icon: "heart",
+    icon: "file-text",
     component: HomeScreen,
   },
   {

@@ -133,8 +133,9 @@ export const UserScreen = ({ navigation }: any) => {
                 <Text className="text-white m-3 text-xl">{item?.title}</Text>
                 <View className="my-auto flex flex-row">
                   {item?.contentIds
-                    ? item?.contentIds.map((id: number) => {
-                        return <ReleaseCover key={id} id={id as number} />;
+                    ? item?.contentIds.map((id: number, index: number) => {
+                        if (index < 6)
+                          return <ReleaseCover key={index} id={id as number} />;
                       })
                     : null}
                 </View>
