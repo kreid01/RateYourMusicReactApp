@@ -82,11 +82,19 @@ export const UserScreen = ({ navigation }: any) => {
   return (
     <View className="h-[100vh] bg-slate-800">
       <View className="mt-16 relative w-[90%] flex flex-row rounded-2xl bg-gray-700 p-3 mx-auto">
-        {(file || image) && (
+        {file || image ? (
           <Image
             alt=""
             source={{
               uri: "data:image/jpeg;base64," + image,
+            }}
+            className="w-20 z-5 relative h-20 my-auto rounded-full"
+          />
+        ) : (
+          <Image
+            alt=""
+            source={{
+              uri: "https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-High-Quality-Image.png",
             }}
             className="w-20 z-5 relative h-20 my-auto rounded-full"
           />
@@ -115,7 +123,7 @@ export const UserScreen = ({ navigation }: any) => {
         <Text className="text-3xl text-white ">YOUR PLAYLISTS</Text>
 
         <FlatList
-          className="mt-5 min-h-[27vh]"
+          className="mt-5 max-h-[27vh]"
           numColumns={1}
           data={data?.getUserPlaylists}
           refreshControl={
@@ -165,7 +173,7 @@ export const UserScreen = ({ navigation }: any) => {
                 <Center
                   w="94.5%"
                   marginBottom={10}
-                  className="h-[20vh] mt-5  bg-slate-700"
+                  className=" mt-5  bg-slate-700"
                 >
                   <Box safeArea p="2" w="90%" className="-mt-5" maxW="320">
                     <FormControl>

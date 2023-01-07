@@ -61,7 +61,7 @@ export const PlaylistScreen = ({ navigation, route }: any) => {
         </Button>
       </View>
       {fetching ? (
-        <Spinner />
+        <Spinner color="indigo.500" size="lg" className="mx-auto mt-10" />
       ) : (
         <ScrollView>
           {data?.getPlaylistById?.contentIds?.map((releaseId, index) => {

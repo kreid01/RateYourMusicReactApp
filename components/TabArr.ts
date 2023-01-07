@@ -1,3 +1,4 @@
+import { NewseScreen } from "./../screens/NewsScreen";
 import { Icons } from "./Icons";
 import { HomeScreen } from "../screens/HomeScreen";
 import { LoginScreen } from "../screens/LoginScreen";
@@ -31,7 +32,7 @@ export const TabArr = [
     label: "News",
     type: Icons.Feather,
     icon: "file-text",
-    component: HomeScreen,
+    component: NewseScreen,
   },
   {
     route: "Account",

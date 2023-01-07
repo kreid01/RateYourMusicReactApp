@@ -4,62 +4,29 @@ import React, { useRef, useState } from "react";
 import Animated from "react-native-reanimated";
 import { Release } from "../components/Release";
 import { SearchBar } from "../components/SearchBar";
-import { useInfiniteQuery } from "react-query";
-import { IRelease } from "../conts/Types";
+import { useMyInfiniteQuery } from "../hooks/useMyInfiniteQuery";
 
-const getReleases = async (pageParam: number) => {
-  const response = await fetch("http://192.168.0.15:80/graphql", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      query: `
-    query getAllReleases($take: Int!, $skip: Int!) {
-      getAllReleases(take: $take, skip: $skip) {
-        id
-        genres
-        artistId
-        title
-        rating
-        released
-        ratingCount
-        cover
-      }
-    }
-  `,
-      variables: {
-        take: 8,
-        skip: pageParam,
-      },
-    }),
-  });
-  const releases = await response.json();
-
-  console.log(pageParam);
-
-  return releases.data.getAllReleases;
-};
+const getAllReleasesQuery = `
+query getAllReleases($take: Int!, $skip: Int!) {
+  getAllReleases(take: $take, skip: $skip) {
+    id
+    genres
+    artistId
+    title
+    rating
+    released
+    ratingCount
+    cover
+  }
+}
+`;
 
 export const HomeScreen = ({ navigation }: any) => {
-  const { data, fetchNextPage, hasNextPage, isFetching, refetch, isSuccess } =
-    useInfiniteQuery({
-      queryKey: ["releases"],
-      queryFn: ({ pageParam = 1 }) => getReleases(pageParam),
-      getNextPageParam: (lastPage, allPages) => {
-        const nextPage = allPages.length + 1;
-        return nextPage;
-      },
-    });
-
-  const loadNext = () => {
-    if (hasNextPage) {
-      fetchNextPage();
-    }
-  };
-
   const scrollY = useRef(new Animated.Value(0)).current;
   const itemSize = 176;
+
+  const { isSuccess, data, isFetching, refetch, loadNext } =
+    useMyInfiniteQuery(getAllReleasesQuery);
 
   return (
     <View className="relative min-h-[100vh] bg-slate-800">
@@ -113,7 +80,7 @@ export const HomeScreen = ({ navigation }: any) => {
             );
           }}
           onEndReached={loadNext}
-          data={data.pages.flat()}
+          data={data?.pages.flat()}
           refreshControl={
             <RefreshControl refreshing={isFetching} onRefresh={refetch} />
           }

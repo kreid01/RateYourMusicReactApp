@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Text, View, Image, Button } from "native-base";
 import React from "react";
+import { RefreshControl } from "react-native-gesture-handler";
 import { useQuery } from "react-query";
 import { useSelector } from "react-redux";
 import {
@@ -12,6 +13,7 @@ import { RootState } from "../store/store";
 
 interface Props {
   message: Message;
+  refresh: () => void;
 }
 
 const getUserImage = async () => {
@@ -19,7 +21,7 @@ const getUserImage = async () => {
   return image;
 };
 
-export const ChatMessaage: React.FC<Props> = ({ message }) => {
+export const ChatMessaage: React.FC<Props> = ({ message, refresh }) => {
   const [result] = useGetUsernameQuery({
     variables: { id: message.posterId as number },
   });
@@ -59,7 +61,16 @@ export const ChatMessaage: React.FC<Props> = ({ message }) => {
           </Text>
           {currentUser?.id === message.posterId ? (
             <Button
-              onPress={() => deleteMessage({ id: message.id as number })}
+              onPress={() =>
+                deleteMessage({ id: message.id as number }).then(
+                  async (data) => {
+                    if (data.error) {
+                      console.debug(data.error);
+                    }
+                    refresh();
+                  }
+                )
+              }
               variant="ghost"
               className="ml-10"
               size={"sm"}

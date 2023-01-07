@@ -240,6 +240,16 @@ export type QuerySearchReleasesArgs = {
   search: Scalars['String'];
 };
 
+export type Subscription = {
+  __typename?: 'Subscription';
+  messageSubscription?: Maybe<Message>;
+};
+
+
+export type SubscriptionMessageSubscriptionArgs = {
+  channelId: Scalars['Int'];
+};
+
 export type Artist = {
   __typename?: 'artist';
   born?: Maybe<Scalars['String']>;
@@ -346,7 +356,14 @@ export type GetChatMessagesQueryVariables = Exact<{
 }>;
 
 
-export type GetChatMessagesQuery = { __typename?: 'Query', getChatMessages?: Array<{ __typename?: 'message', channelId?: number | null, posterId?: number | null, content?: string | null, postDate?: string | null } | null> | null };
+export type GetChatMessagesQuery = { __typename?: 'Query', getChatMessages?: Array<{ __typename?: 'message', id?: number | null, channelId?: number | null, posterId?: number | null, content?: string | null, postDate?: string | null } | null> | null };
+
+export type GetMessagesSubscriptionVariables = Exact<{
+  channelId: Scalars['Int'];
+}>;
+
+
+export type GetMessagesSubscription = { __typename?: 'Subscription', messageSubscription?: { __typename?: 'message', content?: string | null } | null };
 
 export type PostMessageMutationVariables = Exact<{
   channelId: Scalars['Int'];
@@ -509,7 +526,9 @@ export default {
     "mutationType": {
       "name": "Mutation"
     },
-    "subscriptionType": null,
+    "subscriptionType": {
+      "name": "Subscription"
+    },
     "types": [
       {
         "kind": "OBJECT",
@@ -1632,6 +1651,33 @@ export default {
       },
       {
         "kind": "OBJECT",
+        "name": "Subscription",
+        "fields": [
+          {
+            "name": "messageSubscription",
+            "type": {
+              "kind": "OBJECT",
+              "name": "message",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "channelId",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
         "name": "artist",
         "fields": [
           {
@@ -2085,6 +2131,7 @@ export function useDeleteMessageMutation() {
 export const GetChatMessagesDocument = gql`
     query getChatMessages($id: Int!) {
   getChatMessages(id: $id) {
+    id
     channelId
     posterId
     content
@@ -2095,6 +2142,17 @@ export const GetChatMessagesDocument = gql`
 
 export function useGetChatMessagesQuery(options: Omit<Urql.UseQueryArgs<GetChatMessagesQueryVariables>, 'query'>) {
   return Urql.useQuery<GetChatMessagesQuery, GetChatMessagesQueryVariables>({ query: GetChatMessagesDocument, ...options });
+};
+export const GetMessagesDocument = gql`
+    subscription getMessages($channelId: Int!) {
+  messageSubscription(channelId: $channelId) {
+    content
+  }
+}
+    `;
+
+export function useGetMessagesSubscription<TData = GetMessagesSubscription>(options: Omit<Urql.UseSubscriptionArgs<GetMessagesSubscriptionVariables>, 'query'> = {}, handler?: Urql.SubscriptionHandler<GetMessagesSubscription, TData>) {
+  return Urql.useSubscription<GetMessagesSubscription, TData, GetMessagesSubscriptionVariables>({ query: GetMessagesDocument, ...options }, handler);
 };
 export const PostMessageDocument = gql`
     mutation postMessage($channelId: Int!, $posterId: Int!, $content: String!) {

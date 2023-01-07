@@ -9,5 +9,4 @@ query getAllReleases($take: Int!, $skip: Int!) {
     ratingCount
     cover
   }
-  hasMore
 }

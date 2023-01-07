@@ -1,0 +1,5 @@
+subscription getMessages($channelId: Int!) {
+  messageSubscription(channelId: $channelId) {
+    content
+  }
+}

@@ -11,6 +11,7 @@ import {
 import {
   Message,
   useGetChatMessagesQuery,
+  useGetMessagesSubscription,
   usePostMessageMutation,
 } from "../generated/graphql";
 import { ChatMessaage } from "../components/ChatMessage";
@@ -20,9 +21,23 @@ import { ChannelName } from "../components/ChannelName";
 
 export const SingleChannelScreen = ({ route, navigation }: any) => {
   const { id } = route.params;
-  const [result] = useGetChatMessagesQuery({ variables: { id: id } });
+  const [result, reexecuteQuery] = useGetChatMessagesQuery({
+    variables: { id: id },
+  });
+
+  const refresh = () => {
+    reexecuteQuery({ variables: { id: id }, requestPolicy: "network-only" });
+  };
 
   const { data, fetching } = result;
+
+  const [messages] = useGetMessagesSubscription({
+    variables: { channelId: id as number },
+  });
+
+  const { data: chat } = messages;
+
+  console.log(chat?.messageSubscription);
 
   const [message, setMessage] = useState<string>("");
   const currentUser = useSelector((state: RootState) => state.user.value);
@@ -30,11 +45,11 @@ export const SingleChannelScreen = ({ route, navigation }: any) => {
   const [, postMessage] = usePostMessageMutation();
 
   return (
-    <View className="min-h-[100vh] bg-slate-800">
+    <View className="min-h-[100vh] relative bg-slate-800">
       <View className="pt-12 pb-3 shadow-lg  bg-slate-900  flex flex-row">
         <Button
           accessibilityLabel="back-button"
-          className="absolute rounded-full py-3 top-12 left-5 text-white"
+          className="absolute rounded-full py-3 top-10 left-5 text-white"
           variant="ghost"
           onPress={() => navigation.navigate("Channels")}
         >
@@ -45,11 +60,19 @@ export const SingleChannelScreen = ({ route, navigation }: any) => {
         </Text>
       </View>
       {fetching ? (
-        <Spinner />
+        <ScrollView className="flex w-[90vw] h-[80vh]">
+          <Spinner color="indigo.500" size="lg" className="mx-auto mt-10" />
+        </ScrollView>
       ) : (
         <ScrollView className="flex w-[90vw] h-[80vh]">
           {data?.getChatMessages?.map((message, i) => {
-            return <ChatMessaage key={i} message={message as Message} />;
+            return (
+              <ChatMessaage
+                refresh={refresh}
+                key={i}
+                message={message as Message}
+              />
+            );
           })}
         </ScrollView>
       )}
@@ -75,6 +98,7 @@ export const SingleChannelScreen = ({ route, navigation }: any) => {
                     alert(data.error.message);
                   } else {
                     setMessage("");
+                    refresh();
                   }
                 })
               }

@@ -7,7 +7,7 @@ export const DisplayAdd = ({ releaseTitle }: { releaseTitle: string }) => {
   useState(() => {
     Animated.timing(progressBar, {
       toValue: 372,
-      duration: 2250,
+      duration: 4529,
       useNativeDriver: false,
     }).start();
   });
@@ -18,9 +18,9 @@ export const DisplayAdd = ({ releaseTitle }: { releaseTitle: string }) => {
         style={{
           width: progressBar,
         }}
-        className="absolute border-2 border-red-500"
+        className="absolute border-2 border-blue-500"
       />
-      <Text className="text-white mx-auto my-auto">
+      <Text className="text-white pt-1 mx-auto my-auto">
         {releaseTitle} added to playlist{" "}
       </Text>
     </View>
