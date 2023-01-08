@@ -35,14 +35,6 @@ export const PlaylistRelease: React.FC<Props> = ({
       outputRange: [1, 0.1],
     });
 
-    const style = {
-      transform: [
-        {
-          translateX,
-        },
-      ],
-    };
-
     return (
       <View className="bg-red-500 w-[95vw] h-[9vh] mr-3 mt-1">
         <Animated.Text className="ml-auto my-auto mr-5 text-xl">
@@ -64,7 +56,6 @@ export const PlaylistRelease: React.FC<Props> = ({
       if (data.error) {
         alert(data.error.message);
       } else {
-        refresh();
       }
     });
   };

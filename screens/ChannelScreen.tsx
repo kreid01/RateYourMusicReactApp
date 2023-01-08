@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, Spinner, ScrollView, Input } from "native-base";
 import { useGetAllChannelsQuery } from "../generated/graphql";
-import { ChannelComponent } from "../components/ChannelComponent";
+import { ChannelComponent } from "../components/ChannelComponent/ChannelComponent";
 
 export const ChannelScreen = ({ navigation }: any) => {
   const [result] = useGetAllChannelsQuery();

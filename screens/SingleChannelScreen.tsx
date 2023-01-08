@@ -7,6 +7,7 @@ import {
   Input,
   Button,
   ArrowBackIcon,
+  KeyboardAvoidingView,
 } from "native-base";
 import {
   Message,
@@ -44,8 +45,13 @@ export const SingleChannelScreen = ({ route, navigation }: any) => {
 
   const [, postMessage] = usePostMessageMutation();
 
+  console.log(data?.getChatMessages);
+
   return (
-    <View className="min-h-[100vh] relative bg-slate-800">
+    <KeyboardAvoidingView
+      behavior="position"
+      className="min-h-[100vh] relative bg-slate-800"
+    >
       <View className="pt-12 pb-3 shadow-lg  bg-slate-900  flex flex-row">
         <Button
           accessibilityLabel="back-button"
@@ -98,7 +104,6 @@ export const SingleChannelScreen = ({ route, navigation }: any) => {
                     alert(data.error.message);
                   } else {
                     setMessage("");
-                    refresh();
                   }
                 })
               }
@@ -108,6 +113,6 @@ export const SingleChannelScreen = ({ route, navigation }: any) => {
           }
         ></Input>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 };

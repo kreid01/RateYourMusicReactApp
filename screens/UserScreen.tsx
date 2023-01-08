@@ -163,7 +163,6 @@ export const UserScreen = ({ navigation }: any) => {
                   console.debug(result.error.message);
                 } else if (result.data) {
                   handleClick();
-                  refresh();
                 }
               });
             }}

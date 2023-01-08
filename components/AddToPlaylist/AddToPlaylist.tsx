@@ -6,9 +6,9 @@ import { useSelector } from "react-redux";
 import {
   useGetUserPlaylistsQuery,
   useUpdatePlaylistMutation,
-} from "../generated/graphql";
-import { RootState } from "../store/store";
-import { DisplayAdd } from "./DisplayAdd";
+} from "../../generated/graphql";
+import { RootState } from "../../store/store";
+import { DisplayAdd } from "../DisplayAdd";
 
 interface Props {
   releaseId: number;

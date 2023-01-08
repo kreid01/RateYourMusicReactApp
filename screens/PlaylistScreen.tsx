@@ -52,6 +52,7 @@ export const PlaylistScreen = ({ navigation, route }: any) => {
               if (data.error) {
                 alert(data.error.message);
               } else {
+                refresh();
                 navigation.navigate("Account");
               }
             })

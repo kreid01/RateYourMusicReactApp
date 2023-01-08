@@ -83,6 +83,7 @@ export const EditRelease: React.FC<Props> = ({ release, handleEdit }) => {
                   <Button
                     className="mb-5"
                     variant="ghost"
+                    testID="edit-button"
                     onPress={() => handleEdit()}
                   >
                     <CloseIcon color="#D30000" />

@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { View } from "native-base";
+import { InfoIcon, View } from "native-base";
 import { RegisterScreen } from "../screens/RegisterScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -10,10 +10,57 @@ import { navStyles } from "../styles/BottomNavStyles";
 import { TabArr } from "./TabArr";
 import { SingleReleaseScreen } from "../screens/SingleReleaseScreen";
 import { LoginScreen } from "../screens/LoginScreen";
-import { createClient, Provider } from "urql";
+import {
+  createClient,
+  defaultExchanges,
+  gql,
+  Provider,
+  subscriptionExchange,
+} from "urql";
 import { getAccessToken } from "../utils/accessToken";
 import { SingleChannelScreen } from "../screens/SingleChannelScreen";
 import { PlaylistScreen } from "../screens/PlaylistScreen";
+import { createClient as createWSClient } from "graphql-ws";
+import { cacheExchange } from "@urql/exchange-graphcache";
+import {
+  GetChatMessagesDocument,
+  GetUserPlaylistsDocument,
+} from "../generated/graphql";
+
+const wsClient = createWSClient({
+  url: "ws://192.168.0.15:80/graphql",
+});
+
+const messages = gql`
+  query ($id: Int!) {
+    getChatMessages(id: $id) {
+      id
+      channelId
+      posterId
+      content
+      postDate
+    }
+  }
+`;
+
+const playlist = gql`
+  query ($id: Int!) {
+    getUserPlaylists(id: $id) {
+      id
+      contentIds
+      title
+    }
+  }
+`;
+
+const getPlaylistById = gql`
+  query ($id: Int!) {
+    getPlaylistById(id: $id) {
+      title
+      contentIds
+    }
+  }
+`;
 
 export const urqlClient = createClient({
   url: "http://192.168.0.15:80/graphql",
@@ -23,6 +70,47 @@ export const urqlClient = createClient({
       headers: { authorization: token ? `Bearer ${token}` : "" },
     };
   },
+  exchanges: [
+    ...defaultExchanges,
+    subscriptionExchange({
+      forwardSubscription: (operation) => ({
+        subscribe: (sink) => ({
+          unsubscribe: wsClient.subscribe(operation, sink),
+        }),
+      }),
+    }),
+    cacheExchange({
+      updates: {
+        Mutation: {
+          deletePlaylist(result, args, cache, info) {
+            cache.updateQuery(
+              { query: GetUserPlaylistsDocument, variables: info.variables },
+              (data: any) => {
+                data.getUsersPlaylists.filter(
+                  (playlist: any) => playlist.id !== args.id
+                );
+                return data;
+              }
+            );
+          },
+
+          deleteMessage(_result, args, cache, _info) {
+            cache.updateQuery(
+              {
+                query: messages,
+                variables: { channelId: args.channelId },
+              },
+              (data: any) => {
+                data.getChatMessage = data.getChatMessages.filter(
+                  (message: any) => message.id !== 46
+                );
+              }
+            );
+          },
+        },
+      },
+    }),
+  ],
 });
 
 export const Navigation = () => {

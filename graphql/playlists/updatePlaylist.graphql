@@ -1,5 +1,7 @@
 mutation updatePlaylist($id: Int!, $contentIds: [Int!]) {
   updatePlaylist(id: $id, contentIds: $contentIds) {
     contentIds
+    id
+    title
   }
 }

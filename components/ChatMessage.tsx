@@ -66,8 +66,8 @@ export const ChatMessaage: React.FC<Props> = ({ message, refresh }) => {
                   async (data) => {
                     if (data.error) {
                       console.debug(data.error);
+                    } else {
                     }
-                    refresh();
                   }
                 )
               }

@@ -1,7 +1,7 @@
 import { Image, Spinner, View, Text } from "native-base";
 import React from "react";
 import { TouchableOpacity } from "react-native";
-import { useGetReleaseByIdQuery } from "../generated/graphql";
+import { useGetReleaseByIdQuery } from "../../generated/graphql";
 
 interface Props {
   id: number;
@@ -35,7 +35,9 @@ export const ChannelComponent: React.FC<Props> = ({
         source={{ uri: data?.getReleaseById?.cover as string }}
       />
       <View className="ml-2">
-        <Text className="text-xl font-bold text-white">{title}</Text>
+        <Text testID="title" className="text-xl font-bold text-white">
+          {title}
+        </Text>
         <Text className=" text-gray-200">{data?.getReleaseById?.title}</Text>
       </View>
     </TouchableOpacity>

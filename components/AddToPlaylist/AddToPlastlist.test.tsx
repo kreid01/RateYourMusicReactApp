@@ -1,11 +1,11 @@
 import React from "react";
 import { cleanup, screen, render } from "@testing-library/react-native";
 import "@testing-library/jest-dom";
-import { ArtistName } from "./ArtistName";
-import { NativeBaseProvider, Spinner } from "native-base";
+import { NativeBaseProvider } from "native-base";
 import { Provider } from "urql";
 import { expect } from "@jest/globals";
-import renderer, { act } from "react-test-renderer";
+import renderer from "react-test-renderer";
+import { AddToPlaylist } from "./AddToPlaylist";
 
 const inset = {
   frame: { x: 0, y: 0, width: 0, height: 0 },
@@ -24,7 +24,7 @@ it("makes a request on render", async () => {
   renderer.create(
     <Provider value={mockClient as any}>
       <NativeBaseProvider initialWindowMetrics={inset}>
-        <ArtistName color="text-red-500" id={1} />;
+        <AddToPlaylist releaseId={1} releaseTitle="test-title" />
       </NativeBaseProvider>
     </Provider>
   );
@@ -35,7 +35,7 @@ it("matched snapshot", async () => {
   const tree = renderer
     .create(
       <NativeBaseProvider>
-        <ArtistName color="text-red-500" id={1} />;
+        <AddToPlaylist releaseId={1} releaseTitle="test-title" />
       </NativeBaseProvider>
     )
     .toJSON();

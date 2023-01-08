@@ -349,7 +349,7 @@ export type DeleteMessageMutationVariables = Exact<{
 }>;
 
 
-export type DeleteMessageMutation = { __typename?: 'Mutation', deleteMessage?: { __typename?: 'message', content?: string | null } | null };
+export type DeleteMessageMutation = { __typename?: 'Mutation', deleteMessage?: { __typename?: 'message', content?: string | null, id?: number | null } | null };
 
 export type GetChatMessagesQueryVariables = Exact<{
   id: Scalars['Int'];
@@ -409,7 +409,7 @@ export type UpdatePlaylistMutationVariables = Exact<{
 }>;
 
 
-export type UpdatePlaylistMutation = { __typename?: 'Mutation', updatePlaylist?: { __typename?: 'playlist', contentIds?: Array<number | null> | null } | null };
+export type UpdatePlaylistMutation = { __typename?: 'Mutation', updatePlaylist?: { __typename?: 'playlist', contentIds?: Array<number | null> | null, id?: number | null, title?: string | null } | null };
 
 export type GetAllReleasesQueryVariables = Exact<{
   take: Scalars['Int'];
@@ -2121,6 +2121,7 @@ export const DeleteMessageDocument = gql`
     mutation deleteMessage($id: Int!) {
   deleteMessage(id: $id) {
     content
+    id
   }
 }
     `;
@@ -2216,6 +2217,8 @@ export const UpdatePlaylistDocument = gql`
     mutation updatePlaylist($id: Int!, $contentIds: [Int!]) {
   updatePlaylist(id: $id, contentIds: $contentIds) {
     contentIds
+    id
+    title
   }
 }
     `;

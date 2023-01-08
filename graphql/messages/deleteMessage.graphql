@@ -1,5 +1,6 @@
 mutation deleteMessage($id: Int!) {
   deleteMessage(id: $id) {
     content
+    id
   }
 }

@@ -14,8 +14,10 @@ export const ArtistName: React.FC<Props> = ({ id, color }) => {
   const { data, fetching } = result;
 
   return !fetching ? (
-    <Text className={`${color} font-bold`}>{data?.getArtistById?.name}</Text>
+    <Text testID="artist-name" className={`${color} font-bold`}>
+      {data?.getArtistById?.name}
+    </Text>
   ) : (
-    <Spinner />
+    <Spinner testID="spinner" />
   );
 };

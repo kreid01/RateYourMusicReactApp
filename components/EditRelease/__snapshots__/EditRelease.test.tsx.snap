@@ -1,0 +1,1006 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matched snapshot 1`] = `
+<RNCSafeAreaProvider
+  onInsetsChange={[Function]}
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    dataSet={{}}
+    style={{}}
+  >
+    <View
+      className="mt-5 ml-5 w-[90%]"
+      dataSet={{}}
+      style={{}}
+    >
+      <View
+        className="mb-2"
+        dataSet={{}}
+        style={{}}
+      >
+        <View
+          dataSet={{}}
+          isFocused={false}
+          style={
+            {
+              "alignItems": "center",
+              "backgroundColor": "#475569",
+              "borderColor": "#475569",
+              "borderRadius": 4,
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "overflow": "hidden",
+            }
+          }
+        >
+          <TextInput
+            accessible={true}
+            className="text-white"
+            dataSet={{}}
+            editable={true}
+            focusOutlineColor="#475569"
+            onBlur={[Function]}
+            onChangeText={[Function]}
+            onFocus={[Function]}
+            onKeyPress={[Function]}
+            placeholder="Cover"
+            placeholderTextColor="#a3a3a3"
+            secureTextEntry={false}
+            style={
+              {
+                "backgroundColor": "transparent",
+                "color": "#171717",
+                "flex": 1,
+                "fontFamily": undefined,
+                "fontSize": 12,
+                "fontStyle": "normal",
+                "fontWeight": "400",
+                "height": "100%",
+                "paddingBottom": 8,
+                "paddingLeft": 12,
+                "paddingRight": 12,
+                "paddingTop": 8,
+                "width": "100%",
+              }
+            }
+          >
+            testimgaeurl
+          </TextInput>
+        </View>
+      </View>
+      <View
+        dataSet={{}}
+        isFocused={false}
+        style={
+          {
+            "alignItems": "center",
+            "backgroundColor": "#475569",
+            "borderColor": "#475569",
+            "borderRadius": 4,
+            "borderWidth": 1,
+            "flexDirection": "row",
+            "overflow": "hidden",
+          }
+        }
+      >
+        <TextInput
+          accessible={true}
+          className="text-white text-3xl"
+          dataSet={{}}
+          editable={true}
+          focusOutlineColor="#475569"
+          onBlur={[Function]}
+          onChangeText={[Function]}
+          onFocus={[Function]}
+          onKeyPress={[Function]}
+          placeholderTextColor="#a3a3a3"
+          secureTextEntry={false}
+          style={
+            {
+              "backgroundColor": "transparent",
+              "color": "#171717",
+              "flex": 1,
+              "fontFamily": undefined,
+              "fontSize": 12,
+              "fontStyle": "normal",
+              "fontWeight": "400",
+              "height": "100%",
+              "paddingBottom": 8,
+              "paddingLeft": 12,
+              "paddingRight": 12,
+              "paddingTop": 8,
+              "width": "100%",
+            }
+          }
+        >
+          test
+        </TextInput>
+      </View>
+      <View
+        className="flex flex-row"
+        dataSet={{}}
+        style={{}}
+      >
+        <Text
+          className="text-gray-500"
+          dataSet={{}}
+          style={
+            {
+              "backgroundColor": undefined,
+              "color": "#171717",
+              "fontFamily": undefined,
+              "fontSize": 14,
+              "fontStyle": "normal",
+              "fontWeight": "400",
+              "letterSpacing": 0,
+              "lineHeight": 21,
+              "textDecorationLine": undefined,
+            }
+          }
+        >
+          By
+           
+          <ActivityIndicator
+            accessibilityLabel="loading"
+            accessible={true}
+            color="#0891b2"
+            size="small"
+            style={
+              [
+                [
+                  {},
+                  {
+                    "dataSet": {},
+                  },
+                  {},
+                ],
+                undefined,
+              ]
+            }
+            testID="spinner"
+          />
+        </Text>
+        <View
+          className="flex flex-row ml-auto"
+          dataSet={{}}
+          style={{}}
+        >
+          <View
+            accessibilityRole="button"
+            accessible={true}
+            className="mb-5"
+            collapsable={false}
+            colorScheme="primary"
+            dataSet={{}}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              {
+                "alignItems": "center",
+                "borderRadius": 4,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "paddingBottom": 10,
+                "paddingLeft": 12,
+                "paddingRight": 12,
+                "paddingTop": 10,
+              }
+            }
+          >
+            <View
+              dataSet={{}}
+              style={
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                }
+              }
+              test={true}
+            >
+              <View
+                dataSet={{}}
+                style={{}}
+              >
+                <RNSVGSvgView
+                  accessibilityRole="image"
+                  align="xMidYMid"
+                  bbHeight="16"
+                  bbWidth="16"
+                  dataSet={{}}
+                  focusable={false}
+                  meetOrSlice={0}
+                  minX={0}
+                  minY={0}
+                  stroke=""
+                  style={
+                    [
+                      {
+                        "backgroundColor": "transparent",
+                        "borderWidth": 0,
+                      },
+                      {
+                        "color": "#3BB143",
+                        "height": 16,
+                        "width": 16,
+                      },
+                      {
+                        "flex": 0,
+                        "height": 16,
+                        "width": 16,
+                      },
+                    ]
+                  }
+                  tintColor="#3BB143"
+                  vbHeight={24}
+                  vbWidth={24}
+                >
+                  <RNSVGGroup
+                    propList={
+                      [
+                        "stroke",
+                      ]
+                    }
+                    stroke={null}
+                  >
+                    <RNSVGGroup>
+                      <RNSVGPath
+                        d="M8.53115 15.1856L3.96198 10.744L2 12.6512L8.53115 19L22 5.9072L20.038 4L8.53115 15.1856Z"
+                        fill={
+                          {
+                            "type": 2,
+                          }
+                        }
+                        propList={
+                          [
+                            "fill",
+                            "stroke",
+                          ]
+                        }
+                        stroke={null}
+                      />
+                    </RNSVGGroup>
+                  </RNSVGGroup>
+                </RNSVGSvgView>
+              </View>
+            </View>
+          </View>
+          <View
+            accessibilityRole="button"
+            accessible={true}
+            className="mb-5"
+            collapsable={false}
+            colorScheme="primary"
+            dataSet={{}}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              {
+                "alignItems": "center",
+                "borderRadius": 4,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "paddingBottom": 10,
+                "paddingLeft": 12,
+                "paddingRight": 12,
+                "paddingTop": 10,
+              }
+            }
+            testID="edit-button"
+          >
+            <View
+              dataSet={{}}
+              style={
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                }
+              }
+              test={true}
+            >
+              <View
+                dataSet={{}}
+                style={{}}
+              >
+                <RNSVGSvgView
+                  accessibilityRole="image"
+                  align="xMidYMid"
+                  bbHeight="16"
+                  bbWidth="16"
+                  dataSet={{}}
+                  focusable={false}
+                  meetOrSlice={0}
+                  minX={0}
+                  minY={0}
+                  stroke=""
+                  style={
+                    [
+                      {
+                        "backgroundColor": "transparent",
+                        "borderWidth": 0,
+                      },
+                      {
+                        "color": "#D30000",
+                        "height": 16,
+                        "width": 16,
+                      },
+                      {
+                        "flex": 0,
+                        "height": 16,
+                        "width": 16,
+                      },
+                    ]
+                  }
+                  tintColor="#D30000"
+                  vbHeight={24}
+                  vbWidth={24}
+                >
+                  <RNSVGGroup
+                    propList={
+                      [
+                        "stroke",
+                      ]
+                    }
+                    stroke={null}
+                  >
+                    <RNSVGGroup>
+                      <RNSVGPath
+                        d="M12 9.77778L4.22222 2L2 4.22222L9.77778 12L2 19.7778L4.22222 22L12 14.2222L19.7778 22L22 19.7778L14.2222 12L22 4.22222L19.7778 2L12 9.77778Z"
+                        fill={
+                          {
+                            "type": 2,
+                          }
+                        }
+                        propList={
+                          [
+                            "fill",
+                            "stroke",
+                          ]
+                        }
+                        stroke={null}
+                      />
+                    </RNSVGGroup>
+                  </RNSVGGroup>
+                </RNSVGSvgView>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+    <View
+      className="mx-5 mt-5 p-5 bg-gray-700 "
+      dataSet={{}}
+      style={{}}
+    >
+      <View
+        className="flex flex-row"
+        dataSet={{}}
+        style={{}}
+      >
+        <Text
+          className="text-gray-100 mr-8"
+          dataSet={{}}
+          style={
+            {
+              "backgroundColor": undefined,
+              "color": "#171717",
+              "fontFamily": undefined,
+              "fontSize": 14,
+              "fontStyle": "normal",
+              "fontWeight": "400",
+              "letterSpacing": 0,
+              "lineHeight": 21,
+              "textDecorationLine": undefined,
+            }
+          }
+        >
+          Type:
+        </Text>
+        <View
+          dataSet={{}}
+          isFocused={false}
+          style={
+            {
+              "alignItems": "center",
+              "backgroundColor": "#475569",
+              "borderColor": "#475569",
+              "borderRadius": 4,
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "height": 28,
+              "marginTop": -4,
+              "overflow": "hidden",
+              "width": 256,
+            }
+          }
+        >
+          <TextInput
+            accessible={true}
+            className="text-white"
+            dataSet={{}}
+            editable={true}
+            focusOutlineColor="#475569"
+            onBlur={[Function]}
+            onChangeText={[Function]}
+            onFocus={[Function]}
+            onKeyPress={[Function]}
+            placeholderTextColor="#a3a3a3"
+            secureTextEntry={false}
+            style={
+              {
+                "backgroundColor": "transparent",
+                "color": "#171717",
+                "flex": 1,
+                "fontFamily": undefined,
+                "fontSize": 12,
+                "fontStyle": "normal",
+                "fontWeight": "400",
+                "height": "100%",
+                "paddingBottom": 8,
+                "paddingLeft": 12,
+                "paddingRight": 12,
+                "paddingTop": 8,
+                "width": "100%",
+              }
+            }
+          >
+            Album
+          </TextInput>
+        </View>
+      </View>
+      <View
+        dataSet={{}}
+        style={{}}
+      >
+        <Text
+          className="text-white"
+          dataSet={{}}
+          style={
+            {
+              "backgroundColor": undefined,
+              "color": "#171717",
+              "fontFamily": undefined,
+              "fontSize": 14,
+              "fontStyle": "normal",
+              "fontWeight": "400",
+              "letterSpacing": 0,
+              "lineHeight": 21,
+              "textDecorationLine": undefined,
+            }
+          }
+        >
+          Rating:
+           
+          <Text
+            className=" text-white font-bold text-lg"
+            dataSet={{}}
+            style={
+              {
+                "backgroundColor": undefined,
+                "fontFamily": undefined,
+                "fontSize": undefined,
+                "fontStyle": undefined,
+                "fontWeight": undefined,
+                "textDecorationLine": undefined,
+              }
+            }
+          >
+            5
+          </Text>
+           
+          / 5.0 from
+           
+          <Text
+            className=" text-white font-bold"
+            dataSet={{}}
+            style={
+              {
+                "backgroundColor": undefined,
+                "fontFamily": undefined,
+                "fontSize": undefined,
+                "fontStyle": undefined,
+                "fontWeight": undefined,
+                "textDecorationLine": undefined,
+              }
+            }
+          >
+            1
+          </Text>
+           
+          ratings
+        </Text>
+      </View>
+      <View
+        className="flex flex-row my-2"
+        dataSet={{}}
+        style={{}}
+      >
+        <Text
+          className="text-white mr-1"
+          dataSet={{}}
+          style={
+            {
+              "backgroundColor": undefined,
+              "color": "#171717",
+              "fontFamily": undefined,
+              "fontSize": 14,
+              "fontStyle": "normal",
+              "fontWeight": "400",
+              "letterSpacing": 0,
+              "lineHeight": 21,
+              "textDecorationLine": undefined,
+            }
+          }
+        >
+          Released:
+        </Text>
+        <View
+          dataSet={{}}
+          isFocused={false}
+          style={
+            {
+              "alignItems": "center",
+              "backgroundColor": "#475569",
+              "borderColor": "#475569",
+              "borderRadius": 4,
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "height": 28,
+              "marginTop": -4,
+              "overflow": "hidden",
+              "width": 256,
+            }
+          }
+        >
+          <TextInput
+            accessible={true}
+            className="text-white"
+            dataSet={{}}
+            editable={true}
+            focusOutlineColor="#475569"
+            onBlur={[Function]}
+            onChangeText={[Function]}
+            onFocus={[Function]}
+            onKeyPress={[Function]}
+            placeholderTextColor="#a3a3a3"
+            secureTextEntry={false}
+            style={
+              {
+                "backgroundColor": "transparent",
+                "color": "#171717",
+                "flex": 1,
+                "fontFamily": undefined,
+                "fontSize": 12,
+                "fontStyle": "normal",
+                "fontWeight": "400",
+                "height": "100%",
+                "paddingBottom": 8,
+                "paddingLeft": 12,
+                "paddingRight": 12,
+                "paddingTop": 8,
+                "width": "100%",
+              }
+            }
+          >
+            1999 Scotland
+          </TextInput>
+        </View>
+      </View>
+      <View
+        className="flex flex-row justify-between"
+        dataSet={{}}
+        style={{}}
+      >
+        <View
+          className="flex flex-row mt-3 w-[100%] flex-wrap"
+          dataSet={{}}
+          style={{}}
+        >
+          <Text
+            className="text-white mr-1"
+            dataSet={{}}
+            style={
+              {
+                "backgroundColor": undefined,
+                "color": "#171717",
+                "fontFamily": undefined,
+                "fontSize": 14,
+                "fontStyle": "normal",
+                "fontWeight": "400",
+                "letterSpacing": 0,
+                "lineHeight": 21,
+                "textDecorationLine": undefined,
+              }
+            }
+          >
+            Genres:
+          </Text>
+          <View
+            className="-mt-1 mb-3 mx-1"
+            dataSet={{}}
+            style={{}}
+          >
+            <View
+              dataSet={{}}
+              isFocused={false}
+              style={
+                {
+                  "alignItems": "center",
+                  "borderColor": "#d4d4d4",
+                  "borderRadius": 4,
+                  "borderWidth": 1,
+                  "flexDirection": "row",
+                  "overflow": "hidden",
+                  "width": 96,
+                }
+              }
+            >
+              <TextInput
+                accessible={true}
+                className="text-blue-500"
+                dataSet={{}}
+                editable={true}
+                onBlur={[Function]}
+                onChangeText={[Function]}
+                onFocus={[Function]}
+                onKeyPress={[Function]}
+                placeholderTextColor="#a3a3a3"
+                secureTextEntry={false}
+                style={
+                  {
+                    "backgroundColor": "transparent",
+                    "color": "#171717",
+                    "flex": 1,
+                    "fontFamily": undefined,
+                    "fontSize": 12,
+                    "fontStyle": "normal",
+                    "fontWeight": "400",
+                    "height": "100%",
+                    "paddingBottom": 8,
+                    "paddingLeft": 12,
+                    "paddingRight": 12,
+                    "paddingTop": 8,
+                    "width": "100%",
+                  }
+                }
+              >
+                genre1
+                 
+              </TextInput>
+            </View>
+          </View>
+          <View
+            className="-mt-1 mb-3 mx-1"
+            dataSet={{}}
+            style={{}}
+          >
+            <View
+              dataSet={{}}
+              isFocused={false}
+              style={
+                {
+                  "alignItems": "center",
+                  "borderColor": "#d4d4d4",
+                  "borderRadius": 4,
+                  "borderWidth": 1,
+                  "flexDirection": "row",
+                  "overflow": "hidden",
+                  "width": 96,
+                }
+              }
+            >
+              <TextInput
+                accessible={true}
+                className="text-blue-500"
+                dataSet={{}}
+                editable={true}
+                onBlur={[Function]}
+                onChangeText={[Function]}
+                onFocus={[Function]}
+                onKeyPress={[Function]}
+                placeholderTextColor="#a3a3a3"
+                secureTextEntry={false}
+                style={
+                  {
+                    "backgroundColor": "transparent",
+                    "color": "#171717",
+                    "flex": 1,
+                    "fontFamily": undefined,
+                    "fontSize": 12,
+                    "fontStyle": "normal",
+                    "fontWeight": "400",
+                    "height": "100%",
+                    "paddingBottom": 8,
+                    "paddingLeft": 12,
+                    "paddingRight": 12,
+                    "paddingTop": 8,
+                    "width": "100%",
+                  }
+                }
+              >
+                genre2
+                 
+              </TextInput>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        className="flex flex-row"
+        dataSet={{}}
+        style={{}}
+      >
+        <Text
+          className="text-white"
+          dataSet={{}}
+          style={
+            {
+              "backgroundColor": undefined,
+              "color": "#171717",
+              "fontFamily": undefined,
+              "fontSize": 14,
+              "fontStyle": "normal",
+              "fontWeight": "400",
+              "letterSpacing": 0,
+              "lineHeight": 21,
+              "textDecorationLine": undefined,
+            }
+          }
+        >
+          Language: 
+        </Text>
+        <View
+          dataSet={{}}
+          isFocused={false}
+          style={
+            {
+              "alignItems": "center",
+              "borderColor": "#d4d4d4",
+              "borderRadius": 4,
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "height": 28,
+              "marginTop": -4,
+              "overflow": "hidden",
+              "width": 256,
+            }
+          }
+        >
+          <TextInput
+            accessible={true}
+            className="text-white"
+            dataSet={{}}
+            editable={true}
+            onBlur={[Function]}
+            onChangeText={[Function]}
+            onFocus={[Function]}
+            onKeyPress={[Function]}
+            placeholderTextColor="#a3a3a3"
+            secureTextEntry={false}
+            style={
+              {
+                "backgroundColor": "transparent",
+                "color": "#171717",
+                "flex": 1,
+                "fontFamily": undefined,
+                "fontSize": 12,
+                "fontStyle": "normal",
+                "fontWeight": "400",
+                "height": "100%",
+                "paddingBottom": 8,
+                "paddingLeft": 12,
+                "paddingRight": 12,
+                "paddingTop": 8,
+                "width": "100%",
+              }
+            }
+          >
+            English
+          </TextInput>
+        </View>
+      </View>
+      <View
+        dataSet={{}}
+        style={{}}
+      >
+        <Text
+          className="text-white font-bold mb-2 mt-5"
+          dataSet={{}}
+          style={
+            {
+              "backgroundColor": undefined,
+              "color": "#171717",
+              "fontFamily": undefined,
+              "fontSize": 14,
+              "fontStyle": "normal",
+              "fontWeight": "400",
+              "letterSpacing": 0,
+              "lineHeight": 21,
+              "textDecorationLine": undefined,
+            }
+          }
+        >
+          Track Listing
+        </Text>
+        <View
+          className="border-[1px] border-gray-500"
+          dataSet={{}}
+          style={{}}
+        >
+          <View
+            className="flex flex-row py-1 border-b-[1px] border-gray-500"
+            dataSet={{}}
+            style={{}}
+          >
+            <Text
+              className="text-gray-400 font-bold mx-3"
+              dataSet={{}}
+              style={
+                {
+                  "backgroundColor": undefined,
+                  "color": "#171717",
+                  "fontFamily": undefined,
+                  "fontSize": 14,
+                  "fontStyle": "normal",
+                  "fontWeight": "400",
+                  "letterSpacing": 0,
+                  "lineHeight": 21,
+                  "textDecorationLine": undefined,
+                }
+              }
+            >
+              1
+               
+            </Text>
+            <View
+              dataSet={{}}
+              isFocused={false}
+              style={
+                {
+                  "alignItems": "center",
+                  "borderColor": "#d4d4d4",
+                  "borderRadius": 4,
+                  "borderWidth": 1,
+                  "flexDirection": "row",
+                  "overflow": "hidden",
+                  "width": 288,
+                }
+              }
+            >
+              <TextInput
+                accessible={true}
+                className="text-white"
+                dataSet={{}}
+                editable={true}
+                onBlur={[Function]}
+                onChangeText={[Function]}
+                onFocus={[Function]}
+                onKeyPress={[Function]}
+                placeholderTextColor="#a3a3a3"
+                secureTextEntry={false}
+                style={
+                  {
+                    "backgroundColor": "transparent",
+                    "color": "#171717",
+                    "flex": 1,
+                    "fontFamily": undefined,
+                    "fontSize": 12,
+                    "fontStyle": "normal",
+                    "fontWeight": "400",
+                    "height": "100%",
+                    "paddingBottom": 8,
+                    "paddingLeft": 12,
+                    "paddingRight": 12,
+                    "paddingTop": 8,
+                    "width": "100%",
+                  }
+                }
+              >
+                track1
+              </TextInput>
+            </View>
+          </View>
+          <View
+            className="flex flex-row py-1 border-b-[1px] border-gray-500"
+            dataSet={{}}
+            style={{}}
+          >
+            <Text
+              className="text-gray-400 font-bold mx-3"
+              dataSet={{}}
+              style={
+                {
+                  "backgroundColor": undefined,
+                  "color": "#171717",
+                  "fontFamily": undefined,
+                  "fontSize": 14,
+                  "fontStyle": "normal",
+                  "fontWeight": "400",
+                  "letterSpacing": 0,
+                  "lineHeight": 21,
+                  "textDecorationLine": undefined,
+                }
+              }
+            >
+              2
+               
+            </Text>
+            <View
+              dataSet={{}}
+              isFocused={false}
+              style={
+                {
+                  "alignItems": "center",
+                  "borderColor": "#d4d4d4",
+                  "borderRadius": 4,
+                  "borderWidth": 1,
+                  "flexDirection": "row",
+                  "overflow": "hidden",
+                  "width": 288,
+                }
+              }
+            >
+              <TextInput
+                accessible={true}
+                className="text-white"
+                dataSet={{}}
+                editable={true}
+                onBlur={[Function]}
+                onChangeText={[Function]}
+                onFocus={[Function]}
+                onKeyPress={[Function]}
+                placeholderTextColor="#a3a3a3"
+                secureTextEntry={false}
+                style={
+                  {
+                    "backgroundColor": "transparent",
+                    "color": "#171717",
+                    "flex": 1,
+                    "fontFamily": undefined,
+                    "fontSize": 12,
+                    "fontStyle": "normal",
+                    "fontWeight": "400",
+                    "height": "100%",
+                    "paddingBottom": 8,
+                    "paddingLeft": 12,
+                    "paddingRight": 12,
+                    "paddingTop": 8,
+                    "width": "100%",
+                  }
+                }
+              >
+                track2
+              </TextInput>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+  ;
+</RNCSafeAreaProvider>
+`;
