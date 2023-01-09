@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files\nodejs\node_modules\yarn\bin\yarn.js add @graphql-codegen-testing
+  C:\Program Files\nodejs\node.exe C:\Program Files\nodejs\node_modules\yarn\bin\yarn.js add @types/react-inverted-scrollview
 
 PATH: 
   C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Users\kiera\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files\nodejs\;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files (x86)\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\150\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\150\DTS\Binn\;C:\Program Files\Azure Data Studio\bin;C:\Program Files\Amazon\AWSCLIV2\;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Users\kiera\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files\nodejs\;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files (x86)\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\150\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\150\DTS\Binn\;C:\Program Files\Azure Data Studio\bin;C:\Program Files\Amazon\AWSCLIV2\;C:\WebDriver\bin
@@ -14,8 +14,8 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@graphql-codegen-testing: Request "https://registry.yarnpkg.com/@graphql-codegen-testing" returned a 405
-      at Request.params.callback [as _callback] (C:\Users\kiera\AppData\Roaming\nvm\v16.18.1\node_modules\yarn\lib\cli.js:66154:18)
+  Error: https://registry.yarnpkg.com/@types%2freact-inverted-scrollview: Not found
+      at Request.params.callback [as _callback] (C:\Users\kiera\AppData\Roaming\nvm\v16.18.1\node_modules\yarn\lib\cli.js:66145:18)
       at Request.self.callback (C:\Users\kiera\AppData\Roaming\nvm\v16.18.1\node_modules\yarn\lib\cli.js:140890:22)
       at Request.emit (node:events:513:28)
       at Request.<anonymous> (C:\Users\kiera\AppData\Roaming\nvm\v16.18.1\node_modules\yarn\lib\cli.js:141862:10)
@@ -33,7 +33,7 @@ npm manifest:
     "main": "node_modules/expo/AppEntry.js",
     "scripts": {
       "start": "expo start",
-      "test": "jest ",
+      "test": "jest",
       "android": "expo start --android",
       "ios": "expo start --ios",
       "web": "expo start --web",
@@ -60,7 +60,9 @@ npm manifest:
       "@reduxjs/toolkit": "^1.9.1",
       "@tanstack/react-query": "^4.20.4",
       "@testing-library/jest-dom": "^5.16.5",
+      "@testing-library/react-native": "^11.5.0",
       "@types/react-test-renderer": "^18.0.0",
+      "@urql/devtools": "^2.0.3",
       "@urql/exchange-graphcache": "^5.0.8",
       "aws-sdk": "^2.1286.0",
       "axios": "^1.2.1",
@@ -80,6 +82,7 @@ npm manifest:
       "pod-install": "^0.1.38",
       "react": "18.1.0",
       "react-dom": "18.1.0",
+      "react-inverted-scrollview": "^1.0.7",
       "react-native": "0.70.5",
       "react-native-animatable": "^1.3.3",
       "react-native-fast-image": "^8.6.3",
@@ -90,6 +93,7 @@ npm manifest:
       "react-native-screens": "^3.18.2",
       "react-native-shared-element": "^0.8.4",
       "react-native-svg": "13.4.0",
+      "react-native-uuid": "^2.0.1",
       "react-native-vector-icons": "^9.2.0",
       "react-native-web": "~0.18.9",
       "react-navigation-shared-element": "^3.1.3",
@@ -114,7 +118,6 @@ npm manifest:
       "@types/react": "~18.0.14",
       "@types/react-native": "~0.70.6",
       "@types/react-native-vector-icons": "^6.4.12",
-      "@types/testing-library__jest-dom": "^5.14.5",
       "appium": "^1.22.3",
       "appium-doctor": "^1.16.2",
       "cypress": "^12.2.0",
@@ -4547,6 +4550,13 @@ Lockfile:
       lodash "^4.17.15"
       redent "^3.0.0"
   
+  "@testing-library/react-native@^11.5.0":
+    version "11.5.0"
+    resolved "https://registry.yarnpkg.com/@testing-library/react-native/-/react-native-11.5.0.tgz#b043c5db7b15eca42a65e95d3f3ae196fab9493b"
+    integrity sha512-seV+qebsbX4E5CWk/wizU1+2wVLsPyqEzG7sTgrhJ81cgAawg7ay06fIZR9IS75pDeWn2KZVd4mGk1pjJ3i3Zw==
+    dependencies:
+      pretty-format "^29.0.0"
+  
   "@testing-library/react@^13.4.0":
     version "13.4.0"
     resolved "https://registry.yarnpkg.com/@testing-library/react/-/react-13.4.0.tgz#6a31e3bf5951615593ad984e96b9e5e2d9380966"
@@ -4906,7 +4916,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/@types/tapable/-/tapable-1.0.8.tgz#b94a4391c85666c7b73299fd3ad79d4faa435310"
     integrity sha512-ipixuVrh2OdNmauvtT51o3d8z12p6LtFW9in7U79der/kwejjdNchQC5UMn5u/KxNoM7VHHOs/l8KS8uHxhODQ==
   
-  "@types/testing-library__jest-dom@^5.14.5", "@types/testing-library__jest-dom@^5.9.1":
+  "@types/testing-library__jest-dom@^5.9.1":
     version "5.14.5"
     resolved "https://registry.yarnpkg.com/@types/testing-library__jest-dom/-/testing-library__jest-dom-5.14.5.tgz#d113709c90b3c75fdb127ec338dad7d5f86c974f"
     integrity sha512-SBwbxYoyPIvxHbeHxTZX2Pe/74F/tX2/D3mMvzabdeJ25bBojfW0TyB8BHrbq/9zaaKICJZjLP+8r6AeZMFCuQ==
@@ -5015,6 +5025,13 @@ Lockfile:
     integrity sha512-Mnxtq4I4QeFJsgs7Iytw+HyhiGxISR6qtyk66c9tipozLZ6QVxrCiUPF2HY4BxNIabaxcp+rivadvm8NAnXj4Q==
     dependencies:
       wonka "^6.1.2"
+  
+  "@urql/devtools@^2.0.3":
+    version "2.0.3"
+    resolved "https://registry.yarnpkg.com/@urql/devtools/-/devtools-2.0.3.tgz#780998c37386c72af9402a8f88c1b388e62f28cd"
+    integrity sha512-TktPLiBS9LcBPHD6qcnb8wqOVcg3Bx0iCtvQ80uPpfofwwBGJmqnQTjUdEFU6kwaLOFZULQ9+Uo4831G823mQw==
+    dependencies:
+      wonka ">= 4.0.9"
   
   "@urql/exchange-graphcache@^5.0.8":
     version "5.0.8"
@@ -16304,6 +16321,11 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/react-freeze/-/react-freeze-1.0.3.tgz#5e3ca90e682fed1d73a7cb50c2c7402b3e85618d"
     integrity sha512-ZnXwLQnGzrDpHBHiC56TXFXvmolPeMjTn1UOm610M4EXGzbEDR7oOIyS2ZiItgbs6eZc4oU/a0hpk8PrcKvv5g==
   
+  react-inverted-scrollview@^1.0.7:
+    version "1.0.7"
+    resolved "https://registry.yarnpkg.com/react-inverted-scrollview/-/react-inverted-scrollview-1.0.7.tgz#25ab5384af7ac6446ebcfc155537cca3c7e1b37b"
+    integrity sha512-hbXWww8OGJHJpzPWXWZGxXhWLSd4CXnm/u70RaNcXOT+QF6stROVWFHKM9Rbt1SAuamb4dAXrfzT9gKKPBd9NA==
+  
   "react-is@^16.12.0 || ^17.0.0 || ^18.0.0", react-is@^18.0.0, react-is@^18.1.0, react-is@^18.2.0:
     version "18.2.0"
     resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.2.0.tgz#199431eeaaa2e09f86427efbb4f1473edb47609b"
@@ -16400,6 +16422,11 @@ Lockfile:
     dependencies:
       css-select "^5.1.0"
       css-tree "^1.1.3"
+  
+  react-native-uuid@^2.0.1:
+    version "2.0.1"
+    resolved "https://registry.yarnpkg.com/react-native-uuid/-/react-native-uuid-2.0.1.tgz#ed4e2dfb1683eddb66967eb5dca140dfe1abddb9"
+    integrity sha512-cptnoIbL53GTCrWlb/+jrDC6tvb7ypIyzbXNJcpR3Vab0mkeaaVd5qnB3f0whXYzS+SMoSQLcUUB0gEWqkPC0g==
   
   react-native-vector-icons@^9.2.0:
     version "9.2.0"
@@ -19727,15 +19754,15 @@ Lockfile:
       triple-beam "^1.3.0"
       winston-transport "^4.5.0"
   
+  "wonka@>= 4.0.9", wonka@^6.0.0, wonka@^6.1.2:
+    version "6.1.2"
+    resolved "https://registry.yarnpkg.com/wonka/-/wonka-6.1.2.tgz#2c66fa5b26a12f002a03619b988258313d0b5352"
+    integrity sha512-zNrXPMccg/7OEp9tSfFkMgTvhhowqasiSHdJ3eCZolXxVTV/aT6HUTofoZk9gwRbGoFey/Nss3JaZKUMKMbofg==
+  
   wonka@^4.0.14:
     version "4.0.15"
     resolved "https://registry.yarnpkg.com/wonka/-/wonka-4.0.15.tgz#9aa42046efa424565ab8f8f451fcca955bf80b89"
     integrity sha512-U0IUQHKXXn6PFo9nqsHphVCE5m3IntqZNB9Jjn7EB1lrR7YTDY3YWgFvEvwniTzXSvOH/XMzAZaIfJF/LvHYXg==
-  
-  wonka@^6.0.0, wonka@^6.1.2:
-    version "6.1.2"
-    resolved "https://registry.yarnpkg.com/wonka/-/wonka-6.1.2.tgz#2c66fa5b26a12f002a03619b988258313d0b5352"
-    integrity sha512-zNrXPMccg/7OEp9tSfFkMgTvhhowqasiSHdJ3eCZolXxVTV/aT6HUTofoZk9gwRbGoFey/Nss3JaZKUMKMbofg==
   
   word-wrap@^1.2.3, word-wrap@~1.2.3:
     version "1.2.3"

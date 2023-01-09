@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from "react-query";
 
-export const useMyInfiniteQuery = (query: string) => {
+export const useInfiniteMessageQuery = (query: string, id: number) => {
   const getQuery = async (pageParam: number) => {
     const response = await fetch("http://192.168.0.15:80/graphql", {
       method: "POST",
@@ -10,19 +10,20 @@ export const useMyInfiniteQuery = (query: string) => {
       body: JSON.stringify({
         query: query,
         variables: {
-          take: 8,
+          id: id,
+          take: 12,
           skip: pageParam,
         },
       }),
     });
     const releases = await response.json();
 
-    return releases.data.getAllReleases;
+    return releases.data.getChatMessages;
   };
 
   const { data, fetchNextPage, hasNextPage, isFetching, refetch, isSuccess } =
     useInfiniteQuery({
-      queryKey: ["releases"],
+      queryKey: ["messages"],
       queryFn: ({ pageParam = 1 }) => getQuery(pageParam),
       getNextPageParam: (lastPage, allPages) => {
         const nextPage = allPages.length + 1;
