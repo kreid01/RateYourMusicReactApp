@@ -1,11 +1,13 @@
 import React from "react";
-import { cleanup, screen, render } from "@testing-library/react-native";
+import { cleanup } from "@testing-library/react-native";
 import "@testing-library/jest-dom";
 import { NativeBaseProvider } from "native-base";
 import { Provider } from "urql";
+import { Provider as ReduxProvider } from "react-redux";
 import { expect } from "@jest/globals";
 import renderer from "react-test-renderer";
 import { AddToPlaylist } from "./AddToPlaylist";
+import store from "../../store/store";
 
 const inset = {
   frame: { x: 0, y: 0, width: 0, height: 0 },
@@ -24,7 +26,9 @@ it("makes a request on render", async () => {
   renderer.create(
     <Provider value={mockClient as any}>
       <NativeBaseProvider initialWindowMetrics={inset}>
-        <AddToPlaylist releaseId={1} releaseTitle="test-title" />
+        <ReduxProvider store={store}>
+          <AddToPlaylist releaseId={1} releaseTitle="test-title" />
+        </ReduxProvider>
       </NativeBaseProvider>
     </Provider>
   );

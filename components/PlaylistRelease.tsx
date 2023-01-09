@@ -8,13 +8,12 @@ import {
   useUpdatePlaylistMutation,
 } from "../generated/graphql";
 import { ArtistName } from "./ArtistName/ArtistName";
-import Icon, { Icons } from "./Icons";
+import Icon, { Icons } from "./Icons/Icons";
 
 interface Props {
   id: number;
   navigation: any;
   playlistId: number;
-  refresh: () => void;
   contentIds: number[];
 }
 
@@ -22,14 +21,17 @@ export const PlaylistRelease: React.FC<Props> = ({
   id,
   playlistId,
   navigation,
-  refresh,
   contentIds,
 }) => {
   const [result] = useGetReleaseByIdQuery({ variables: { id: id as number } });
 
   const [, updatePlaylist] = useUpdatePlaylistMutation();
 
-  const renderRight = (progressAnimatedValue: any, dragAnimatedValue: any) => {
+  const renderRight = (
+    progressAnimatedValue: any,
+    dragAnimatedValue: any,
+    close: any
+  ) => {
     const translateX = dragAnimatedValue.interpolate({
       inputRange: [-50, 0.5],
       outputRange: [1, 0.1],

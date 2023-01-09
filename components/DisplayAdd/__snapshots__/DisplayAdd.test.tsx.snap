@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matched snapshot 1`] = `
+<RNCSafeAreaProvider
+  onInsetsChange={[Function]}
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    className=" bg-gray-700 h-8 w-[90vw]"
+  >
+    <View
+      className="absolute border-2 border-blue-500"
+      collapsable={false}
+      style={
+        {
+          "width": 0,
+        }
+      }
+    />
+    <Text
+      className="text-white pt-1 mx-auto my-auto"
+      testID="playlist-add"
+    >
+      test
+       added to playlist
+       
+    </Text>
+  </View>
+</RNCSafeAreaProvider>
+`;

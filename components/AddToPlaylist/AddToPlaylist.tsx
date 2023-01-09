@@ -8,7 +8,7 @@ import {
   useUpdatePlaylistMutation,
 } from "../../generated/graphql";
 import { RootState } from "../../store/store";
-import { DisplayAdd } from "../DisplayAdd";
+import { DisplayAdd } from "../DisplayAdd/DisplayAdd";
 
 interface Props {
   releaseId: number;

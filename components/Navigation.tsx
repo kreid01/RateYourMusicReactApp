@@ -7,7 +7,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { TouchableOpacity, Animated } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { navStyles } from "../styles/BottomNavStyles";
-import { TabArr } from "./TabArr";
+import { TabArr } from "./TabArr/TabArr";
 import { SingleReleaseScreen } from "../screens/SingleReleaseScreen";
 import { LoginScreen } from "../screens/LoginScreen";
 import {
@@ -22,45 +22,11 @@ import { SingleChannelScreen } from "../screens/SingleChannelScreen";
 import { PlaylistScreen } from "../screens/PlaylistScreen";
 import { createClient as createWSClient } from "graphql-ws";
 import { cacheExchange } from "@urql/exchange-graphcache";
-import {
-  GetChatMessagesDocument,
-  GetUserPlaylistsDocument,
-} from "../generated/graphql";
+import { devtoolsExchange } from "@urql/devtools";
 
 const wsClient = createWSClient({
   url: "ws://192.168.0.15:80/graphql",
 });
-
-const messages = gql`
-  query ($id: Int!) {
-    getChatMessages(id: $id) {
-      id
-      channelId
-      posterId
-      content
-      postDate
-    }
-  }
-`;
-
-const playlist = gql`
-  query ($id: Int!) {
-    getUserPlaylists(id: $id) {
-      id
-      contentIds
-      title
-    }
-  }
-`;
-
-const getPlaylistById = gql`
-  query ($id: Int!) {
-    getPlaylistById(id: $id) {
-      title
-      contentIds
-    }
-  }
-`;
 
 export const urqlClient = createClient({
   url: "http://192.168.0.15:80/graphql",
@@ -71,6 +37,7 @@ export const urqlClient = createClient({
     };
   },
   exchanges: [
+    devtoolsExchange,
     ...defaultExchanges,
     subscriptionExchange({
       forwardSubscription: (operation) => ({
@@ -82,30 +49,36 @@ export const urqlClient = createClient({
     cacheExchange({
       updates: {
         Mutation: {
-          deletePlaylist(result, args, cache, info) {
-            cache.updateQuery(
-              { query: GetUserPlaylistsDocument, variables: info.variables },
-              (data: any) => {
-                data.getUsersPlaylists.filter(
-                  (playlist: any) => playlist.id !== args.id
-                );
-                return data;
-              }
-            );
-          },
-
           deleteMessage(_result, args, cache, _info) {
-            cache.updateQuery(
-              {
-                query: messages,
-                variables: { channelId: args.channelId },
-              },
-              (data: any) => {
-                data.getChatMessage = data.getChatMessages.filter(
-                  (message: any) => message.id !== 46
-                );
+            const Messages = gql`
+              query getChatMessages($id: Int!) {
+                (id: $id) {
+                  id
+                  channelId
+                  posterId
+                  content
+                  postDate
+                }
               }
-            );
+            `;
+
+            const fields = cache
+              .inspectFields("Query")
+              .filter((field) => field.fieldName === "getChatMessages")
+              .forEach((field) => {
+                cache.updateQuery(
+                  {
+                    query: Messages,
+                    variables: { id: 1 },
+                  },
+                  (data) => {
+                    data.getChatMessages = data.getChatMessages.filter(
+                      (message: any) => message.id !== args.id
+                    );
+                    return data;
+                  }
+                );
+              });
           },
         },
       },

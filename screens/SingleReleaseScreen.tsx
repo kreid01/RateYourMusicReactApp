@@ -15,7 +15,7 @@ import { ArtistName } from "../components/ArtistName/ArtistName";
 import { EditRelease } from "../components/EditRelease/EditRelease";
 import { IRelease } from "../conts/Types";
 import { ReleaseReviews } from "../components/ReleaseReviews";
-import { CreateReview } from "../components/CreateReview";
+import { CreateReview } from "../components/CreateReview/CreateReview";
 import { AddToPlaylist } from "../components/AddToPlaylist/AddToPlaylist";
 
 export const SingleReleaseScreen = ({ route, navigation }: any) => {

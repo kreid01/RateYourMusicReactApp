@@ -2,7 +2,6 @@ import { Formik } from "formik";
 import {
   Box,
   Button,
-  Center,
   FormControl,
   Input,
   TextArea,
@@ -14,9 +13,9 @@ import { TouchableOpacity } from "react-native";
 import { useSelector } from "react-redux";
 import { object, string } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
-import { usePostReviewMutation } from "../generated/graphql";
-import { RootState } from "../store/store";
-import Icon, { Icons } from "./Icons";
+import { usePostReviewMutation } from "../../generated/graphql";
+import { RootState } from "../../store/store";
+import Icon, { Icons } from "../Icons/Icons";
 import Animated, { FadeInUp, FadeOutUp } from "react-native-reanimated";
 
 interface Props {
@@ -85,6 +84,7 @@ export const CreateReview: React.FC<Props> = ({
   return (
     <View>
       <Button
+        testID="open-review"
         onPress={() => handleClick()}
         bgColor="blue.400"
         data-cy="open-review"
@@ -163,6 +163,7 @@ export const CreateReview: React.FC<Props> = ({
                     Cancel
                   </Button>
                   <Button
+                    testID="submit-button"
                     accessibilityLabel="submit-review-button"
                     onPress={() => handleSubmit()}
                     bgColor="blue.400"

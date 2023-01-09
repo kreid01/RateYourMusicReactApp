@@ -17,7 +17,6 @@ import {
   WarningOutlineIcon,
 } from "native-base";
 import React, { useState } from "react";
-import { useMutation, useQueryClient } from "react-query";
 import { object, string } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import { useRegisterMutation } from "../generated/graphql";

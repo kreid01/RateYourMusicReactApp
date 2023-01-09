@@ -1,9 +1,9 @@
-import { NewseScreen } from "./../screens/NewsScreen";
-import { Icons } from "./Icons";
-import { HomeScreen } from "../screens/HomeScreen";
-import { LoginScreen } from "../screens/LoginScreen";
-import { CreateReleaseScreen } from "../screens/CreateReleaseScreen";
-import { ChannelScreen } from "../screens/ChannelScreen";
+import { NewseScreen } from "../../screens/NewsScreen";
+import { Icons } from "../Icons/Icons";
+import { HomeScreen } from "../../screens/HomeScreen";
+import { LoginScreen } from "../../screens/LoginScreen";
+import { CreateReleaseScreen } from "../../screens/CreateReleaseScreen";
+import { ChannelScreen } from "../../screens/ChannelScreen";
 
 export const TabArr = [
   {

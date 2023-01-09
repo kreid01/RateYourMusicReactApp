@@ -1,5 +1,5 @@
 import React from "react";
-import { useGetChannelNameQuery } from "../generated/graphql";
+import { useGetChannelNameQuery } from "../../generated/graphql";
 import { Text } from "native-base";
 
 interface Props {

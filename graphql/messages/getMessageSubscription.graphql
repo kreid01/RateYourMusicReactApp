@@ -1,5 +1,9 @@
 subscription getMessages($channelId: Int!) {
   messageSubscription(channelId: $channelId) {
+    id
+    channelId
+    posterId
     content
+    postDate
   }
 }

@@ -1,8 +1,8 @@
 import React from "react";
-import { cleanup, screen, render } from "@testing-library/react-native";
+import { cleanup } from "@testing-library/react-native";
 import "@testing-library/jest-dom";
 import { ArtistName } from "./ArtistName";
-import { NativeBaseProvider, Spinner } from "native-base";
+import { NativeBaseProvider } from "native-base";
 import { Provider } from "urql";
 import { expect } from "@jest/globals";
 import renderer, { act } from "react-test-renderer";

@@ -349,7 +349,7 @@ export type DeleteMessageMutationVariables = Exact<{
 }>;
 
 
-export type DeleteMessageMutation = { __typename?: 'Mutation', deleteMessage?: { __typename?: 'message', content?: string | null, id?: number | null } | null };
+export type DeleteMessageMutation = { __typename?: 'Mutation', deleteMessage?: { __typename?: 'message', id?: number | null, channelId?: number | null, posterId?: number | null, content?: string | null, postDate?: string | null } | null };
 
 export type GetChatMessagesQueryVariables = Exact<{
   id: Scalars['Int'];
@@ -363,7 +363,7 @@ export type GetMessagesSubscriptionVariables = Exact<{
 }>;
 
 
-export type GetMessagesSubscription = { __typename?: 'Subscription', messageSubscription?: { __typename?: 'message', content?: string | null } | null };
+export type GetMessagesSubscription = { __typename?: 'Subscription', messageSubscription?: { __typename?: 'message', id?: number | null, channelId?: number | null, posterId?: number | null, content?: string | null, postDate?: string | null } | null };
 
 export type PostMessageMutationVariables = Exact<{
   channelId: Scalars['Int'];
@@ -2120,8 +2120,11 @@ export function useGetAllChannelsQuery(options?: Omit<Urql.UseQueryArgs<GetAllCh
 export const DeleteMessageDocument = gql`
     mutation deleteMessage($id: Int!) {
   deleteMessage(id: $id) {
-    content
     id
+    channelId
+    posterId
+    content
+    postDate
   }
 }
     `;
@@ -2147,7 +2150,11 @@ export function useGetChatMessagesQuery(options: Omit<Urql.UseQueryArgs<GetChatM
 export const GetMessagesDocument = gql`
     subscription getMessages($channelId: Int!) {
   messageSubscription(channelId: $channelId) {
+    id
+    channelId
+    posterId
     content
+    postDate
   }
 }
     `;

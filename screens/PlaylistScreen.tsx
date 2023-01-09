@@ -13,6 +13,8 @@ import {
   useGetPlaylistByIdQuery,
 } from "../generated/graphql";
 import { PlaylistRelease } from "../components/PlaylistRelease";
+import uuid from "react-native-uuid";
+import { useRefreshOnFocus } from "../hooks/useRefreshOnFocus";
 
 export const PlaylistScreen = ({ navigation, route }: any) => {
   const { id } = route.params;
@@ -68,10 +70,9 @@ export const PlaylistScreen = ({ navigation, route }: any) => {
           {data?.getPlaylistById?.contentIds?.map((releaseId, index) => {
             return (
               <PlaylistRelease
-                key={index}
+                key={uuid.v4() as string}
                 playlistId={id as number}
                 contentIds={data.getPlaylistById?.contentIds as number[]}
-                refresh={refresh}
                 navigation={navigation}
                 id={releaseId as number}
               />

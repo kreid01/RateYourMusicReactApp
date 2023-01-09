@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -15,13 +15,16 @@ import {
   useGetMessagesSubscription,
   usePostMessageMutation,
 } from "../generated/graphql";
-import { ChatMessaage } from "../components/ChatMessage";
+import { ChatMessaage } from "../components/ChatMessage/ChatMessage";
 import { RootState } from "../store/store";
 import { useSelector } from "react-redux";
-import { ChannelName } from "../components/ChannelName";
+import { ChannelName } from "../components/ChannelName/ChannelName";
 
 export const SingleChannelScreen = ({ route, navigation }: any) => {
   const { id } = route.params;
+
+  const [newMessages, setNewMessages] = useState<any[]>();
+
   const [result, reexecuteQuery] = useGetChatMessagesQuery({
     variables: { id: id },
   });
@@ -32,36 +35,50 @@ export const SingleChannelScreen = ({ route, navigation }: any) => {
 
   const { data, fetching } = result;
 
+  useEffect(() => {
+    data?.getChatMessages
+      ? setNewMessages(data?.getChatMessages as Message[])
+      : null;
+  }, [data?.getChatMessages]);
+
   const [messages] = useGetMessagesSubscription({
     variables: { channelId: id as number },
   });
 
   const { data: chat } = messages;
 
-  console.log(chat?.messageSubscription);
+  useEffect(() => {
+    chat?.messageSubscription
+      ? setNewMessages((prevState) => [
+          ...(prevState as Message[]),
+          chat?.messageSubscription,
+        ])
+      : null;
+  }, [chat?.messageSubscription]);
 
   const [message, setMessage] = useState<string>("");
   const currentUser = useSelector((state: RootState) => state.user.value);
 
   const [, postMessage] = usePostMessageMutation();
 
-  console.log(data?.getChatMessages);
-
   return (
     <KeyboardAvoidingView
       behavior="position"
       className="min-h-[100vh] relative bg-slate-800"
     >
-      <View className="pt-12 pb-3 shadow-lg  bg-slate-900  flex flex-row">
+      <View className="pt-16 pb-4 shadow-lg  bg-slate-900  flex flex-row">
         <Button
           accessibilityLabel="back-button"
-          className="absolute rounded-full py-3 top-10 left-5 text-white"
+          className="absolute rounded-full py-3 top-14  left-5 text-white"
           variant="ghost"
-          onPress={() => navigation.navigate("Channels")}
+          onPress={() => {
+            refresh();
+            navigation.navigate("Channels");
+          }}
         >
           <ArrowBackIcon style={{ size: "lg", color: "white" }} />
         </Button>
-        <Text className="text-xl text-white mx-auto">
+        <Text className="text-xl  text-white mx-auto">
           <ChannelName id={id} />
         </Text>
       </View>
@@ -70,19 +87,21 @@ export const SingleChannelScreen = ({ route, navigation }: any) => {
           <Spinner color="indigo.500" size="lg" className="mx-auto mt-10" />
         </ScrollView>
       ) : (
-        <ScrollView className="flex w-[90vw] h-[80vh]">
-          {data?.getChatMessages?.map((message, i) => {
-            return (
-              <ChatMessaage
-                refresh={refresh}
-                key={i}
-                message={message as Message}
-              />
-            );
-          })}
+        <ScrollView className="flex flex-col-reverse w-[90vw] h-[80vh]">
+          {data?.getChatMessages &&
+            newMessages?.map((message, i) => {
+              return (
+                <ChatMessaage
+                  refresh={refresh}
+                  key={i}
+                  message={message as Message}
+                />
+              );
+            })}
         </ScrollView>
       )}
-      <View className="my-8 bottom-5 fixed w-[90vw] mx-auto">
+
+      <View className="bottom-0 fixed w-[90vw] mx-auto">
         <Input
           placeholder="Message"
           borderColor="#475569"

@@ -20,7 +20,7 @@ export const DisplayAdd = ({ releaseTitle }: { releaseTitle: string }) => {
         }}
         className="absolute border-2 border-blue-500"
       />
-      <Text className="text-white pt-1 mx-auto my-auto">
+      <Text testID="playlist-add" className="text-white pt-1 mx-auto my-auto">
         {releaseTitle} added to playlist{" "}
       </Text>
     </View>

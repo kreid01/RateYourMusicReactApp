@@ -7,6 +7,7 @@ import { getRefreshToken, setRefreshToken } from "./utils/refreshToken";
 import store from "./store/store";
 import { Provider } from "react-redux";
 import axios from "axios";
+import { devtoolsExchange } from "@urql/devtools";
 
 export default function App() {
   const client = new QueryClient();

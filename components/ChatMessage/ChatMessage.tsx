@@ -8,8 +8,8 @@ import {
   Message,
   useDeleteMessageMutation,
   useGetUsernameQuery,
-} from "../generated/graphql";
-import { RootState } from "../store/store";
+} from "../../generated/graphql";
+import { RootState } from "../../store/store";
 
 interface Props {
   message: Message;
@@ -44,7 +44,7 @@ export const ChatMessaage: React.FC<Props> = ({ message, refresh }) => {
         />
       ) : (
         <Image
-          alt=""
+          alt="user-image"
           source={{
             uri: "https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-High-Quality-Image.png",
           }}
@@ -72,14 +72,16 @@ export const ChatMessaage: React.FC<Props> = ({ message, refresh }) => {
                 )
               }
               variant="ghost"
-              className="ml-10"
+              className="ml-6"
               size={"sm"}
             >
               Delete
             </Button>
           ) : null}
         </View>
-        <Text className="text-white -mt-2">{message.content}</Text>
+        <Text testID="message-content" className="text-white -mt-2">
+          {message.content}
+        </Text>
       </View>
     </View>
   );
