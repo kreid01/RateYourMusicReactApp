@@ -69,7 +69,11 @@ export const urqlClient = createClient({
                 cache.updateQuery(
                   {
                     query: Messages,
-                    variables: { id: 1 },
+                    variables: {
+                      id: 1,
+                      skip: field.arguments?.skip,
+                      take: field.arguments?.take,
+                    },
                   },
                   (data) => {
                     data.getChatMessages = data.getChatMessages.filter(

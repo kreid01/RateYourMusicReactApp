@@ -43,7 +43,6 @@ export const SingleChannelScreen = ({ route, navigation }: any) => {
   const {
     isSuccess,
     data: messages,
-    isFetching,
     refetch,
     loadNext,
   } = useInfiniteMessageQuery(getChatMessagesQuery, id);

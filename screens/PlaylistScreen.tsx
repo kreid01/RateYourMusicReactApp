@@ -17,15 +17,11 @@ import uuid from "react-native-uuid";
 import { useRefreshOnFocus } from "../hooks/useRefreshOnFocus";
 
 export const PlaylistScreen = ({ navigation, route }: any) => {
-  const { id } = route.params;
+  const { id, refresh } = route.params;
 
-  const [result, reexecuteQuery] = useGetPlaylistByIdQuery({
+  const [result] = useGetPlaylistByIdQuery({
     variables: { id: id as number },
   });
-
-  const refresh = () => {
-    reexecuteQuery({ requestPolicy: "network-only" });
-  };
 
   const [, deletePlaylist] = useDeletePlaylistMutation();
 

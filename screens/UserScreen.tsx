@@ -134,7 +134,7 @@ export const UserScreen = ({ navigation }: any) => {
               <TouchableOpacity
                 key={item?.id}
                 onPress={() =>
-                  navigation.navigate("Playlist", { id: item?.id })
+                  navigation.navigate("Playlist", { id: item?.id, refresh })
                 }
                 className="bg-gray-700 my-1 w-[90vw] flex flex-row "
               >
